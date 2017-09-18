@@ -61,8 +61,8 @@ $runner->run($unit_test_package);
 ```
 ~/tester$ php test.php 
 UNIT TESTS ***************************************
-Unit Test of LogResultsTester class - Success!
-Unit Test of Phlegmatic\Tester\Tests\Unit\OutputResultsTestRunnerUnitTest - Success!
+Unit Test of OutputResultsTester class - Success!
+Unit Test of Phlegmatic\Tester\Tests\Unit\OutputResultsRunnerUnitTest - Success!
 Unit test of Phlegmatic\Tester\Helpers\OutputAssertionTester - Success!
 **************************************************
 3 tests passed successfully!

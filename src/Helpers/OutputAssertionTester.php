@@ -2,6 +2,7 @@
 
 namespace Phlegmatic\Tester\Helpers;
 
+
 use Phlegmatic\Tester\Tester;
 
 /**

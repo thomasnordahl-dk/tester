@@ -41,7 +41,7 @@ class TestPackage
     /**
      * @return TestCase[]
      */
-    public function listTestCases()
+    public function getTestCaseList()
     {
         return $this->test_case_list;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Unit;
+namespace Phlegmatic\Tester\Tests\Unit\Helpers;
 
 
 use Phlegmatic\Tester\Helpers\OutputAssertionTester;
@@ -8,7 +8,7 @@ use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\Tester;
 use Phlegmatic\Tester\Tests\Mock\MockTester;
 
-class OutputBufferTesterUnitTest implements TestCase
+class OutputAssertionTesterUnitTest implements TestCase
 {
     public function getDescription(): string
     {
@@ -28,7 +28,7 @@ class OutputBufferTesterUnitTest implements TestCase
 
         $tester->assert($mock_tester->assert_result === true,
             "Matching text output by the \$when argument should cause a success assertOutput");
-        $tester->assert("why" === $mock_tester->assert_why, "Only pass reason why on successful comparison");
+        $tester->assert("why" === $mock_tester->assert_why, "Reason why is passed to standard assert");
 
         $expected_why_reason_passed = "why\nExpected:\n{$test_text}\nActual:\nsomething else than {$test_text}";
 
@@ -39,6 +39,6 @@ class OutputBufferTesterUnitTest implements TestCase
         $tester->assert($mock_tester->assert_result === false,
             "Matching text output by the \$when argument should cause a success assertOutput");
         $tester->assert($expected_why_reason_passed === $mock_tester->assert_why,
-            "Pass values as reason why on failed comparison");
+            "Add expected and actual values as reason why on failed comparison");
     }
 }
