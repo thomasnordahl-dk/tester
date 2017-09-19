@@ -1,11 +1,11 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Unit\Adapters\OutputResultsRunner;
+namespace Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner;
 
 use Exception;
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\CaseResult;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\CaseResult;
 use Phlegmatic\Tester\Exception\FailedAssertionException;
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\OutputResultsTester;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\OutputResultsTester;
 use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\Tester;
 use Phlegmatic\Tester\Tests\Mock\MockTestCase;

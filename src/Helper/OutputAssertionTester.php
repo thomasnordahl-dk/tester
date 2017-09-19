@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlegmatic\Tester\Helpers;
+namespace Phlegmatic\Tester\Helper;
 
 
 use Phlegmatic\Tester\Tester;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Mock\Adapters\OutputResultsRunner;
+namespace Phlegmatic\Tester\Tests\Mock\Adapter\OutputResultsRunner;
 
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\PackageResult;
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\PackageResultRenderer;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\PackageResult;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\PackageResultRenderer;
 
 class MockPackageResultRenderer extends PackageResultRenderer
 {

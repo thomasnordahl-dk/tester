@@ -1,16 +1,17 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Unit\Adapters\OutputResultsRunner;
+namespace Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner;
 
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\CaseResult;
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\PackageResult;
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\PackageResultRenderer;
-use Phlegmatic\Tester\Helpers\OutputAssertionTester;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\CaseResult;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\PackageResult;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\PackageResultRenderer;
+use Phlegmatic\Tester\Helper\OutputAssertionTester;
 use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\Tester;
 use Phlegmatic\Tester\TestPackage;
 use Phlegmatic\Tester\Tests\Mock\MockTestCase;
 
+//TODO add test for test causing an unexpected exception
 class PackageResultRendererUnitTest implements TestCase
 {
     /**

@@ -1,7 +1,7 @@
 <?php
 
-use Phlegmatic\Tester\Adapters\OutputResultsRunner;
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\PackageResultRenderer;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\PackageResultRenderer;
 use Phlegmatic\Tester\Runner;
 
 function getRunner(): Runner

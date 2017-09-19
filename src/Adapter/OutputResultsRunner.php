@@ -1,12 +1,12 @@
 <?php
 
-namespace Phlegmatic\Tester\Adapters;
+namespace Phlegmatic\Tester\Adapter;
 
 use Exception;
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\CaseResult;
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\OutputResultsTester;
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\PackageResult;
-use Phlegmatic\Tester\Adapters\OutputResultsRunner\PackageResultRenderer;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\CaseResult;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\OutputResultsTester;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\PackageResult;
+use Phlegmatic\Tester\Adapter\OutputResultsRunner\PackageResultRenderer;
 use Phlegmatic\Tester\Exception\FailedAssertionException;
 use Phlegmatic\Tester\Runner;
 use Phlegmatic\Tester\TestCase;

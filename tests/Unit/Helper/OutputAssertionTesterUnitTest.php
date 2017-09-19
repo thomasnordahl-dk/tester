@@ -1,9 +1,9 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Unit\Helpers;
+namespace Phlegmatic\Tester\Tests\Unit\Helper;
 
 
-use Phlegmatic\Tester\Helpers\OutputAssertionTester;
+use Phlegmatic\Tester\Helper\OutputAssertionTester;
 use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\Tester;
 use Phlegmatic\Tester\Tests\Mock\MockTester;

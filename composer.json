@@ -1,6 +1,6 @@
 {
     "name": "phlegmatic/tester",
-    "description": "A light-weight and object oriented PHP testing framework.",
+    "description": "A simple and object oriented approach to testing for PHP.",
     "type": "library",
     "license": "MIT",
     "authors": [

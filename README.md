@@ -1,97 +1,124 @@
-phlegmatic/tester
-=================
-*A light-weight and object oriented PHP testing framework*
+Tester
+======
+*A simple and object oriented approach to testing for PHP.*
 
-**The documentation is at a bare minimum for the first unstable version - more to come later!**
+**This library is still in its early stage of development.**
 
-## `Tester`
-Two basic assertion methods are defined by the `Tester` interface:
-```php
-    public function assert(bool $result, string $why): void;
+## Installation
 ```
-```php
-    public function expect(string $exception_type, callable $when, string $why): void;
+composer require-dev phlegmatic/tester
 ```
-You'll see these methods applied in the next section.
 
-## `TestCase`
-A test is defined by implementing the interface `\Phlegmatic\Tester\TestCase`.
+## Tests
+A test is defined by a class that implements `\Phlegmatic\Tester\TestCase`. The interface
+defines two methods: 
+* `getDescription(): string`
+* `run(\Phlegmatic\Tester\Tester $tester): void`
 
+The `getDescription()` method should return an apt description of the test case performed
+by the class, when `run()` is invoked.
+
+Example:
 ```php
 class UserUnitTest implements \Phlegmatic\Tester\TestCase
 {
     public function getDescription(): string
     {
-        return "Unit test of User class";
+        return "Unit test of " . \User::class;
     }
     
-    public function run(Tester $tester)
+    public function run(\Phlegmatic\Tester\Tester $tester): string
     {
-        $user = User::create("john.doe@email.com");
+        $user = new User("john.doe@email.com");
         
-        $tester->assert($user instanceof User, "Static factory method must return instance of User");
-        $tester->assert($user->getEmail() === "john.doe@email.com", "Factory method sets email correctly");
+        $tester->assert("john.doe@email.com" === $user->getEmail(), "User::getEmail() returns assigned email");
         
-        $tester->expect(\RuntimeException::class, function () {
-            User::create("not a valid email address");
-        }, "Using an invalid email address should cause factory method to throw a RuntimeException");
+        $tester->expect(\InvalidArgumentException::class, function() {
+            new User("invalid email address");
+        }, 
+        "Only valid emails allowed as constructor argument");
     }
 }
 ```
 
-## `TestPackage`
-Test cases are collected into test packages with the class `TestPackage`.
+## Assertions
+Assertions are done through the `\Phlegmatic\Tester\Tester` interface. The interface
+defines two methods:
+* `assert(bool $result, string $why): void`
+* `expect(string $exception_type, callable $when, string $why): void`
+
+## Packages
+A package defines a collection of related test cases. An example could be unit test package, or acceptance test package.
+
 ```php
-$unit_tests = [
-    new UserUnitTest,
-    new AddressUnitTest,
-    new UserRepositoryUnitTest,
-]
-$unit_test_package = new TestPackage("Unit tests", $unit_tests);
+$package = new \Phlegmatic\Tester\TestPackage("Unit tests", $test_case_list);
 ```
 
-## `Runner`
-A `Runner` implementation runs test packages.
+Packages are run through a runner, defined by `Phlegmatic\Tester\Runner`. A runner has one method:
 ```php
-$runner->run($unit_test_package);
+/**
+ * @param TestPackage[] $package_list
+ *
+ * @throws \Phlegmatic\Tester\Exception\FailedTestException
+ */
+public function run($package_list): void;
 ```
 
-## Output format
-`phlegmatic/tester` runs its own tests. Currently the output of running these tests looks like this:
-```
-~/tester$ php test.php 
-UNIT TESTS ***************************************
-Unit Test of OutputResultsTester class - Success!
-Unit Test of Phlegmatic\Tester\Tests\Unit\OutputResultsRunnerUnitTest - Success!
-Unit test of Phlegmatic\Tester\Helpers\OutputAssertionTester - Success!
-**************************************************
-3 tests passed successfully!
-**************************************************
+An instance of the currently available implementation of the runner interface `Phlegmatic\Tester\Adapter\OutputResultRunner`
+can be fetched by the function `getRunner(): Runner`.
 
+## Test file
+In the following example the unit test defined above is run through a unit test package,
+assuming that the `phlegmatic/tester` is located in the default vendor folder structure,
+when using Composer to install the library.
+
+```php
+# test.php
+require_once __DIR__ . "/vendor/autoload_psr4.php";
+require_once __DIR__ . "/vendor/phlegmatic/tester/functions/getRunner.php";
+
+use \Phlegmatic\Tester\TestPackage;
+use \Phlegmatic\Tester\Exception\FailedTestException;
+use \User\Test\UserUnitTest;
+
+$unit_tests = new TestPackage("Unit tests", [new UserUnitTest()]);
+
+$runner = getRunner();
+
+try {
+    $runner->run([$package]);
+    exit(0);
+} catch (FailedTestException $e) {
+    exit(1);
+}
 ```
 
-## Helpers
-The library delivers a set of basic helpers. Look at the and get inspired to make your own decorators or helpers that
- allows you to assert that special case as you need.
- 
-`OutputAssertionsTester` is a decorator that allows to test output to the output buffer.
+## Decorators
+One way of defining custom assertions for complex test cases is to define a decorator
+class to the `Tester` interface.
 
-```
+The library defines a decorator, `\Phlegmatic\Tester\Helper\OutputAssertionTester`, 
+for testing the output to output buffer.
+
+```php
 public function run(Tester $tester): void
 {
-    $output_tester = new OutputAssertionsTester($tester);
+    $tester = new OutputAssertionTester($tester);
     
-    $tester->assertOutput("This is the output", function () {
-        echo "This is the output";
-    }, "The function provided outputs the expected output.");
+    $tester->assertOutput("This is output with a variable", function () {
+        $template_renderer = new TemplateRenderer();
+        $template_renderer->render("This is output with a [variable]", ["variable" => "variable"]);
+    }, 
+    "The template renderer should replace variables with values in associative array");
 }
 ```
 
-This decorator is applied in `Phlegmatic\Tester\Unit\OutputResultsRunnerUnitTest`.
+## Testable and tested
+All classes are unit tested. The tests can be found in the `test/` folder, and they
+are executed by the file `/test.php`.
 
-## Bootstrapping
-Plans are to somehow deliver easy bootstrapping for libraries using `phlegmatic\tester` as its testing framework.
-In the current form you can simply create a new instance of the `OutputResultsRunner`.
-```php
-$runner = new OutputResultsRunner();
-```
+The libraries units are tested using the libraries own testing facilities. Refer to these
+test cases for further usage examples.
+
+## Inspiration
+This library is inspired by the testing library [mindplay-dk/testies](https://github.com/mindplay-dk/testies).

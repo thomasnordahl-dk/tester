@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlegmatic\Tester\Adapters\OutputResultsRunner;
+namespace Phlegmatic\Tester\Adapter\OutputResultsRunner;
 
 use Exception;
 use Phlegmatic\Tester\TestCase;
