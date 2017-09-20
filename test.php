@@ -7,11 +7,16 @@ use Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner\LogResultsTesterUni
 use Phlegmatic\Tester\Tests\Unit\Helper\OutputAssertionTesterUnitTest;
 use Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunnerUnitTest;
 use Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner\PackageResultRendererUnitTest;
+use Phlegmatic\Tester\Tests\Unit\TestPackageUnitTest;
 
 $unit_tests = new TestPackage("UNIT TESTS", [
+    ## TestPackage
+    new TestPackageUnitTest(),
+    ## OutputResultRunner and related units
     new OutputResultsRunnerUnitTest(),
     new LogResultsTesterUnitTest(),
     new PackageResultRendererUnitTest(),
+    ## Helpers
     new OutputAssertionTesterUnitTest,
 ]);
 
