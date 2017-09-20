@@ -10,8 +10,8 @@ use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\Tester;
 use Phlegmatic\Tester\TestPackage;
 use Phlegmatic\Tester\Tests\Mock\MockTestCase;
+use RuntimeException;
 
-//TODO add test for test causing an unexpected exception
 class PackageResultRendererUnitTest implements TestCase
 {
     /**
@@ -88,19 +88,33 @@ Package 2 ****************************************
         $package_result_renderer = new PackageResultRenderer();
 
         $failing_mock_case = new MockTestCase();
-        $failing_mock_case->description = "This is the failing test";
+        $failing_mock_case->description = "This is the failing test case";
 
         $successful_mock_case = new MockTestCase();
-        $successful_mock_case->description = "This is the successful test";
+        $successful_mock_case->description = "This is the successful test case";
+
+        $exception_mock_case = new MockTestCase();
+        $exception_mock_case->description = "This is the throwing test case";
 
         $first_package = new TestPackage("Package 1", [$failing_mock_case]);
-        $second_package = new TestPackage("Package 2", [$failing_mock_case]);
+        $second_package = new TestPackage("Package 2", [$successful_mock_case, $failing_mock_case]);
+        $third_package = new TestPackage("Package 3", [$successful_mock_case, $exception_mock_case]);
 
         $successful_case_result = new CaseResult($successful_mock_case);
         $successful_case_result->addSuccessReason("reason for success");
 
         $failed_case_result = new CaseResult($failing_mock_case);
         $failed_case_result->addFailReason("reason for failure");
+
+        $exception_thrown = new RuntimeException("runtime failure");
+        $exception_line = $exception_thrown->getLine();
+        $exception_message = $exception_thrown->getMessage();
+        $exception_file = $exception_thrown->getFile();
+        $exception_trace = $exception_thrown->getTraceAsString();
+
+        $exception_ended_case_result = new CaseResult($exception_mock_case);
+        $exception_ended_case_result->addSuccessReason("This is the successful test");
+        $exception_ended_case_result->testEndedByException($exception_thrown);
 
         $first_package_result = new PackageResult($first_package);
         $first_package_result->addTestCaseResult($failed_case_result);
@@ -109,20 +123,34 @@ Package 2 ****************************************
         $second_package_result->addTestCaseResult($successful_case_result);
         $second_package_result->addTestCaseResult($failed_case_result);
 
-        $package_result_list = [$first_package_result, $second_package_result];
+        $third_package_result = new PackageResult($third_package);
+        $third_package_result->addTestCaseResult($successful_case_result);
+        $third_package_result->addTestCaseResult($exception_ended_case_result);
+
+        $package_result_list = [$first_package_result, $second_package_result, $third_package_result];
 
         $expected_output =
             "Package 1 ****************************************
-✖ This is the failing test
+✖ This is the failing test case
 - FAILED!: reason for failure
 **************************************************
 1 out of 1 tests failed
 **************************************************
 
 Package 2 ****************************************
-✔ This is the successful test
-✖ This is the failing test
+✔ This is the successful test case
+✖ This is the failing test case
 - FAILED!: reason for failure
+**************************************************
+1 out of 2 tests failed
+**************************************************
+
+Package 3 ****************************************
+✔ This is the successful test case
+✖ This is the throwing test case
+RuntimeException thrown on line: {$exception_line} in {$exception_file}
+{$exception_message}
+{$exception_trace}
 **************************************************
 1 out of 2 tests failed
 **************************************************

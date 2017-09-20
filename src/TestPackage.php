@@ -2,8 +2,6 @@
 
 namespace Phlegmatic\Tester;
 
-
-
 /**
  * Contains a list of test cases to perform under a common description.
  * A description a package could be "unit tests" or "acceptance tests"

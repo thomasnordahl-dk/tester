@@ -86,7 +86,9 @@ class PackageResultRenderer
 
         $this->renderFailReasons($case_result);
 
-        $this->renderException($case_result);
+        if ($case_result->wasEndedByException()) {
+            $this->renderException($case_result);
+        }
     }
 
     private function padText(string $text): string
@@ -126,6 +128,16 @@ class PackageResultRenderer
 
     private function renderException(CaseResult $case_result): void
     {
+        $exception = $case_result->getExceptionThrown();
+        $exception_class = get_class($exception);
+        $exception_line = $exception->getLine();
+        $exception_file = $exception->getFile();
+        $exception_trace = $exception->getTraceAsString();
+        $exception_message = $exception->getMessage();
+
+        echo "{$exception_class} thrown on line: {$exception_line} in {$exception_file}\n";
+        echo "{$exception_message}\n";
+        echo "{$exception_trace}\n";
     }
 
     private function renderPaddedLine()
