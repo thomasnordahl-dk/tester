@@ -1,17 +1,16 @@
 <?php
 
+namespace Phlegmatic\Tester\Factory;
+
 use Phlegmatic\Tester\Adapter\OutputResultsRunner;
 use Phlegmatic\Tester\Adapter\OutputResultsRunner\PackageResultRenderer;
 use Phlegmatic\Tester\Runner;
 
-function getRunner(): Runner
+class RunnerFactory
 {
-    static $runner;
-
-    if (! $runner instanceof Runner) {
+    public static function createDefault(): Runner
+    {
         $renderer = new PackageResultRenderer();
-        $runner = new OutputResultsRunner($renderer);
+        return new OutputResultsRunner($renderer);
     }
-
-    return $runner;
 }

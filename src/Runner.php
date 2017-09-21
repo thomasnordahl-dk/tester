@@ -4,7 +4,6 @@ namespace Phlegmatic\Tester;
 
 use Phlegmatic\Tester\Exception\FailedTestsException;
 
-
 /**
  * Runs test packages
  */

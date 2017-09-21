@@ -65,7 +65,7 @@ public function run($package_list): void;
 ```
 
 An instance of the currently available implementation of the runner interface `Phlegmatic\Tester\Adapter\OutputResultRunner`
-can be fetched by the function `getRunner(): Runner`.
+can be created with the static factory method `RunnerFactory::createDefault(): Runner`.
 
 ## Test file
 In the following example the unit test defined above is run through a unit test package,
@@ -74,16 +74,16 @@ when using Composer to install the library.
 
 ```php
 # test.php
-require_once __DIR__ . "/vendor/autoload_psr4.php";
-require_once __DIR__ . "/vendor/phlegmatic/tester/functions/getRunner.php";
+require_once __DIR__ . "/vendor/autoload.php";
 
+use \Phlegmatic\Tester\Factory\RunnerFactory;
 use \Phlegmatic\Tester\TestPackage;
 use \Phlegmatic\Tester\Exception\FailedTestException;
 use \User\Test\UserUnitTest;
 
 $unit_tests = new TestPackage("Unit tests", [new UserUnitTest()]);
 
-$runner = getRunner();
+$runner = RunnerFactory::createDefault();
 
 try {
     $runner->run([$package]);

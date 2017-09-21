@@ -1,7 +1,8 @@
 <?php
-require_once __DIR__ . "/header.php";
+require_once __DIR__ . "/vendor/autoload.php";
 
 use Phlegmatic\Tester\Exception\FailedTestsException;
+use Phlegmatic\Tester\Factory\RunnerFactory;
 use Phlegmatic\Tester\TestPackage;
 use Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner\LogResultsTesterUnitTest;
 use Phlegmatic\Tester\Tests\Unit\Helper\OutputAssertionTesterUnitTest;
@@ -20,7 +21,7 @@ $unit_tests = new TestPackage("UNIT TESTS", [
     new OutputAssertionTesterUnitTest,
 ]);
 
-$runner = getRunner();
+$runner = RunnerFactory::createDefault();
 
 try {
     $runner->run([$unit_tests]);
