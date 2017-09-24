@@ -22,22 +22,22 @@ class OutputAssertionTesterUnitTest implements TestCase
 
         $test_text = "This is the text expected to be caught by the output buffer and compared";
 
-        $output_buffer_tester->assertOutput($test_text, function () use ($test_text) {
+        $output_buffer_tester->expectOutput($test_text, function () use ($test_text) {
             echo $test_text;
         }, "why");
 
         $tester->assert($mock_tester->assert_result === true,
-            "Matching text output by the \$when argument should cause a success assertOutput");
+            "Matching text output by the \$when argument should cause a success expectOutput");
         $tester->assert("why" === $mock_tester->assert_why, "Reason why is passed to standard assert");
 
         $expected_why_reason_passed = "why\nExpected:\n{$test_text}\nActual:\nsomething else than {$test_text}";
 
-        $output_buffer_tester->assertOutput($test_text, function () use ($test_text) {
+        $output_buffer_tester->expectOutput($test_text, function () use ($test_text) {
             echo "something else than {$test_text}";
         }, "why");
 
         $tester->assert($mock_tester->assert_result === false,
-            "Matching text output by the \$when argument should cause a success assertOutput");
+            "Matching text output by the \$when argument should cause a success expectOutput");
         $tester->assert($expected_why_reason_passed === $mock_tester->assert_why,
             "Add expected and actual values as reason why on failed comparison");
     }

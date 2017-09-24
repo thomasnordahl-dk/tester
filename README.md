@@ -105,7 +105,7 @@ public function run(Tester $tester): void
 {
     $tester = new OutputAssertionTester($tester);
     
-    $tester->assertOutput("This is output with a variable", function () {
+    $tester->expectOutput("This is output with a variable", function () {
         $template_renderer = new TemplateRenderer();
         $template_renderer->render("This is output with a [variable]", ["variable" => "variable"]);
     }, 

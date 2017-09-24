@@ -2,6 +2,7 @@
 
 namespace Phlegmatic\Tester\Adapter\OutputResultsRunner;
 
+
 use Exception;
 
 use Phlegmatic\Tester\Exception\FailedAssertionException;
@@ -10,45 +11,66 @@ use Phlegmatic\Tester\Tester;
 class OutputResultsTester implements Tester
 {
     /**
-     * @var CaseResult
+     * @var bool
      */
-    private $test_case_results;
+    private $verbose;
 
-    public function __construct(CaseResult $results)
+    /**
+     * @var int
+     */
+    private $success_count = 0;
+
+    public function __construct(bool $verbose = false)
     {
-        $this->test_case_results = $results;
+        $this->verbose = $verbose;
     }
 
     public function assert(bool $result, string $why): void
     {
-        $test_case_results = $this->test_case_results;
-
         if ($result === true) {
-            $test_case_results->addSuccessReason($why);
+            $this->countAndOutputSuccess($why);
         } else {
-            $test_case_results->addFailReason($why);
-            throw new FailedAssertionException("Failed assertion {$why}");
+            $this->outputFailure($why);
+            throw new FailedAssertionException($why);
         }
     }
 
     public function expect(string $exception_type, callable $when, string $why): void
     {
-        $test_case_results = $this->test_case_results;
-        $failed = false;
+        $failed = true;
 
         try {
             $when();
-            $test_case_results->addFailReason($why);
-            $failed = true;
+            $this->outputFailure($why);
         } catch (Exception $exception) {
             if (! $exception instanceof $exception_type) {
                 throw $exception;
             }
-            $test_case_results->addSuccessReason($why);
+            $failed = false;
+            $this->countAndOutputSuccess($why);
         }
 
         if ($failed) {
             throw new FailedAssertionException("Failed assertion {$why}");
         }
+    }
+
+    public function getSuccessCount(): int
+    {
+        return $this->success_count;
+    }
+
+    private function countAndOutputSuccess($why): void
+    {
+        $this->success_count += 1;
+
+        if ($this->verbose) {
+            echo "✔ {$why}\n";
+        }
+    }
+
+    private function outputFailure(string $why): void
+    {
+        echo "✖ {$why}\n";
     }
 }

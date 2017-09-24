@@ -4,19 +4,18 @@ require_once __DIR__ . "/vendor/autoload.php";
 use Phlegmatic\Tester\Exception\FailedTestsException;
 use Phlegmatic\Tester\Factory\RunnerFactory;
 use Phlegmatic\Tester\TestPackage;
-use Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner\LogResultsTesterUnitTest;
+use Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner\OutputResultsTesterUnitTest;
 use Phlegmatic\Tester\Tests\Unit\Helper\OutputAssertionTesterUnitTest;
-use Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunnerUnitTest;
+use Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner\OutputResultsRunnerUnitTest;
 use Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner\PackageResultRendererUnitTest;
 use Phlegmatic\Tester\Tests\Unit\TestPackageUnitTest;
 
 $unit_tests = new TestPackage("UNIT TESTS", [
     ## TestPackage
-    new TestPackageUnitTest(),
+      new TestPackageUnitTest(),
     ## OutputResultRunner and related units
     new OutputResultsRunnerUnitTest(),
-    new LogResultsTesterUnitTest(),
-    new PackageResultRendererUnitTest(),
+    new OutputResultsTesterUnitTest(),
     ## Helpers
     new OutputAssertionTesterUnitTest,
 ]);

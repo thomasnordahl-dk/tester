@@ -8,18 +8,27 @@ use Phlegmatic\Tester\Tester;
 
 class MockTestCase implements TestCase
 {
-    public $description = "mock test case";
+    public $description = "";
 
     /**
-     * @var Closure $test function(Tester $tester) { // mock test here}
+     * @var Closure
      */
-    public $test;
+    private $run_function;
 
-    public function __construct()
+    public function __construct(string $description, Closure $run_function)
     {
-        $this->test = function (Tester $tester) {
-            $tester->assert(true, "");
-        };
+        $this->description = $description;
+        $this->run_function = $run_function;
+    }
+
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+    }
+
+    public function setRunFunction(Closure $run_function)
+    {
+        $this->run_function = $run_function;
     }
 
     public function getDescription(): string
@@ -29,7 +38,7 @@ class MockTestCase implements TestCase
 
     public function run(Tester $tester): void
     {
-        $test_function = $this->test;
-        $test_function($tester);
+        $run_function = $this->run_function;
+        $run_function($tester);
     }
 }

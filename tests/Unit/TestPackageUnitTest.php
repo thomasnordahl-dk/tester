@@ -16,8 +16,12 @@ class TestPackageUnitTest implements TestCase
 
     public function run(Tester $tester): void
     {
-        $test_case_1 = new MockTestCase();
-        $test_case_2 = new MockTestCase();
+        $empty_function = function () {
+            //do nothing
+        };
+
+        $test_case_1 = new MockTestCase("test case 1", $empty_function);
+        $test_case_2 = new MockTestCase("test case 2", $empty_function);
 
         $package = new TestPackage("Description", [$test_case_1, $test_case_2]);
 

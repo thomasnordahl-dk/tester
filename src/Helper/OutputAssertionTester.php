@@ -21,7 +21,7 @@ class OutputAssertionTester implements Tester
         $this->tester = $tester;
     }
 
-    public function assertOutput(string $expected_output, callable $when, string $why): void
+    public function expectOutput(string $expected_output, callable $when, string $why): void
     {
         ob_start();
         $when();
