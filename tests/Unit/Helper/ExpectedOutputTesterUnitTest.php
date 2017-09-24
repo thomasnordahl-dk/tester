@@ -3,22 +3,22 @@
 namespace Phlegmatic\Tester\Tests\Unit\Helper;
 
 
-use Phlegmatic\Tester\Helper\OutputAssertionTester;
+use Phlegmatic\Tester\Helper\ExpectedOutputTester;
 use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\Tester;
 use Phlegmatic\Tester\Tests\Mock\MockTester;
 
-class OutputAssertionTesterUnitTest implements TestCase
+class ExpectedOutputTesterUnitTest implements TestCase
 {
     public function getDescription(): string
     {
-        return "Unit test of " . OutputAssertionTester::class;
+        return "Unit test of " . ExpectedOutputTester::class;
     }
 
     public function run(Tester $tester): void
     {
         $mock_tester = new MockTester();
-        $output_buffer_tester = new OutputAssertionTester($mock_tester);
+        $output_buffer_tester = new ExpectedOutputTester($mock_tester);
 
         $test_text = "This is the text expected to be caught by the output buffer and compared";
 

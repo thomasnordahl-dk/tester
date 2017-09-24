@@ -9,7 +9,7 @@ use Phlegmatic\Tester\Tester;
  * Decorates a Tester class with assertions for comparing expected output
  * and actual output.
  */
-class OutputAssertionTester implements Tester
+class ExpectedOutputTester implements Tester
 {
     /**
      * @var Tester

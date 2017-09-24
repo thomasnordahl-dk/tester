@@ -6,6 +6,9 @@ use Phlegmatic\Tester\Adapter\OutputResultsRunner\OutputResultsRunner;
 use Phlegmatic\Tester\Adapter\OutputResultsRunner\OutputResultsTesterFactory;
 use Phlegmatic\Tester\Runner;
 
+/**
+ * Creates default instances of Runner implementations
+ */
 class RunnerFactory
 {
     public static function createDefault(): Runner

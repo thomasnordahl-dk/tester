@@ -5,7 +5,7 @@ namespace Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner;
 use Exception;
 use Phlegmatic\Tester\Exception\FailedAssertionException;
 use Phlegmatic\Tester\Adapter\OutputResultsRunner\OutputResultsTester;
-use Phlegmatic\Tester\Helper\OutputAssertionTester;
+use Phlegmatic\Tester\Helper\ExpectedOutputTester;
 use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\Tester;
 
@@ -21,7 +21,7 @@ class OutputResultsTesterUnitTest implements TestCase
     const FAILURE_REASON = "the reason for failure";
     const OUTPUT_ON_FAILURE = "✖ the reason for failure\n";
     /**
-     * @var OutputAssertionTester $tester ;
+     * @var ExpectedOutputTester $tester ;
      */
     private $tester;
 
@@ -32,7 +32,7 @@ class OutputResultsTesterUnitTest implements TestCase
 
     public function run(Tester $tester): void
     {
-        $this->tester = new OutputAssertionTester($tester);
+        $this->tester = new ExpectedOutputTester($tester);
 
         $this->testAssertMethod();
         $this->testExpectMethod();

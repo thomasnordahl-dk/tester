@@ -5,7 +5,7 @@ namespace Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner;
 use Exception;
 use Phlegmatic\Tester\Adapter\OutputResultsRunner\OutputResultsRunner;
 use Phlegmatic\Tester\Exception\FailedTestsException;
-use Phlegmatic\Tester\Helper\OutputAssertionTester;
+use Phlegmatic\Tester\Helper\ExpectedOutputTester;
 use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\Tester;
 use Phlegmatic\Tester\TestPackage;
@@ -20,7 +20,7 @@ use RuntimeException;
 class OutputResultsRunnerUnitTest implements TestCase
 {
     /**
-     * @var OutputAssertionTester
+     * @var ExpectedOutputTester
      */
     private $tester;
 
@@ -31,7 +31,7 @@ class OutputResultsRunnerUnitTest implements TestCase
 
     public function run(Tester $tester): void
     {
-        $this->tester = new OutputAssertionTester($tester);
+        $this->tester = new ExpectedOutputTester($tester);
 
         $this->testTwoPassingTestCases();
         $this->testTwoPassingTestCasesVerbose();

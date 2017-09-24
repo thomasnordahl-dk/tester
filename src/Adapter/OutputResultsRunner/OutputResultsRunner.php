@@ -9,6 +9,9 @@ use Phlegmatic\Tester\Runner;
 use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\TestPackage;
 
+/**
+ * Outputs formatted results of the test cases to the standard output buffer
+ */
 class OutputResultsRunner implements Runner
 {
     private const PAD_COUNT                            = 100;

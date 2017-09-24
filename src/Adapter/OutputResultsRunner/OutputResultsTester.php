@@ -8,6 +8,9 @@ use Exception;
 use Phlegmatic\Tester\Exception\FailedAssertionException;
 use Phlegmatic\Tester\Tester;
 
+/**
+ * Outputs reasons for failures / successes to the standard output buffer
+ */
 class OutputResultsTester implements Tester
 {
     /**

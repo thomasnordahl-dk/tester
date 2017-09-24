@@ -97,13 +97,13 @@ try {
 One way of defining custom assertions for complex test cases is to define a decorator
 class to the `Tester` interface.
 
-The library defines a decorator, `\Phlegmatic\Tester\Helper\OutputAssertionTester`, 
+The library defines a decorator, `\Phlegmatic\Tester\Helper\ExpectedOutputTester`, 
 for testing the output to output buffer.
 
 ```php
 public function run(Tester $tester): void
 {
-    $tester = new OutputAssertionTester($tester);
+    $tester = new ExpectedOutputTester($tester);
     
     $tester->expectOutput("This is output with a variable", function () {
         $template_renderer = new TemplateRenderer();
@@ -115,7 +115,7 @@ public function run(Tester $tester): void
 
 ## Testable and tested
 All classes are unit tested. The tests can be found in the `test/` folder, and they
-are executed by the file `/test.php`.
+are executed by the file `/bin/tester`.
 
 The libraries units are tested using the libraries own testing facilities. Refer to these
 test cases for further usage examples.
