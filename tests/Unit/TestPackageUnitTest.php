@@ -3,7 +3,7 @@
 namespace Phlegmatic\Tester\Tests\Unit;
 
 use Phlegmatic\Tester\TestCase;
-use Phlegmatic\Tester\Tester;
+use Phlegmatic\Tester\Assertion\Tester;
 use Phlegmatic\Tester\TestPackage;
 use Phlegmatic\Tester\Tests\Mock\MockTestCase;
 

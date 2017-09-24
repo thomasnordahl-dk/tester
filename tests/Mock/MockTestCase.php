@@ -3,8 +3,8 @@
 namespace Phlegmatic\Tester\Tests\Mock;
 
 use Closure;
+use Phlegmatic\Tester\Assertion\Tester;
 use Phlegmatic\Tester\TestCase;
-use Phlegmatic\Tester\Tester;
 
 class MockTestCase implements TestCase
 {

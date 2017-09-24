@@ -5,8 +5,10 @@
  * into best practices for binary files and loading autoloader / locating working directory
  */
 
-use Phlegmatic\Tester\Exception\FailedTestsException;
-use Phlegmatic\Tester\Factory\RunnerFactory;
+use Phlegmatic\Tester\Runner\CommandLine\CommandLineOptions;
+use Phlegmatic\Tester\Runner\FailedTestsException;
+use Phlegmatic\Tester\Runner\Factory\CommandLineOptionsFactory;
+use Phlegmatic\Tester\Runner\Factory\RunnerFactory;
 
 loadAutoLoader();
 
@@ -14,7 +16,10 @@ $composer_dir = getComposerDir();
 
 $package_list = require_once $composer_dir . "/test.php";
 
-$runner = RunnerFactory::createDefault();
+
+$factory = new CommandLineOptionsFactory(new RunnerFactory(), CommandLineOptions::createStandardOption());
+
+$runner = $factory->create();
 
 try {
     $runner->run($package_list);

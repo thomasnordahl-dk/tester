@@ -20,14 +20,19 @@ by the class, when `run()` is invoked.
 
 Example:
 ```php
-class UserUnitTest implements \Phlegmatic\Tester\TestCase
+namespace \Vendor\Project\Test;
+
+use \Phlegmatic\Tester\TestCase;
+use \Phlegmatic\Tester\Tester;
+
+class UserUnitTest implements TestCase
 {
     public function getDescription(): string
     {
         return "Unit test of " . \User::class;
     }
     
-    public function run(\Phlegmatic\Tester\Tester $tester): string
+    public function run(Tester $tester): string
     {
         $user = new User("john.doe@email.com");
         
@@ -41,12 +46,6 @@ class UserUnitTest implements \Phlegmatic\Tester\TestCase
 }
 ```
 
-## Assertions
-Assertions are done through the `\Phlegmatic\Tester\Tester` interface. The interface
-defines two methods:
-* `assert(bool $result, string $why): void`
-* `expect(string $exception_type, callable $when, string $why): void`
-
 ## Packages
 A package defines a collection of related test cases. An example could be unit test package, or acceptance test package.
 
@@ -54,50 +53,65 @@ A package defines a collection of related test cases. An example could be unit t
 $package = new \Phlegmatic\Tester\TestPackage("Unit tests", $test_case_list);
 ```
 
-Packages are run through a runner, defined by `Phlegmatic\Tester\Runner`. A runner has one method:
+## Running tests
+Running tests is done by putting a file `test.php` in the root folder of the composer
+project, that returns an array of testpackages.
 ```php
-/**
- * @param TestPackage[] $package_list
- *
- * @throws \Phlegmatic\Tester\Exception\FailedTestException
- */
-public function run($package_list): void;
-```
-
-An instance of the currently available implementation of the runner interface `Phlegmatic\Tester\Adapter\OutputResultRunner`
-can be created with the static factory method `RunnerFactory::createDefault(): Runner`.
-
-## Test file
-In the following example the unit test defined above is run through a unit test package,
-assuming that the `phlegmatic/tester` is located in the default vendor folder structure,
-when using Composer to install the library.
-
-```php
-# test.php
-require_once __DIR__ . "/vendor/autoload.php";
-
-use \Phlegmatic\Tester\Factory\RunnerFactory;
 use \Phlegmatic\Tester\TestPackage;
-use \Phlegmatic\Tester\Exception\FailedTestException;
-use \User\Test\UserUnitTest;
+use \Vendor\Project\Tests\UserUnitTest;
 
-$unit_tests = new TestPackage("Unit tests", [new UserUnitTest()]);
+$unit_tests = new TestPackage("Unit tests", [new UserUnitTest]);
 
-$runner = RunnerFactory::createDefault();
-
-try {
-    $runner->run([$package]);
-    exit(0);
-} catch (FailedTestException $e) {
-    exit(1);
-}
+return [$unit_tests];
 ```
 
-## Decorators
+Tests are then invoked by calling the binary `bin/tester`;
+```
+~ bin/tester
+```
+
+For verbose output:
+```
+~ bin/tester -v
+``` 
+
+### Code coverage
+The library utilizes the PHPUnit Code Coverage package to create code coverage reports for 
+the tests.
+
+#### Output coverage to xml:
+
+Outputs to `coverage.xml`:
+```
+~ vendor/bin/tester --coverage-xml
+```
+Outputs to custom file:
+```
+~ vendor/bin/tester --coverage-xml=custom-coverage-file.xml
+```
+#### Output coverage to html:
+Outputs to folder `coverage`:
+```
+~ vendor/bin/tester --coverage-html
+```
+Outputs to custom folder:
+```
+~ vendor/bin/tester --coverage-html=custom-folder
+```
+
+- ***Depending on a phpunit for code coverage is subject to change***
+
+## Assertions
+Assertions are done through the `\Phlegmatic\Tester\Assertion\Tester` interface. The interface
+defines two methods:
+* `assert(bool $result, string $why): void`
+* `expect(string $exception_type, callable $when, string $why): void`
+
+### Decorators
 One way of defining custom assertions for complex test cases is to define a decorator
 class to the `Tester` interface.
 
-The library defines a decorator, `\Phlegmatic\Tester\Helper\ExpectedOutputTester`, 
+The library defines a decorator, `\Phlegmatic\Tester\Assertion\Decorator\ExpectedOutputTester`, 
 for testing the output to output buffer.
 
 ```php
@@ -107,7 +121,7 @@ public function run(Tester $tester): void
     
     $tester->expectOutput("This is output with a variable", function () {
         $template_renderer = new TemplateRenderer();
-        $template_renderer->render("This is output with a [variable]", ["variable" => "variable"]);
+        $template_renderer->render("This is output with a [name]", ["name" => "variable"]);
     }, 
     "The template renderer should replace variables with values in associative array");
 }

@@ -2,6 +2,8 @@
 
 namespace Phlegmatic\Tester;
 
+use Phlegmatic\Tester\Assertion\Tester;
+
 /**
  * A TestCase uses a Tester to make assertions on code.
  */
