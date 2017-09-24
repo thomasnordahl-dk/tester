@@ -1,0 +1,72 @@
+#!/usr/bin/env php
+<?php
+/**
+ * TODO this is a very preliminary version of a binary file - pending some research
+ * into best practices for binary files and loading autoloader / locating working directory
+ */
+
+use Phlegmatic\Tester\Exception\FailedTestsException;
+use Phlegmatic\Tester\Factory\RunnerFactory;
+
+loadAutoLoader();
+
+$composer_dir = getComposerDir();
+
+$package_list = require_once $composer_dir . "/test.php";
+
+$runner = RunnerFactory::createDefault();
+
+try {
+    $runner->run($package_list);
+} catch (FailedTestsException $exception) {
+    exit($exception->getMessage() . "\n");
+}
+
+exit(0);
+
+function loadAutoLoader(): void
+{
+    $vendor_dir = getVendorDirectory();
+
+    $filename = $vendor_dir . "/autoload.php";
+
+    if (!file_exists($filename)) {
+        throw new \RuntimeException("Could not locate composer autoloader! - {$filename}");
+    }
+
+    require_once $filename;
+}
+
+function getVendorDirectory(): string
+{
+    $composer_config = getComposerConfig();
+
+    $vendor_dir = $composer_config['config']['vendor-dir'] ?? getcwd() . "/vendor";
+
+    return $vendor_dir;
+}
+
+function getComposerConfig(): array
+{
+    $directory = getComposerDir();
+
+    $composer_json = file_get_contents($directory . "/composer.json");
+
+    return json_decode($composer_json, true);
+}
+
+function getComposerDir(): string
+{
+    $directory = __DIR__;
+
+    while (! file_exists($directory . "/composer.json")) {
+        $prev_dir = $directory;
+        $directory = dirname(__DIR__);
+
+        if ($prev_dir == $directory) {
+            throw new \RuntimeException("Failed to locate composer.json");
+        }
+    }
+
+    return $directory;
+}

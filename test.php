@@ -1,8 +1,4 @@
 <?php
-require_once __DIR__ . "/vendor/autoload.php";
-
-use Phlegmatic\Tester\Exception\FailedTestsException;
-use Phlegmatic\Tester\Factory\RunnerFactory;
 use Phlegmatic\Tester\TestPackage;
 use Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner\OutputResultsTesterUnitTest;
 use Phlegmatic\Tester\Tests\Unit\Helper\OutputAssertionTesterUnitTest;
@@ -20,11 +16,4 @@ $unit_tests = new TestPackage("UNIT TESTS", [
     new OutputAssertionTesterUnitTest,
 ]);
 
-$runner = RunnerFactory::createDefault();
-
-try {
-    $runner->run([$unit_tests]);
-    exit(0);
-} catch (FailedTestsException $e) {
-    exit(1);
-}
+return [$unit_tests];

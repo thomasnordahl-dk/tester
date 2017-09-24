@@ -4,6 +4,7 @@ namespace Phlegmatic\Tester\Tests\Unit\Adapter\OutputResultsRunner;
 
 use Exception;
 use Phlegmatic\Tester\Adapter\OutputResultsRunner\OutputResultsRunner;
+use Phlegmatic\Tester\Exception\FailedTestsException;
 use Phlegmatic\Tester\Helper\OutputAssertionTester;
 use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\Tester;
@@ -78,18 +79,24 @@ class OutputResultsRunnerUnitTest implements TestCase
         $tester = $this->tester;
 
         $expected_output = $this->getExpectedOutputSingleFailingTest();
+        $exception_thrown = false;
 
-        $when = function () {
+        $when = function () use (&$exception_thrown) {
             $runner = $this->createRunner();
 
             $package = $this->createPackageWithSingleFailingTest();
 
-            $runner->run([$package]);
-
+            try {
+                $runner->run([$package]);
+            } catch (FailedTestsException $exception) {
+                $exception_thrown = true;
+            }
         };
 
         $tester->expectOutput($expected_output, $when,
             OutputResultsRunner::class . " should match the expected output for single failing case");
+
+        $tester->assert($exception_thrown, "Failed test should cause runner to throw failed test exception");
     }
 
     private function testThrowingTestCase(): void

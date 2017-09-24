@@ -4,6 +4,7 @@ namespace Phlegmatic\Tester\Adapter\OutputResultsRunner;
 
 use Error;
 use Phlegmatic\Tester\Exception\FailedAssertionException;
+use Phlegmatic\Tester\Exception\FailedTestsException;
 use Phlegmatic\Tester\Runner;
 use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\TestPackage;
@@ -30,6 +31,11 @@ class OutputResultsRunner implements Runner
     private $is_verbose;
 
     /**
+     * @var bool
+     */
+    private $failed_test = false;
+
+    /**
      * @var OutputResultsTesterFactory
      */
     private $tester_factory;
@@ -44,6 +50,10 @@ class OutputResultsRunner implements Runner
     {
         foreach ($test_packages as $package) {
             $this->runTestPackage($package);
+        }
+
+        if ($this->failed_test) {
+            throw new FailedTestsException("A test case failed!");
         }
     }
 
@@ -83,6 +93,7 @@ class OutputResultsRunner implements Runner
         } catch (FailedAssertionException $exception) {
             $this->outputTestCaseSummary($tester, true);
             $this->failed_test_count += 1;
+            $this->failed_test = true;
         } catch (Error $error) {
             usleep(self::WAIT_BEFORE_RETHROW_IN_MICRO_SECONDS);
             throw $error;
