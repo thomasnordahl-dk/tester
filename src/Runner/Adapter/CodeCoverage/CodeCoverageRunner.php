@@ -3,6 +3,7 @@
 namespace Phlegmatic\Tester\Runner\Adapter\CodeCoverage;
 
 use Phlegmatic\Tester\Runner\Runner;
+use Phlegmatic\Tester\TestPackage;
 
 
 /**
@@ -51,18 +52,35 @@ class CodeCoverageRunner implements Runner
 
     public function run($packages): void
     {
-        $coverage = $this->coverage_facade;
+        $this->runWithCoverage($packages);
 
-        $coverage->start("code-coverage");
+        $this->outputResults();
+    }
+
+    /**
+     * @param TestPackage[] $packages
+     */
+    private function runWithCoverage($packages): void
+    {
+        $coverage_facade = $this->coverage_facade;
+
+        $coverage_facade->start("phlegmatic-tester");
+
         $this->runner->run($packages);
-        $coverage->stop();
+
+        $coverage_facade->stop();
+    }
+
+    private function outputResults(): void
+    {
+        $coverage_facade = $this->coverage_facade;
 
         if ($this->html_output_directory) {
-            $coverage->outputHtml($this->html_output_directory);
+            $coverage_facade->outputHtml($this->html_output_directory);
         }
 
         if ($this->xml_output_file) {
-            $coverage->outputXml($this->xml_output_file);
+            $coverage_facade->outputXml($this->xml_output_file);
         }
     }
 }
