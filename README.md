@@ -1,9 +1,6 @@
-Tester
-======
+phlegmatic/tester
+=================
 *A simple and object oriented approach to testing PHP code.*
-
-**This library is still in its early stage of development. 
-Please excuse the mess, and report any bugs or unexpected behaviour you may experience**
 
 ## Installation
 ```
@@ -89,20 +86,20 @@ the tests.
 
 Outputs to `coverage.xml`:
 ```
-~ vendor/bin/tester --coverage-xml
+~ bin/tester --coverage-xml
 ```
 Outputs to custom file:
 ```
-~ vendor/bin/tester --coverage-xml=custom-coverage-file.xml
+~ bin/tester --coverage-xml=custom-coverage-file.xml
 ```
 #### Output coverage to html:
 Outputs to folder `coverage`:
 ```
-~ vendor/bin/tester --coverage-html
+~ bin/tester --coverage-html
 ```
 Outputs to custom folder:
 ```
-~ vendor/bin/tester --coverage-html=custom-folder
+~ bin/tester --coverage-html=custom-folder
 ```
 
 ## Inspiration

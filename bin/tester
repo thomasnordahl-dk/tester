@@ -33,7 +33,9 @@ try {
 
 $time = number_format($stop - $start, 2);
 
-exit("Finished in {$time}s\nS");
+echo "Finished in {$time}s\nS";
+
+exit(0);
 
 function loadAutoLoader(): void
 {
