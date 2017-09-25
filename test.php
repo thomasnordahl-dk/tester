@@ -1,6 +1,7 @@
 <?php
 
 use Phlegmatic\Tester\TestPackage;
+use Phlegmatic\Tester\Tests\Unit\Assertion\Decorator\ComparisonTesterUnitTest;
 use Phlegmatic\Tester\Tests\Unit\Assertion\Decorator\ExpectedOutputTesterUnitTest;
 use Phlegmatic\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\CodeCoverageFacadeUnitTest;
 use Phlegmatic\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\CodeCoverageRunnerUnitTest;
@@ -15,25 +16,26 @@ $unit_tests = new TestPackage(
     "UNIT TESTS",
     [
         # Package class
-        new TestPackageUnitTest(),
+        new TestPackageUnitTest,
 
         # Tester decorators
         new ExpectedOutputTesterUnitTest,
+        new ComparisonTesterUnitTest,
 
         # Runner/OutputResults
-        new OutputResultsRunnerUnitTest(),
-        new OutputResultsTesterUnitTest(),
+        new OutputResultsRunnerUnitTest,
+        new OutputResultsTesterUnitTest,
 
         # Runner/CodeCoverage
-        new CodeCoverageFacadeUnitTest(),
-        new CodeCoverageRunnerUnitTest(),
+        new CodeCoverageFacadeUnitTest,
+        new CodeCoverageRunnerUnitTest,
 
         # Runner/CommandLineOptions
-        new CommandLineOptionsUnitTest(),
+        new CommandLineOptionsUnitTest,
 
         # Runner/Factory
-        new CommandLineOptionsFactoryUnitTest(),
-        new RunnerFactoryUnitTest(),
+        new CommandLineOptionsFactoryUnitTest,
+        new RunnerFactoryUnitTest,
     ]
 );
 

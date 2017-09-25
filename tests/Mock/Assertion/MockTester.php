@@ -9,6 +9,9 @@ class MockTester implements Tester
 {
     public $assert_result;
     public $assert_why;
+    public $expect_exception_type;
+    public $expect_when;
+    public $expect_why;
 
     public function assert(bool $result, string $why): void
     {
@@ -18,6 +21,8 @@ class MockTester implements Tester
 
     public function expect(string $exception_type, callable $when, string $why): void
     {
-
+        $this->expect_exception_type = $exception_type;
+        $this->expect_when = $when;
+        $this->expect_why = $why;
     }
 }
