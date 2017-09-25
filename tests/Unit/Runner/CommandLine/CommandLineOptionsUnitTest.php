@@ -15,7 +15,7 @@ class CommandLineOptionsUnitTest implements TestCase
 
     public function run(Tester $tester): void
     {
-        $standard_options = CommandLineOptions::createStandardOption();
+        $standard_options = CommandLineOptions::createStandardOptions();
         $tester->assert(!$standard_options->isOptionSet("definitely-not-an-option"), "try out standard options");
 
         $options_function = $this->getopt([]);

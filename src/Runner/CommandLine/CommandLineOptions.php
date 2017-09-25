@@ -52,7 +52,7 @@ class CommandLineOptions
         return $value = $value ?: "";
     }
 
-    public static function createStandardOption(): CommandLineOptions
+    public static function createStandardOptions(): CommandLineOptions
     {
         $callable = self::createStandardOptionFunction();
 

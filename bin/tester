@@ -17,17 +17,23 @@ $composer_dir = getComposerDir();
 $package_list = require_once $composer_dir . "/test.php";
 
 
-$factory = new CommandLineOptionsFactory(new RunnerFactory(), CommandLineOptions::createStandardOption());
+$options = CommandLineOptions::createStandardOptions();
+
+$factory = new CommandLineOptionsFactory(new RunnerFactory(), $options);
 
 $runner = $factory->create();
 
 try {
+    $start = microtime(true);
     $runner->run($package_list);
+    $stop = microtime(true);
 } catch (FailedTestsException $exception) {
     exit($exception->getMessage() . "\n");
 }
 
-exit(0);
+$time = number_format($stop - $start, 2);
+
+exit("Finished in {$time}s\nS");
 
 function loadAutoLoader(): void
 {
