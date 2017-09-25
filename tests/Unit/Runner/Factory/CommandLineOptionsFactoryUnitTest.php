@@ -45,5 +45,10 @@ class CommandLineOptionsFactoryUnitTest implements TestCase
         $factory = new CommandLineOptionsFactory($runner_factory, $command_line_options);
 
         $tester->assert($factory->create() instanceof CodeCoverageRunner, "--coverage-xml gives coverage runner");
+
+        $command_line_options = new MockCommandLineOptions(["v" => false]);
+        $factory = new CommandLineOptionsFactory($runner_factory, $command_line_options);
+
+        $tester->assert($factory->create() instanceof OutputResultsRunner, "-v gives output runner");
     }
 }

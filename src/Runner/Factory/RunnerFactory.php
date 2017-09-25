@@ -11,10 +11,27 @@ use Phlegmatic\Tester\Runner\Runner;
  */
 class RunnerFactory
 {
+    /**
+     * @var OutputResultsTesterFactory
+     */
+    private $tester_factory;
+
+    public function __construct()
+    {
+        $this->tester_factory = new OutputResultsTesterFactory();
+    }
+
     public function create(): Runner
     {
-        $tester_factory = new OutputResultsTesterFactory();
+        $tester_factory = $this->tester_factory;
 
-        return new OutputResultsRunner($tester_factory);
+        return new OutputResultsRunner($tester_factory, false);
+    }
+
+    public function createVerbose(): Runner
+    {
+        $tester_factory = $this->tester_factory;
+
+        return new OutputResultsRunner($tester_factory, true);
     }
 }

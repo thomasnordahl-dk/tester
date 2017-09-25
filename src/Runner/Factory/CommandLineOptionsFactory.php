@@ -12,8 +12,10 @@ use SebastianBergmann\CodeCoverage\Report\Html\Facade;
 
 class CommandLineOptionsFactory
 {
-    const COVERAGE_XML_OPTION  = "coverage-xml";
-    const COVERAGE_HTML_OPTION = "coverage-html";
+    private const VERBOSE_OPTION = "v";
+    private const COVERAGE_XML_OPTION    = "coverage-xml";
+    private const COVERAGE_HTML_OPTION   = "coverage-html";
+
     /**
      * @var Runner
      */
@@ -37,7 +39,9 @@ class CommandLineOptionsFactory
 
     public function create(): Runner
     {
-        $this->runner = $this->factory->create();
+        $this->runner = null;
+
+        $this->createBaseRunner();
 
         $this->decorateWithCoverage();
 
@@ -71,5 +75,19 @@ class CommandLineOptionsFactory
         }
 
         $this->runner = $runner;
+    }
+
+    private function createBaseRunner(): void
+    {
+        $options = $this->options;
+        $factory = $this->factory;
+
+        $runner_is_verbose = $options->isOptionSet(self::VERBOSE_OPTION);
+
+        if ($runner_is_verbose) {
+            $this->runner = $factory->createVerbose();
+        } else {
+            $this->runner = $factory->create();
+        }
     }
 }

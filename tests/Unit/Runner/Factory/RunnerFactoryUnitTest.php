@@ -20,5 +20,6 @@ class RunnerFactoryUnitTest implements TestCase
         $factory = new RunnerFactory();
 
         $tester->assert($factory->create() instanceof Runner, "Factory should create runner instance");
+        $tester->assert($factory->createVerbose() instanceof Runner, "Factory should create runner instance");
     }
 }
