@@ -105,7 +105,5 @@ Outputs to custom folder:
 ~ vendor/bin/tester --coverage-html=custom-folder
 ```
 
-- ***Depending on a phpunit for code coverage is subject to change***
-
 ## Inspiration
 This library is inspired by the testing library [mindplay-dk/testies](https://github.com/mindplay-dk/testies).

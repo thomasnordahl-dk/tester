@@ -12,9 +12,9 @@ use SebastianBergmann\CodeCoverage\Report\Html\Facade;
 
 class CommandLineOptionsFactory
 {
-    private const VERBOSE_OPTION = "v";
-    private const COVERAGE_XML_OPTION    = "coverage-xml";
-    private const COVERAGE_HTML_OPTION   = "coverage-html";
+    private const VERBOSE_OPTION       = "v";
+    private const COVERAGE_XML_OPTION  = "coverage-xml";
+    private const COVERAGE_HTML_OPTION = "coverage-html";
 
     /**
      * @var Runner
@@ -48,35 +48,6 @@ class CommandLineOptionsFactory
         return $this->runner;
     }
 
-    private function decorateWithCoverage(): void
-    {
-        $options = $this->options;
-        $runner = $this->runner;
-
-        if ($options->isOptionSet(self::COVERAGE_XML_OPTION) || $options->isOptionSet(self::COVERAGE_HTML_OPTION)) {
-
-            $coverage = new CodeCoverage();
-            $filter = $coverage->filter();
-            $filter->addDirectoryToWhitelist(getcwd() . "/src");
-
-            $coverage_facade = new CodeCoverageFacade($coverage, new Clover(), new Facade());
-
-            $runner = new CodeCoverageRunner($runner, $coverage_facade);
-
-            if ($options->isOptionSet(self::COVERAGE_XML_OPTION)) {
-                $output = $options->getValue(self::COVERAGE_XML_OPTION) ?: "coverage.xml";
-                $runner->outputXml($output);
-            }
-
-            if ($options->isOptionSet(self::COVERAGE_HTML_OPTION)) {
-                $output = $options->getValue(self::COVERAGE_HTML_OPTION) ?: "coverage";
-                $runner->outputHtml($output);
-            }
-        }
-
-        $this->runner = $runner;
-    }
-
     private function createBaseRunner(): void
     {
         $options = $this->options;
@@ -89,5 +60,45 @@ class CommandLineOptionsFactory
         } else {
             $this->runner = $factory->create();
         }
+    }
+
+    private function decorateWithCoverage(): void
+    {
+        $options = $this->options;
+        $runner = $this->runner;
+
+        if ($options->isOptionSet(self::COVERAGE_XML_OPTION) ||
+            $options->isOptionSet(self::COVERAGE_HTML_OPTION)) {
+
+            $runner = $this->createCoverageRunner($runner);
+
+            if ($options->isOptionSet(self::COVERAGE_XML_OPTION)) {
+                $value = $options->getValue(self::COVERAGE_XML_OPTION);
+
+                $runner->outputXml($value ?: "coverage.xml");
+            }
+
+            if ($options->isOptionSet(self::COVERAGE_HTML_OPTION)) {
+                $value = $options->getValue(self::COVERAGE_HTML_OPTION);
+
+                $runner->outputHtml($value ?: "coverage");
+            }
+        }
+
+        $this->runner = $runner;
+    }
+
+    private function createCoverageRunner(Runner $runner): CodeCoverageRunner
+    {
+        $coverage = new CodeCoverage();
+
+        $filter = $coverage->filter();
+        $filter->addDirectoryToWhitelist(getcwd() . "/src");
+
+        $coverage_facade = new CodeCoverageFacade($coverage, new Clover(), new Facade());
+
+        $runner = new CodeCoverageRunner($runner, $coverage_facade);
+
+        return $runner;
     }
 }
