@@ -3,7 +3,7 @@
 namespace Phlegmatic\Tester\Tests\Unit\Runner\CommandLine;
 
 use Phlegmatic\Tester\Assertion\Tester;
-use Phlegmatic\Tester\Runner\CommandLine\CommandLineOptions;
+use Phlegmatic\Tester\Runner\Factory\Helper\CommandLineOptions;
 use Phlegmatic\Tester\TestCase;
 
 class CommandLineOptionsUnitTest implements TestCase

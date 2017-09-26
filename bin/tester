@@ -1,11 +1,10 @@
 #!/usr/bin/env php
 <?php
 /**
- * TODO this is a very preliminary version of a binary file - pending some research
- * into best practices for binary files and loading autoloader / locating working directory
+ * TODO cleanup, refactor, improve, solidify
  */
 
-use Phlegmatic\Tester\Runner\CommandLine\CommandLineOptions;
+use Phlegmatic\Tester\Runner\Factory\Helper\CommandLineOptions;
 use Phlegmatic\Tester\Runner\FailedTestsException;
 use Phlegmatic\Tester\Runner\Factory\CommandLineOptionsFactory;
 use Phlegmatic\Tester\Runner\Factory\RunnerFactory;
@@ -33,7 +32,7 @@ try {
 
 $time = number_format($stop - $start, 2);
 
-echo "Finished in {$time}s\nS";
+echo "Finished in {$time}s\n";
 
 exit(0);
 

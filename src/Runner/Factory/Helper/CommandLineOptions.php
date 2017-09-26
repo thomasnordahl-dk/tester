@@ -1,17 +1,14 @@
 <?php
 
-namespace Phlegmatic\Tester\Runner\CommandLine;
-
+namespace Phlegmatic\Tester\Runner\Factory\Helper;
 
 /**
  * Uses getopt to evaluate command line options
  *
  * The class is constructed with a callable function that should delegate to getopt.
  *
- * This function is injected so that it can be replaced under unit test.
- *
  * Construct new instances with the factory method
- * @see \Phlegmatic\Tester\Runner\CommandLine\CommandLineOptions::createStandardOptions()
+ * @see \Phlegmatic\Tester\Runner\Factory\Helper\CommandLineOptions::create()
  */
 class CommandLineOptions
 {
@@ -21,7 +18,9 @@ class CommandLineOptions
     private $option_function;
 
     /**
-     * @param callable $option_function use CommandLineOptions::createStandardOptionFunction
+     * @param callable $option_function
+     *
+     * @internal - use CommandLineOptions::create() unless testing
      */
     public function __construct(callable $option_function)
     {
@@ -41,6 +40,7 @@ class CommandLineOptions
     public function getValue(string $option): string
     {
         $function = $this->option_function;
+
         if (strlen($option) == 1) {
             $options = $function("{$option}::");
             $value = $options[$option];
@@ -54,15 +54,10 @@ class CommandLineOptions
 
     public static function createStandardOptions(): CommandLineOptions
     {
-        $callable = self::createStandardOptionFunction();
-
-        return new self($callable);
-    }
-
-    private static function createStandardOptionFunction(): callable
-    {
-        return function (...$args) {
+        $callable = function (... $args) {
             return getopt(...$args);
         };
+
+        return new self($callable);
     }
 }

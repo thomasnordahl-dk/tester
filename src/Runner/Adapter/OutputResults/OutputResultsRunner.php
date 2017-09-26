@@ -9,6 +9,8 @@ use Phlegmatic\Tester\TestCase;
 use Phlegmatic\Tester\TestPackage;
 
 /**
+ * todo refactor - too complex
+ *
  * Outputs formatted results of the test cases to the standard output buffer
  */
 class OutputResultsRunner implements Runner

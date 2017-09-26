@@ -4,12 +4,16 @@ namespace Phlegmatic\Tester\Runner\Factory;
 
 use Phlegmatic\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
 use Phlegmatic\Tester\Runner\Adapter\CodeCoverage\CodeCoverageRunner;
-use Phlegmatic\Tester\Runner\CommandLine\CommandLineOptions;
+use Phlegmatic\Tester\Runner\Factory\Helper\CommandLineOptions;
 use Phlegmatic\Tester\Runner\Runner;
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Clover;
 use SebastianBergmann\CodeCoverage\Report\Html\Facade;
 
+/**
+ * TODO remove hardcoded reference to src dir.
+ * TODO close for modification, then open for extension ;)
+ */
 class CommandLineOptionsFactory
 {
     private const VERBOSE_OPTION       = "v";

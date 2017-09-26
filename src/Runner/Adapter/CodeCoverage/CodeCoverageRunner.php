@@ -7,8 +7,6 @@ use Phlegmatic\Tester\TestPackage;
 
 
 /**
- * todo refactor to utilize Dependendy Injection and perform unit tests
- *
  * Runs the tests with code coverage and outputs the
  * coverage to the designated directory/file
  */

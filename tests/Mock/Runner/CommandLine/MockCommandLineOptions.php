@@ -2,7 +2,7 @@
 
 namespace Phlegmatic\Tester\Tests\Mock\Runner\CommandLine;
 
-use Phlegmatic\Tester\Runner\CommandLine\CommandLineOptions;
+use Phlegmatic\Tester\Runner\Factory\Helper\CommandLineOptions;
 
 class MockCommandLineOptions extends CommandLineOptions
 {
