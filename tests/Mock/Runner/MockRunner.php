@@ -1,9 +1,9 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Mock\Runner;
+namespace ThomasNordahlDk\Tester\Tests\Mock\Runner;
 
-use Phlegmatic\Tester\Runner\Runner;
-use Phlegmatic\Tester\TestPackage;
+use ThomasNordahlDk\Tester\Runner\Runner;
+use ThomasNordahlDk\Tester\TestPackage;
 
 class MockRunner implements Runner
 {

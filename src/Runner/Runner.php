@@ -1,9 +1,9 @@
 <?php
 
-namespace Phlegmatic\Tester\Runner;
+namespace ThomasNordahlDk\Tester\Runner;
 
 
-use Phlegmatic\Tester\TestPackage;
+use ThomasNordahlDk\Tester\TestPackage;
 
 /**
  * Runs test packages

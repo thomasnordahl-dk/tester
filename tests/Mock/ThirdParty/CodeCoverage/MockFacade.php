@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Mock\ThirdParty\CodeCoverage;
+namespace ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage;
 
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Html\Facade;

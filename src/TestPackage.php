@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlegmatic\Tester;
+namespace ThomasNordahlDk\Tester;
 
 /**
  * Contains a list of test cases to perform under a common description.

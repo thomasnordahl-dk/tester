@@ -1,9 +1,9 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Mock\Assertion;
+namespace ThomasNordahlDk\Tester\Tests\Mock\Assertion;
 
 
-use Phlegmatic\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Assertion\Tester;
 
 class MockTester implements Tester
 {

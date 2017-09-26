@@ -1,13 +1,13 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Unit\Runner\Adapter\CodeCoverage;
+namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage;
 
 
-use Phlegmatic\Tester\Runner\Adapter\CodeCoverage\CodeCoverageRunner;
-use Phlegmatic\Tester\TestCase;
-use Phlegmatic\Tester\Assertion\Tester;
-use Phlegmatic\Tester\Tests\Mock\Runner\MockRunner;
-use Phlegmatic\Tester\Tests\Mock\Runner\Adapter\CodeCoverage\MockCodeCoverageFacade;
+use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageRunner;
+use ThomasNordahlDk\Tester\TestCase;
+use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Tests\Mock\Runner\MockRunner;
+use ThomasNordahlDk\Tester\Tests\Mock\Runner\Adapter\CodeCoverage\MockCodeCoverageFacade;
 class CodeCoverageRunnerUnitTest implements TestCase
 {
 
@@ -27,7 +27,7 @@ class CodeCoverageRunnerUnitTest implements TestCase
 
         $tester->assert($mock_runner->wasRunWithPackages() === [], "packages passed to base runner");
         $tester->assert($mock_facade->wasStarted(), "runner must start coverage");
-        $tester->assert($mock_facade->wasStarted(), "runner must stop coverage");
+        $tester->assert($mock_facade->wasStopped(), "runner must stop coverage");
         $tester->assert($mock_facade->getHtmlDir() === null, "no html was output");
         $tester->assert($mock_facade->getXmlFile() === null, "no xml was output");
 

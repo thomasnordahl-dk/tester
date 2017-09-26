@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlegmatic\Tester\Runner;
+namespace ThomasNordahlDk\Tester\Runner;
 
 use Exception;
 
@@ -8,7 +8,7 @@ use Exception;
  * Runner::run() should throw this exception when
  * a test fails
  *
- * @see \Phlegmatic\Tester\Runner\Runner
+ * @see \ThomasNordahlDk\Tester\Runner\Runner
  */
 class FailedTestsException extends Exception
 {

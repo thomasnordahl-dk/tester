@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlegmatic\Tester\Assertion;
+namespace ThomasNordahlDk\Tester\Assertion;
 
 /**
  * Tester classes handles assertions when running tests

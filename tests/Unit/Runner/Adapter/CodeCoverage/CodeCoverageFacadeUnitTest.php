@@ -1,15 +1,18 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Unit\Runner\Adapter\CodeCoverage;
+namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage;
 
 
-use Phlegmatic\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
-use Phlegmatic\Tester\TestCase;
-use Phlegmatic\Tester\Assertion\Tester;
-use Phlegmatic\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockCodeCoverage;
-use Phlegmatic\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockFilter;
-use Phlegmatic\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockClover;
-use Phlegmatic\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockFacade;
+use ThomasNordahlDk\Tester\Assertion\Decorator\ComparisonTester;
+use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
+use ThomasNordahlDk\Tester\TestCase;
+use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockCodeCoverage;
+use ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockClover;
+use ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockFacade;
+use SebastianBergmann\CodeCoverage\CodeCoverage;
+use SebastianBergmann\CodeCoverage\Report\Clover;
+use SebastianBergmann\CodeCoverage\Report\Html\Facade;
 
 class CodeCoverageFacadeUnitTest implements TestCase
 {
@@ -20,20 +23,18 @@ class CodeCoverageFacadeUnitTest implements TestCase
 
     public function run(Tester $tester): void
     {
+        $tester = new ComparisonTester($tester);
+
+        $coverage = new CodeCoverage();
+        $coverage->filter()->addDirectoryToWhitelist("path");
+        $expected = new CodeCoverageFacade($coverage, new Clover(), new Facade());
+
+        $tester->assertEqual(CodeCoverageFacade::create("path"), $expected, "create method creates facade");
+
         $xml_file = "/my/special/coverage.xml";
         $html_directory = "/my/special/coverage";
 
-        if (file_exists($html_directory)) {
-            self::removeDirectoryRecursive($html_directory);
-        }
-
-        if (file_exists($xml_file)) {
-            unlink($xml_file);
-        }
-
         $coverage = new MockCodeCoverage();
-        $filter = new MockFilter();
-        $coverage->setFilter($filter);
         $xml_writer = new MockClover();
         $html_writer = new MockFacade();
 
@@ -53,15 +54,5 @@ class CodeCoverageFacadeUnitTest implements TestCase
         $tester->assert($xml_writer->getTarget() === $xml_file, "xml writer processed with xml file");
         $tester->assert($html_writer->getCoverage() === $coverage, "html writer processed with mock coverage");
         $tester->assert($html_writer->getTarget() === $html_directory, "html writer processed with directory");
-    }
-
-    private static function removeDirectoryRecursive($dir)
-    {
-        $files = array_diff(scandir($dir), ['.', '..']);
-        foreach ($files as $file) {
-            (is_dir("$dir/$file")) ? self::removeDirectoryRecursive("$dir/$file") : unlink("$dir/$file");
-        }
-
-        return rmdir($dir);
     }
 }

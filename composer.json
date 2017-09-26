@@ -1,6 +1,6 @@
 {
-    "name": "phlegmatic/tester",
-    "description": "A simple and object oriented approach to testing for PHP.",
+    "name": "thomasnordahldk/tester",
+    "description": "An object oriented approach to testing for PHP.",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -16,12 +16,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Phlegmatic\\Tester\\": "src/"
+            "ThomasNordahlDk\\Tester\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Phlegmatic\\Tester\\Tests\\": "tests/"
+            "ThomasNordahlDk\\Tester\\Tests\\": "tests/"
         }
-    }
+    },
+    "bin": ["dist/tester"]
 }

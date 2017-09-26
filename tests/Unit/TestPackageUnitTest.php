@@ -1,11 +1,11 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Unit;
+namespace ThomasNordahlDk\Tester\Tests\Unit;
 
-use Phlegmatic\Tester\TestCase;
-use Phlegmatic\Tester\Assertion\Tester;
-use Phlegmatic\Tester\TestPackage;
-use Phlegmatic\Tester\Tests\Mock\MockTestCase;
+use ThomasNordahlDk\Tester\TestCase;
+use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\TestPackage;
+use ThomasNordahlDk\Tester\Tests\Mock\MockTestCase;
 
 class TestPackageUnitTest implements TestCase
 {

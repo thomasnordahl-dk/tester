@@ -1,12 +1,13 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Mock\Runner\Adapter\CodeCoverage;
+namespace ThomasNordahlDk\Tester\Tests\Mock\Runner\Adapter\CodeCoverage;
 
 
-use Phlegmatic\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
-use Phlegmatic\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockClover;
-use Phlegmatic\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockCodeCoverage;
-use Phlegmatic\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockFacade;
+use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
+use ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockClover;
+use ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockCodeCoverage;
+use ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockFacade;
+
 class MockCodeCoverageFacade extends CodeCoverageFacade
 {
     private $xml_file;
@@ -37,11 +38,6 @@ class MockCodeCoverageFacade extends CodeCoverageFacade
     public function wasStopped(): bool
     {
         return $this->stopped;
-    }
-
-    public function getId()
-    {
-        return $this->id;
     }
 
     public function start($id): void

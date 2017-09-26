@@ -1,12 +1,14 @@
 <?php
 
-namespace Phlegmatic\Tester\Assertion\Decorator;
+namespace ThomasNordahlDk\Tester\Assertion\Decorator;
 
-use Phlegmatic\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Assertion\Tester;
 
 /**
- * Decorates a Tester class with assertions for comparing expected output
- * and actual output.
+ * Decorates a Tester instance with method expectOutput for asserting
+ * expected output
+ *
+ * @see ExpectedOutputTester::expectOutput()
  */
 class ExpectedOutputTester implements Tester
 {

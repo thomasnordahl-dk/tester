@@ -1,10 +1,16 @@
 <?php
 
-namespace Phlegmatic\Tester\Assertion\Decorator;
+namespace ThomasNordahlDk\Tester\Assertion\Decorator;
 
 
-use Phlegmatic\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Assertion\Tester;
 
+/**
+ * Decorates a Tester instance with the assertions assertSame and assertEqual
+ *
+ * @see ComparisonTester::assertSame()
+ * @see ComparisonTester::assertEqual()
+ */
 class ComparisonTester implements Tester
 {
     /**

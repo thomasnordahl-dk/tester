@@ -1,11 +1,11 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Unit\Assertion\Decorator;
+namespace ThomasNordahlDk\Tester\Tests\Unit\Assertion\Decorator;
 
-use Phlegmatic\Tester\Assertion\Decorator\ComparisonTester;
-use Phlegmatic\Tester\Assertion\Tester;
-use Phlegmatic\Tester\TestCase;
-use Phlegmatic\Tester\Tests\Mock\Assertion\MockTester;
+use ThomasNordahlDk\Tester\Assertion\Decorator\ComparisonTester;
+use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\TestCase;
+use ThomasNordahlDk\Tester\Tests\Mock\Assertion\MockTester;
 use stdClass;
 
 class ComparisonTesterUnitTest implements TestCase
@@ -38,17 +38,17 @@ class ComparisonTesterUnitTest implements TestCase
         $comparison_tester = new ComparisonTester($mock_tester);
 
         $comparison_tester->assert(true, "reason for success");
-        $tester->assert($mock_tester->assert_result, "should pass assert result to original tester");
+        $tester->assert($mock_tester->assert_result, "should pass renderAssertionSuccess result to original tester");
         $tester->assert($mock_tester->assert_why === "reason for success",
-            "should pass assert reason to original tester");
+            "should pass renderAssertionSuccess reason to original tester");
 
         $mock_tester = new MockTester();
         $comparison_tester = new ComparisonTester($mock_tester);
 
         $comparison_tester->assert(false, "reason for failure");
-        $tester->assert(! $mock_tester->assert_result, "should pass false assert result to original tester");
+        $tester->assert(! $mock_tester->assert_result, "should pass false renderAssertionSuccess result to original tester");
         $tester->assert($mock_tester->assert_why === "reason for failure",
-            "should pass assert failure reason to original tester");
+            "should pass renderAssertionSuccess failure reason to original tester");
     }
 
     private function testExpectMethod(): void
@@ -158,10 +158,10 @@ class ComparisonTesterUnitTest implements TestCase
         $mock_tester = new MockTester();
         $comparison_tester = new ComparisonTester($mock_tester);
 
-        $comparison_tester->assertSame($value, $expected_value, "assert if same");
+        $comparison_tester->assertSame($value, $expected_value, "renderAssertionSuccess if same");
 
         $tester->assert($mock_tester->assert_result === $expected_result, $why);
-        $tester->assert($mock_tester->assert_why === "assert if same",
+        $tester->assert($mock_tester->assert_why === "renderAssertionSuccess if same",
             "tester should pass reason when asserting: {$why}");
 
     }

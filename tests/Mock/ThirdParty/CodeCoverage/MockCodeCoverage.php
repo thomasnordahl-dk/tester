@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlegmatic\Tester\Tests\Mock\ThirdParty\CodeCoverage;
+namespace ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage;
 
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 
@@ -10,8 +10,6 @@ class MockCodeCoverage extends CodeCoverage
     private $stop_called = false;
 
     private $started_with_id = false;
-
-    private $filter;
 
     /**
      * @return bool
@@ -34,15 +32,5 @@ class MockCodeCoverage extends CodeCoverage
     public function stop($append = true, $linesToBeCovered = [], array $linesToBeUsed = [])
     {
         $this->stop_called = true;
-    }
-
-    public function setFilter(MockFilter $filter)
-    {
-        $this->filter = $filter;
-    }
-
-    public function filter()
-    {
-        return $this->filter;
     }
 }

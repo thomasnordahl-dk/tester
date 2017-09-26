@@ -1,6 +1,6 @@
 <?php
 
-namespace Phlegmatic\Tester\Runner\Adapter\CodeCoverage;
+namespace ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage;
 
 use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Clover;
@@ -45,5 +45,15 @@ class CodeCoverageFacade
     public function outputHtml(string $directory): void
     {
         $this->html_writer->process($this->coverage, $directory);
+    }
+
+    public static function create(string $path): CodeCoverageFacade
+    {
+        $coverage = new CodeCoverage();
+
+        $filter = $coverage->filter();
+        $filter->addDirectoryToWhitelist($path);
+
+        return new CodeCoverageFacade($coverage, new Clover(), new Facade());
     }
 }

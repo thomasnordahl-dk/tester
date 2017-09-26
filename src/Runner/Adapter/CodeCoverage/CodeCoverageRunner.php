@@ -1,9 +1,9 @@
 <?php
 
-namespace Phlegmatic\Tester\Runner\Adapter\CodeCoverage;
+namespace ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage;
 
-use Phlegmatic\Tester\Runner\Runner;
-use Phlegmatic\Tester\TestPackage;
+use ThomasNordahlDk\Tester\Runner\Runner;
+use ThomasNordahlDk\Tester\TestPackage;
 
 
 /**
@@ -62,7 +62,7 @@ class CodeCoverageRunner implements Runner
     {
         $coverage_facade = $this->coverage_facade;
 
-        $coverage_facade->start("phlegmatic-tester");
+        $coverage_facade->start("ThomasNordahlDk-tester");
 
         $this->runner->run($packages);
 
