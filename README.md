@@ -4,23 +4,24 @@ thomasnordahldk/tester
 
 ## Installation
 ```
-composer require-dev thomasnordahldk/tester
+composer require --dev thomasnordahldk/tester
 ```
 
 ## Tests
 A test is defined by a class that implements `TestCase`. 
 
 ```php
-namespace \Vendor\Project\Test;
+namespace Vendor\Project\Test;
 
-use \ThomasNordahlDk\Tester\TestCase;
-use \ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\TestCase;
+use ThomasNordahlDk\Tester\Assertion\Tester;
+use Vendor\Project\User;
 
 class UserUnitTest implements TestCase
 {
     public function getDescription(): string
     {
-        return "Unit test of " . \User::class;
+        return "Unit test of " . User::class;
     }
     
     public function run(Tester $tester): string
@@ -49,8 +50,9 @@ make assertions about the tested software / unit.
 Running tests is done by putting a file `test.php` in the root folder of the composer
 project, that returns an array of testpackages.
 ```php
-use \ThomasNordahlDk\Tester\TestPackage;
-use \Vendor\Project\Tests\UserUnitTest;
+use ThomasNordahlDk\Tester\TestPackage;
+use Vendor\Project\Tests\Unit\UserUnitTest;
+use Vendor\Project\Tests\Integration\UserRepositoryIntegrationTest;
 
 $unit_tests = new TestPackage("Unit tests", [new UserUnitTest]);
 $integration_tests = new TestPackage("Integration tests", [new UserRepositoryIntegrationTest]);
