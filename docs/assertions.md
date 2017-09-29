@@ -1,8 +1,8 @@
 Assertions
 ==========
-Assertions are done through the `\ThomasNordahlDk\Tester\Assertion\Tester` interface. The interface
+Assertions are done through the `ThomasNordahlDk\Tester\Assertion\Tester` interface. The interface
 defines two methods:
-* `renderAssertionSuccess(bool $result, string $why): void`
+* `assert(bool $result, string $why): void`
 * `expect(string $exception_type, callable $when, string $why): void`
 
 ## Decorators
