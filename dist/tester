@@ -60,17 +60,5 @@ function requireAutoloader(): void
  */
 function getPackageList(string $file_name = "test.php")
 {
-    $dir = __DIR__;
-    $prev_dir = "";
-
-    while ($dir != $prev_dir) {
-        if (file_exists($dir . "/{$file_name}")) {
-            return require $dir . "/{$file_name}";
-        }
-
-        $prev_dir = $dir;
-        $dir = dirname($dir);
-    }
-
-    return [];
+    return require_once getcwd() . "/{$file_name}";
 }
