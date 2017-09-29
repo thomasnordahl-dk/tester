@@ -1,6 +1,6 @@
 Documentation
 =============
 
-* [Assertions](assertions.md)
+* [Building tests](building-tests.md)
+* [Test Packages](packages.md)
 * [Runners](runners.md)
-* [TestPackages](packages.md)
