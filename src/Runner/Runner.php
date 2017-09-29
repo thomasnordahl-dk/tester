@@ -15,5 +15,5 @@ interface Runner
      *
      * @throws FailedTestsException
      */
-    public function run($packages): void;
+    public function run(array $packages): void;
 }

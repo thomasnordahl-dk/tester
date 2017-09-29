@@ -48,7 +48,7 @@ class CodeCoverageRunner implements Runner
         $this->html_output_directory = $directory;
     }
 
-    public function run($packages): void
+    public function run(array $packages): void
     {
         $this->runWithCoverage($packages);
 

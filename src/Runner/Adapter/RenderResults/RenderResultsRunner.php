@@ -27,7 +27,7 @@ class RenderResultsRunner implements Runner
         $this->renderer_factory = $renderer_factory;
     }
 
-    public function run($packages): void
+    public function run(array $packages): void
     {
         foreach ($packages as $package) {
             $this->runPackage($package);
