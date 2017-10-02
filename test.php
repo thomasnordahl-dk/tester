@@ -1,5 +1,8 @@
 <?php
 
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\CloverReportConfigurationUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\HtmlReportConfigurationUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\ConfigurationUnitTest;
 use ThomasNordahlDk\Tester\TestSuite;
 use ThomasNordahlDk\Tester\Tests\Unit\SuiteUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Assertion\Decorator\ComparisonTesterUnitTest;
@@ -26,9 +29,12 @@ $unit_tests = new TestSuite(
     new ExpectedOutputTesterUnitTest,
 
     # Runner/Factory
+    new ConfigurationUnitTest,
     new CommandLineFactoryUnitTest,
 
     # Runner/Adapter/CodeCoverage
+    new CloverReportConfigurationUnitTest,
+    new HtmlReportConfigurationUnitTest,
     new CodeCoverageFacadeUnitTest,
     new CodeCoverageRunnerUnitTest,
 
