@@ -33,7 +33,7 @@ class CodeCoverageRunnerUnitTest implements TestCase
 
 
         $coverage_runner = new CodeCoverageRunner($mock_runner, $mock_facade);
-        $coverage_runner->outputXml("file");
+        $coverage_runner->outputClover("file");
 
         $coverage_runner->run([]);
 

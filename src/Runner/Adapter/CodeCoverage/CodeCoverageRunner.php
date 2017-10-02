@@ -38,7 +38,7 @@ class CodeCoverageRunner implements Runner
         $this->coverage_facade = $coverage_facade;
     }
 
-    public function outputXml(string $output_file): void
+    public function outputClover(string $output_file): void
     {
         $this->xml_output_file = $output_file;
     }

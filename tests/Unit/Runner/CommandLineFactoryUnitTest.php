@@ -99,7 +99,7 @@ class CommandLineFactoryUnitTest implements TestCase
         $render_results_runner = RenderResultsRunner::create();
 
         $expected = new CodeCoverageRunner($render_results_runner, $coverage_facade);
-        $expected->outputXml(self::DEFUALT_COVERAGE_XML_FILE);
+        $expected->outputClover(self::DEFUALT_COVERAGE_XML_FILE);
 
         $options = new CommandLineArguments(["script", "--coverage-clover"]);
         $factory = new CommandLineFactory($options);
@@ -107,7 +107,7 @@ class CommandLineFactoryUnitTest implements TestCase
         $tester->assertEqual($factory->create(), $expected,
             "coverage runner coverage-xml to standard file");
 
-        $expected->outputXml("custom/file.xml");
+        $expected->outputClover("custom/file.xml");
         $options = new CommandLineArguments(["script", "--coverage-clover=custom/file.xml"]);
         $factory = new CommandLineFactory($options);
 
@@ -149,7 +149,7 @@ class CommandLineFactoryUnitTest implements TestCase
         $render_result_runner = RenderResultsRunner::create(true);
         $facade = $this->createExpectedCodeCoverageFacade("custom/coverage/dir");
         $expected = new CodeCoverageRunner($render_result_runner, $facade);
-        $expected->outputXml("custom/file.xml");
+        $expected->outputClover("custom/file.xml");
         $expected->outputHtml("custom/html/dir");
 
         $options = new CommandLineArguments([

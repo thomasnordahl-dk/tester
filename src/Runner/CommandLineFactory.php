@@ -81,7 +81,7 @@ class CommandLineFactory
 
         if ($options->isSet(self::COVERAGE_CLOVER)) {
             $value = $options->getValue(self::COVERAGE_CLOVER);
-            $runner->outputXml($value ?: self::DEFUALT_XML_COVERAGE_FILE);
+            $runner->outputClover($value ?: self::DEFUALT_XML_COVERAGE_FILE);
         }
 
         return $runner;

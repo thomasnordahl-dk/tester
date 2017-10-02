@@ -3,6 +3,7 @@
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\CloverReportConfigurationUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\HtmlReportConfigurationUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\ConfigurationUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\RunnerFactoryUnitTest;
 use ThomasNordahlDk\Tester\TestSuite;
 use ThomasNordahlDk\Tester\Tests\Unit\SuiteUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Assertion\Decorator\ComparisonTesterUnitTest;
@@ -28,7 +29,8 @@ $unit_tests = new TestSuite(
     new ComparisonTesterUnitTest,
     new ExpectedOutputTesterUnitTest,
 
-    # Runner/Factory
+    # Runner
+    new RunnerFactoryUnitTest,
     new ConfigurationUnitTest,
     new CommandLineFactoryUnitTest,
 

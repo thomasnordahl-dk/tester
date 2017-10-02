@@ -47,12 +47,14 @@ class CodeCoverageFacade
         $this->html_writer->process($this->coverage, $directory);
     }
 
-    public static function create(string $path): CodeCoverageFacade
+    public static function create(string ...$paths): CodeCoverageFacade
     {
         $coverage = new CodeCoverage();
 
         $filter = $coverage->filter();
-        $filter->addDirectoryToWhitelist($path);
+        foreach ($paths as $path) {
+            $filter->addDirectoryToWhitelist($path);
+        }
 
         return new CodeCoverageFacade($coverage, new Clover(), new Facade());
     }
