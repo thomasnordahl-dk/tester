@@ -56,7 +56,7 @@ function requireAutoloader(): void
 /**
  * @param string $file_name "string.php"
  *
- * @return \ThomasNordahlDk\Tester\TestPackage[]
+ * @return \ThomasNordahlDk\Tester\TestSuite[]
  * @throws RuntimeException
  */
 function getPackageList(string $file_name = "test.php")

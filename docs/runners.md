@@ -2,7 +2,7 @@ Runners
 =======
 The `\ThomasNordahlDk\Tester\Runner\Runner` interface defines
 the librarys native way of running the tests defined by
-`TestPackage` and `TestCase`.
+`TestSuite` and `TestCase`.
 
 If you wish to just run the tests in the standard way as described in the 
 [readme](../README.md), there is no need to read on. Knowing about how
@@ -20,7 +20,7 @@ use \ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\RenderResultRunner;
 
 $runner = RenderResultsRunner::create();
 
-$tests = new TestPackage("my tests", [
+$tests = new TestSuite("my tests", [
     new UserUnitTest,
 ]);
 

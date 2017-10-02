@@ -3,7 +3,7 @@
 namespace ThomasNordahlDk\Tester\Runner\Adapter\RenderResults;
 
 use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Renderer\AssertionResultRenderer;
-use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Renderer\PackageRenderer;
+use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Renderer\TestSuiteRenderer;
 use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Renderer\TestCaseRenderer;
 
 class RendererFactory
@@ -18,9 +18,9 @@ class RendererFactory
         $this->verbose = $verbose;
     }
 
-    public function createPackageRenderer(): PackageRenderer
+    public function createTestSuiteRenderer(): TestSuiteRenderer
     {
-        return new PackageRenderer();
+        return new TestSuiteRenderer();
     }
 
     public function createTestCaseRenderer(): TestCaseRenderer

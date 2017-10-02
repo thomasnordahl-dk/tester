@@ -25,7 +25,7 @@ class CodeCoverageRunnerUnitTest implements TestCase
 
         $coverage_runner->run([]);
 
-        $tester->assert($mock_runner->wasRunWithPackages() === [], "packages passed to base runner");
+        $tester->assert($mock_runner->wasRunWithPackages() === [], "suites passed to base runner");
         $tester->assert($mock_facade->wasStarted(), "runner must start coverage");
         $tester->assert($mock_facade->wasStopped(), "runner must stop coverage");
         $tester->assert($mock_facade->getHtmlDir() === null, "no html was output");

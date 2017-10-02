@@ -3,7 +3,7 @@
 namespace ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage;
 
 use ThomasNordahlDk\Tester\Runner\Runner;
-use ThomasNordahlDk\Tester\TestPackage;
+use ThomasNordahlDk\Tester\TestSuite;
 
 
 /**
@@ -48,23 +48,23 @@ class CodeCoverageRunner implements Runner
         $this->html_output_directory = $directory;
     }
 
-    public function run(array $packages): void
+    public function run(array $suites): void
     {
-        $this->runWithCoverage($packages);
+        $this->runWithCoverage($suites);
 
         $this->outputResults();
     }
 
     /**
-     * @param TestPackage[] $packages
+     * @param TestSuite[] $test_suites
      */
-    private function runWithCoverage($packages): void
+    private function runWithCoverage($test_suites): void
     {
         $coverage_facade = $this->coverage_facade;
 
         $coverage_facade->start("ThomasNordahlDk-tester");
 
-        $this->runner->run($packages);
+        $this->runner->run($test_suites);
 
         $coverage_facade->stop();
     }

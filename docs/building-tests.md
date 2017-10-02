@@ -5,7 +5,7 @@ Building a test from scratch can be summarized in 4 steps:
 1. Create classes that implements `TestCase`.
 2. Create a new file, `test.php` in the composer root directory.
 3. In `test.php`, create instances of the test case classes
-4. Return an array of `TestPackage` instances created with the test case instances.
+4. Return an array of `TestSuite` instances created with the test case instances.
 
 ## Creating a test case
 An example of a test case could be a unit test of a user class.
@@ -152,43 +152,43 @@ See the section about extending assertion methods below for more on how to add c
 The default location for the test file is the root directory of the composer package.
 This file should be named `test.php`.
 
-This file should return an array of packages. In the case where we only have one test case, only one
-package is in the array returned.
+This file should return an array of test suites. In the case where we only have one test case, only one
+suite is in the array returned.
 
 ```php
 <?php
 # test.php
 
-use ThomasNordahlDk\Tester\TestPackage;
+use ThomasNordahlDk\Tester\TestSuite;
 use Vendor\Package\Test\Unit\UserUnitTest;
 
-$unit_test_package = new TestPackage("Unit tests", [new UserUnitTest]);
+$unit_test_suite = new TestPackage("Unit tests", [new UserUnitTest]);
 
-return [$unit_test_package];
+return [$unit_test_suite];
 ```
 
-As seen in the example, a test package is defined by creating an instance of `TestPackage`.
+As seen in the example, a test suite is defined by creating an instance of `TestSuite`.
 The constructor takes two arguments:
 
-1. The name of the package
+1. The name of the suite
 2. A list of `TestCase` instances
 
-### Multiple cases and packages
-A testpackage can contain multiple cases and multiple packages can be returned;
+### Multiple cases and suites
+A test suite can contain multiple cases and multiple suites can be returned;
 
 ```php
 <?php
 # test.php
 
-use ThomasNordahlDk\Tester\TestPackage;
+use ThomasNordahlDk\Tester\TestSuite;
 use Vendor\Package\Test\Unit\UserUnitTest;
 use Vendor\Package\Test\Unit\AddressUnitTest;
 use Vendor\Package\Test\Integration\UserRepositoryIntegrationTest;
 
-$unit_test_package = new TestPackage("Unit tests", [new UserUnitTest, new AddressUnitTest]);
-$integration_test_package = new TestPackage("Integration tests", [new UserRepositoryIntegrationTest]);
+$unit_test_suite = new TestSuite("Unit tests", [new UserUnitTest, new AddressUnitTest]);
+$integration_test_suite = new TestSuite("Integration tests", [new UserRepositoryIntegrationTest]);
 
-return [$unit_test_package, $integration_test_package];
+return [$unit_test_suite, $integration_test_suite];
 ```
 
 From the command line interface, simply call the binary file provided by the library in the

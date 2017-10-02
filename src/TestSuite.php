@@ -4,9 +4,9 @@ namespace ThomasNordahlDk\Tester;
 
 /**
  * Contains a list of test cases to perform under a common description.
- * A description a package could be "unit tests" or "acceptance tests"
+ * A description of a suite could be "unit tests" or "acceptance tests"
  */
-class TestPackage
+class TestSuite
 {
     /**
      * @Var TestCase[] $test_case_list
@@ -18,17 +18,11 @@ class TestPackage
      */
     private $description = "";
 
-    /**
-     * @param string     $description
-     * @param TestCase[] $test_case_list
-     */
-    public function __construct(string $description, $test_case_list)
+    public function __construct(string $description, TestCase ...$test_case_list)
     {
         $this->description = $description;
 
-        foreach ($test_case_list as $test_case) {
-            $this->addToList($test_case);
-        }
+        $this->test_case_list = $test_case_list;
     }
 
     public function getDescription(): string
@@ -42,10 +36,5 @@ class TestPackage
     public function getTestCaseList()
     {
         return $this->test_case_list;
-    }
-
-    private function addToList(TestCase $test_case): void
-    {
-        $this->test_case_list[] = $test_case;
     }
 }

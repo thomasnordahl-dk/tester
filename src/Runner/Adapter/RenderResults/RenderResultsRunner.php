@@ -3,12 +3,12 @@
 namespace ThomasNordahlDk\Tester\Runner\Adapter\RenderResults;
 
 
-use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Result\PackageResult;
+use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Result\TestSuiteResult;
 use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Result\TesterResult;
 use ThomasNordahlDk\Tester\Runner\FailedTestsException;
 use ThomasNordahlDk\Tester\Runner\Runner;
 use ThomasNordahlDk\Tester\TestCase;
-use ThomasNordahlDk\Tester\TestPackage;
+use ThomasNordahlDk\Tester\TestSuite;
 
 class RenderResultsRunner implements Runner
 {
@@ -27,10 +27,10 @@ class RenderResultsRunner implements Runner
         $this->renderer_factory = $renderer_factory;
     }
 
-    public function run(array $packages): void
+    public function run(array $suites): void
     {
-        foreach ($packages as $package) {
-            $this->runPackage($package);
+        foreach ($suites as $suite) {
+            $this->runTestSuite($suite);
         }
 
         if ($this->failed_tests) {
@@ -38,37 +38,37 @@ class RenderResultsRunner implements Runner
         }
     }
 
-    private function runPackage(TestPackage $package): void
+    private function runTestSuite(TestSuite $suite): void
     {
-        $renderer = $this->renderer_factory->createPackageRenderer();
+        $renderer = $this->renderer_factory->createTestSuiteRenderer();
 
-        $renderer->renderHeader($package);
+        $renderer->renderHeader($suite);
 
-        $result = $this->getPackageResult($package);
+        $result = $this->getTestSuiteResult($suite);
 
         $this->failed_tests += $result->getFailureCount();
 
         $renderer->renderSummary($result);
     }
 
-    private function getPackageResult(TestPackage $package): PackageResult
+    private function getTestSuiteResult(TestSuite $test_suite): TestSuiteResult
     {
-        $package_result = new PackageResult();
+        $test_suite_result = new TestSuiteResult();
 
-        $test_case_list = $package->getTestCaseList();
+        $test_case_list = $test_suite->getTestCaseList();
 
         $start = microtime(true);
 
         foreach ($test_case_list as $test_case) {
-            $this->addTestCaseResults($package_result, $test_case);
+            $this->addTestCaseResults($test_suite_result, $test_case);
         }
 
-        $package_result->setTimeInSeconds(microtime(true) - $start);
+        $test_suite_result->setTimeInSeconds(microtime(true) - $start);
 
-        return $package_result;
+        return $test_suite_result;
     }
 
-    private function addTestCaseResults(PackageResult $package_result, TestCase $test_case): void
+    private function addTestCaseResults(TestSuiteResult $test_suite_result, TestCase $test_case): void
     {
         $renderer_factory = $this->renderer_factory;
 
@@ -82,10 +82,10 @@ class RenderResultsRunner implements Runner
             $test_case->run($tester);
 
             $test_case_renderer->renderSummary($tester->getSuccessCount(), true);
-            $package_result->success($tester->getSuccessCount());
+            $test_suite_result->success($tester->getSuccessCount());
         } catch (FailedAssertionException $exception) {
             $test_case_renderer->renderSummary($tester->getSuccessCount(), false);
-            $package_result->failure($tester->getSuccessCount());
+            $test_suite_result->failure($tester->getSuccessCount());
         }
     }
 

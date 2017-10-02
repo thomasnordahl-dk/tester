@@ -3,17 +3,17 @@
 namespace ThomasNordahlDk\Tester\Runner;
 
 
-use ThomasNordahlDk\Tester\TestPackage;
+use ThomasNordahlDk\Tester\TestSuite;
 
 /**
- * Runs test packages
+ * Runs test test suites
  */
 interface Runner
 {
     /**
-     * @param TestPackage[] $packages
+     * @param TestSuite[] $suites
      *
      * @throws FailedTestsException
      */
-    public function run(array $packages): void;
+    public function run(array $suites): void;
 }

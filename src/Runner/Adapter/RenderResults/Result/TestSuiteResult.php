@@ -3,7 +3,7 @@
 namespace ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Result;
 
 
-class PackageResult
+class TestSuiteResult
 {
     /**
      * @var int number of successfull assertions registered
@@ -11,7 +11,7 @@ class PackageResult
     private $assertion_count = 0;
 
     /**
-     * @var float the time it took to run the package in seconds
+     * @var float the time it took to run the suite in seconds
      */
     private $time_in_seconds = 0.0;
 

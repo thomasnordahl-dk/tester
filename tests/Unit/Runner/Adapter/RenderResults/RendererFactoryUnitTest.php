@@ -6,7 +6,7 @@ namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\RenderResults;
 use ThomasNordahlDk\Tester\Assertion\Decorator\ComparisonTester;
 use ThomasNordahlDk\Tester\Assertion\Tester;
 use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Renderer\AssertionResultRenderer;
-use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Renderer\PackageRenderer;
+use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Renderer\TestSuiteRenderer;
 use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Renderer\TestCaseRenderer;
 use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\RendererFactory;
 use ThomasNordahlDk\Tester\TestCase;
@@ -36,10 +36,10 @@ class RendererFactoryUnitTest implements TestCase
     {
         $tester = $this->tester;
 
-        $expected = new PackageRenderer();
+        $expected = new TestSuiteRenderer();
         $factory = new RendererFactory();
 
-        $tester->assertEqual($expected, $factory->createPackageRenderer(), "package renderer");
+        $tester->assertEqual($expected, $factory->createTestSuiteRenderer(), "test suite renderer");
     }
 
     private function testCreateTestCaseRenderer()

@@ -10,7 +10,7 @@ use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\RendererFactory;
 use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\RenderResultsRunner;
 use ThomasNordahlDk\Tester\Runner\FailedTestsException;
 use ThomasNordahlDk\Tester\TestCase;
-use ThomasNordahlDk\Tester\TestPackage;
+use ThomasNordahlDk\Tester\TestSuite;
 use ThomasNordahlDk\Tester\Tests\Mock\MockTestCase;
 use ThomasNordahlDk\Tester\Tests\Mock\Runner\Adapter\RenderResult\MockRendererFactory;
 
@@ -42,10 +42,10 @@ class RenderResultsRunnerUnitTest implements TestCase
             $tester->assert(false, "failure");
         });
 
-        $package = new TestPackage("description", [$mock_case_1]);
+        $package = new TestSuite("description", $mock_case_1);
 
         $expected = implode(";", [
-            "package-header:description",
+            "suite-header:description",
             "case-header:test-case-1",
             "success:success",
             "success:success",
@@ -62,10 +62,10 @@ class RenderResultsRunnerUnitTest implements TestCase
             $render_results_runner->run([$package]);
         }, "Matches mock renderers output format");
 
-        $package = new TestPackage("description", [$mock_case_1, $mock_case_2]);
+        $package = new TestSuite("description", $mock_case_1, $mock_case_2);
 
         $expected = implode(";", [
-            "package-header:description",
+            "suite-header:description",
             "case-header:test-case-1",
             "success:success",
             "success:success",

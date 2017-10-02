@@ -48,14 +48,14 @@ make assertions about the tested software / unit.
 
 ## Running tests
 Running tests is done by putting a file `test.php` in the root folder of the composer
-project, that returns an array of testpackages.
+project, that returns an array of test suites.
 ```php
-use ThomasNordahlDk\Tester\TestPackage;
+use ThomasNordahlDk\Tester\TestSuite;
 use Vendor\Project\Tests\Unit\UserUnitTest;
 use Vendor\Project\Tests\Integration\UserRepositoryIntegrationTest;
 
-$unit_tests = new TestPackage("Unit tests", [new UserUnitTest]);
-$integration_tests = new TestPackage("Integration tests", [new UserRepositoryIntegrationTest]);
+$unit_tests = new TestSuite("Unit tests", [new UserUnitTest]);
+$integration_tests = new TestSuite("Integration tests", [new UserRepositoryIntegrationTest]);
 
 return [$unit_tests, $integration_tests];
 ```

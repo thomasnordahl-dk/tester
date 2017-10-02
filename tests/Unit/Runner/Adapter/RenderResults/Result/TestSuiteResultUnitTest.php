@@ -4,19 +4,19 @@ namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\RenderResults\Result;
 
 
 use ThomasNordahlDk\Tester\Assertion\Tester;
-use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Result\PackageResult;
+use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\Result\TestSuiteResult;
 use ThomasNordahlDk\Tester\TestCase;
 
-class PackageResultUnitTest implements TestCase
+class TestSuiteResultUnitTest implements TestCase
 {
     public function getDescription(): string
     {
-        return "Unit test of " . PackageResult::class;
+        return "Unit test of " . TestSuiteResult::class;
     }
 
     public function run(Tester $tester): void
     {
-        $package_results = new PackageResult();
+        $package_results = new TestSuiteResult();
 
         $tester->assert($package_results->getSuccessCount() === 0, "new test returns 0 on success count");
         $tester->assert($package_results->getFailureCount() === 0, "new test returns 0 on failure count");
