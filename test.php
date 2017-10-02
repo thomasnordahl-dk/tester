@@ -1,14 +1,13 @@
 <?php
 
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\CloverReportConfigurationUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\HtmlReportConfigurationUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\ConfigurationUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Configuration\CoverageConfigurationUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Configuration\ConfigurationUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\RunnerFactoryUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Configuration\ConfigurationFactoryUnitTest;
 use ThomasNordahlDk\Tester\TestSuite;
 use ThomasNordahlDk\Tester\Tests\Unit\SuiteUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Assertion\Decorator\ComparisonTesterUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Assertion\Decorator\ExpectedOutputTesterUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\CommandLineFactoryUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\CodeCoverageFacadeUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\CodeCoverageRunnerUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\RenderResults\Renderer\AssertionResultRendererUnitTest;
@@ -20,23 +19,22 @@ use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\RenderResults\Result\TestSu
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\RenderResults\Result\TesterResultUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Utility\CommandLineArgumentsUnitTest;
 
-$unit_tests = new TestSuite(
+$unit_tests = new TestSuite(...[
     "UNIT TESTS",
     # Package class
     new SuiteUnitTest,
 
     # Tester decorators
+    new ConfigurationFactoryUnitTest,
     new ComparisonTesterUnitTest,
     new ExpectedOutputTesterUnitTest,
 
     # Runner
     new RunnerFactoryUnitTest,
     new ConfigurationUnitTest,
-    new CommandLineFactoryUnitTest,
+    new CoverageConfigurationUnitTest,
 
     # Runner/Adapter/CodeCoverage
-    new CloverReportConfigurationUnitTest,
-    new HtmlReportConfigurationUnitTest,
     new CodeCoverageFacadeUnitTest,
     new CodeCoverageRunnerUnitTest,
 
@@ -54,7 +52,7 @@ $unit_tests = new TestSuite(
     new TesterResultUnitTest,
 
     # Runner/Utility
-    new CommandLineArgumentsUnitTest
-);
+    new CommandLineArgumentsUnitTest,
+]);
 
 return [$unit_tests];

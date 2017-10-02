@@ -48,10 +48,6 @@ class CommandLineArgumentsUnitTest implements TestCase
         $tester->assert($command_line_options->isSet("with-one-dash") === false, "-with-one-dash is not valid");
         $tester->assert($command_line_options->isSet("with-no-dashes") === false, "with-no-dashes is not valid");
 
-        $tester->assert($command_line_options->isAnySet("a", "x", "notset") === true, "in {a, x, notset} a is set");
-        $tester->assert($command_line_options->isAnySet("x", "y", "notset") === false,
-            "in {x, y, notset} none are set");
-
         $tester->assertSame($command_line_options->getValue("a"), "", "-a has no value");
         $tester->assertSame($command_line_options->getValue("b"), "", "b has no value");
         $tester->assertSame($command_line_options->getValue("c"), "d", "c=d");

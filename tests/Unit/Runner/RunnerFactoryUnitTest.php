@@ -8,7 +8,7 @@ use ThomasNordahlDk\Tester\Assertion\Tester;
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageRunner;
 use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\RenderResultsRunner;
-use ThomasNordahlDk\Tester\Runner\Configuration;
+use ThomasNordahlDk\Tester\Runner\Configuration\Configuration;
 use ThomasNordahlDk\Tester\Runner\Runner;
 use ThomasNordahlDk\Tester\Runner\RunnerFactory;
 use ThomasNordahlDk\Tester\TestCase;
@@ -53,12 +53,12 @@ class RunnerFactoryUnitTest implements TestCase
     {
         $tester = $this->tester;
         $config = new Configuration();
-        $whitelist = $config->getCoverageWhitelist();
+        $coverage_config = $config->getCoverageConfiguration();
+        $whitelist = $coverage_config->getWhitelist();
         $factory = new RunnerFactory($config);
 
-        $clover_report_config = $config->getCloverReportConfiguration();
-        $clover_report_config->setOutput(true);
-        $clover_report_config->setFile("file.xml");
+        $coverage_config->setCloverOutput(true);
+        $coverage_config->setCloverFile("file.xml");
 
         $expected = new CodeCoverageRunner(RenderResultsRunner::create(), CodeCoverageFacade::create(... $whitelist));
         $expected->outputClover("file.xml");
@@ -70,14 +70,15 @@ class RunnerFactoryUnitTest implements TestCase
     {
         $tester = $this->tester;
         $config = new Configuration();
-        $white_list = $config->getCoverageWhitelist();
+        $coverage_config = $config->getCoverageConfiguration();
+        $whitelist = $coverage_config->getWhitelist();
+
         $factory = new RunnerFactory($config);
 
-        $html_report_config = $config->getHtmlReportConfiguration();
-        $html_report_config->setOutput(true);
-        $html_report_config->setDirectory("directory");
+        $coverage_config->setHtmlOutput(true);
+        $coverage_config->setHtmlDirectory("directory");
 
-        $expected = new CodeCoverageRunner(RenderResultsRunner::create(), CodeCoverageFacade::create(... $white_list));
+        $expected = new CodeCoverageRunner(RenderResultsRunner::create(), CodeCoverageFacade::create(... $whitelist));
         $expected->outputHtml("directory");
 
         $tester->assertEqual($factory->create(), $expected, "Factory creates expected html report runner");
@@ -100,15 +101,15 @@ class RunnerFactoryUnitTest implements TestCase
 
         $config->setVerbose(true);
 
-        $clover_config = $config->getCloverReportConfiguration();
-        $clover_config->setOutput(true);
-        $clover_config->setFile("file.xml");
+        $coverage_config = $config->getCoverageConfiguration();
 
-        $html_config = $config->getHtmlReportConfiguration();
-        $html_config->setOutput(true);
-        $html_config->setDirectory("directory");
+        $coverage_config->setCloverOutput(true);
+        $coverage_config->setCloverFile("file.xml");
 
-        $config->setCoverageWhitelist("src", "test");
+        $coverage_config->setHtmlOutput(true);
+        $coverage_config->setHtmlDirectory("directory");
+
+        $coverage_config->setWhitelist("src", "test");
 
         return $config;
     }

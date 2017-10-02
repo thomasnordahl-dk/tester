@@ -26,16 +26,6 @@ class CommandLineArguments
         return isset($this->arguments[$option]);
     }
 
-    public function isAnySet(...$strings): bool
-    {
-        $result = false;
-        foreach ($strings as $string) {
-            $result |= $this->isSet($string);
-        }
-
-        return $result;
-    }
-
     public function getValue(string $option): string
     {
         return @$this->arguments[$option] ?: "";

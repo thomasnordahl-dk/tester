@@ -5,6 +5,7 @@ namespace ThomasNordahlDk\Tester\Runner;
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageRunner;
 use ThomasNordahlDk\Tester\Runner\Adapter\RenderResults\RenderResultsRunner;
+use ThomasNordahlDk\Tester\Runner\Configuration\Configuration;
 
 class RunnerFactory
 {
@@ -30,11 +31,10 @@ class RunnerFactory
     private function decorateWithCoverage($runner): Runner
     {
         $config = $this->configuration;
-        $clover_config = $config->getCloverReportConfiguration();
-        $html_config = $config->getHtmlReportConfiguration();
-        $whitelist = $config->getCoverageWhitelist();
+        $coverage_config = $config->getCoverageConfiguration();
 
-        if ($clover_config->isOutput() || $html_config->isOutput()) {
+        if ($coverage_config->isCloverOutput() || $coverage_config->isHtmlOutput()) {
+            $whitelist = $coverage_config->getWhitelist();
             $coverage_facade = CodeCoverageFacade::create(... $whitelist);
             $runner = new CodeCoverageRunner($runner, $coverage_facade);
 
@@ -47,20 +47,20 @@ class RunnerFactory
 
     private function configureCloverReport(CodeCoverageRunner $runner): void
     {
-        $clover_config = $this->configuration->getCloverReportConfiguration();
+        $coverage_configuration = $this->configuration->getCoverageConfiguration();
 
-        if ($clover_config->isOutput()) {
-            $clover_file = $clover_config->getFile();
+        if ($coverage_configuration->isCloverOutput()) {
+            $clover_file = $coverage_configuration->getCloverFile();
             $runner->outputClover($clover_file);
         }
     }
 
     private function configureHtmlReport(CodeCoverageRunner $runner): void
     {
-        $html_config = $this->configuration->getHtmlReportConfiguration();
+        $coverage_configuration = $this->configuration->getCoverageConfiguration();
 
-        if ($html_config->isOutput()) {
-            $directory = $html_config->getDirectory();
+        if ($coverage_configuration->isHtmlOutput()) {
+            $directory = $coverage_configuration->getHtmlDirectory();
             $runner->outputHtml($directory);
         }
     }

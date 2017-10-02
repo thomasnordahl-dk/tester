@@ -1,21 +1,15 @@
 #!/usr/bin/env php
 <?php
 
-use ThomasNordahlDk\Tester\Runner\CommandLineFactory;
+use ThomasNordahlDk\Tester\Runner\RunnerFactory;
 use ThomasNordahlDk\Tester\Runner\Utility\CommandLineArguments;
 use ThomasNordahlDk\Tester\Runner\FailedTestsException;
+use ThomasNordahlDk\Tester\Runner\Configuration\ConfigurationFactory;
+
+requireAutoloader();
 
 try {
-    requireAutoloader();
-
-    $options = new CommandLineArguments($argv);
-    $factory = new CommandLineFactory($options);
-
-    $runner = $factory->create();
-
-    $package_list = getPackageList($options->getValue("file") ?: "test.php");
-
-    $runner->run($package_list);
+    runSuites($argv);
 } catch (FailedTestsException $exception) {
     exit($exception->getMessage() . "\n");
 }
@@ -53,13 +47,29 @@ function requireAutoloader(): void
     throw new \RuntimeException("autoload.php not found!");
 }
 
+function runSuites(array $argv): void
+{
+    $options = new CommandLineArguments($argv);
+
+    $config_factory = new ConfigurationFactory();
+
+    $configuration = $config_factory->createFromCommandLineArguments($options);
+
+    $factory = new RunnerFactory($configuration);
+
+    $runner = $factory->create();
+
+    $test_suites = getTestSuites($options->getValue("file") ?: "test.php");
+
+    $runner->run($test_suites);
+}
 /**
  * @param string $file_name "string.php"
  *
  * @return \ThomasNordahlDk\Tester\TestSuite[]
  * @throws RuntimeException
  */
-function getPackageList(string $file_name = "test.php")
+function getTestSuites(string $file_name = "test.php")
 {
     if (file_exists($file_name)) {
         return require $file_name;
