@@ -3,7 +3,7 @@
 namespace ThomasNordahlDk\Tester\Tests\Mock;
 
 use Closure;
-use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Tester;
 use ThomasNordahlDk\Tester\TestCase;
 
 class MockTestCase implements TestCase

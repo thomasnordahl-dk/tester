@@ -2,9 +2,9 @@
 
 namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Utility;
 
-use ThomasNordahlDk\Tester\Assertion\Decorator\ComparisonTester;
-use ThomasNordahlDk\Tester\Assertion\Tester;
-use ThomasNordahlDk\Tester\Runner\Utility\CommandLineArguments;
+use ThomasNordahlDk\Tester\Decorator\ComparisonTester;
+use ThomasNordahlDk\Tester\Tester;
+use ThomasNordahlDk\Tester\Runner\CommandLine\CommandLineArguments;
 use ThomasNordahlDk\Tester\TestCase;
 
 class CommandLineArgumentsUnitTest implements TestCase

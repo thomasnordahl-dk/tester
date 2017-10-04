@@ -13,7 +13,7 @@ interface Runner
     /**
      * @param TestSuite[] $suites
      *
-     * @throws FailedTestsException
+     * @throws FailedTestException
      */
     public function run(array $suites): void;
 }

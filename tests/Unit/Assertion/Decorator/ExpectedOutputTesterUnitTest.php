@@ -3,9 +3,9 @@
 namespace ThomasNordahlDk\Tester\Tests\Unit\Assertion\Decorator;
 
 
-use ThomasNordahlDk\Tester\Assertion\Decorator\ExpectedOutputTester;
+use ThomasNordahlDk\Tester\Decorator\ExpectedOutputTester;
 use ThomasNordahlDk\Tester\TestCase;
-use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Tester;
 use ThomasNordahlDk\Tester\Tests\Mock\Assertion\MockTester;
 
 class ExpectedOutputTesterUnitTest implements TestCase

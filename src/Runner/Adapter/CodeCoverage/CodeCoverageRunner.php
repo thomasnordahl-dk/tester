@@ -78,7 +78,7 @@ class CodeCoverageRunner implements Runner
         }
 
         if ($this->xml_output_file) {
-            $coverage_facade->outputXml($this->xml_output_file);
+            $coverage_facade->outputClover($this->xml_output_file);
         }
     }
 }

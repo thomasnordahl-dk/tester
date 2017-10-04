@@ -3,7 +3,7 @@
 namespace ThomasNordahlDk\Tester\Tests\Unit;
 
 use ThomasNordahlDk\Tester\TestCase;
-use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Tester;
 use ThomasNordahlDk\Tester\TestSuite;
 use ThomasNordahlDk\Tester\Tests\Mock\MockTestCase;
 

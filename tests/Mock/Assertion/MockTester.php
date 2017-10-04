@@ -3,7 +3,7 @@
 namespace ThomasNordahlDk\Tester\Tests\Mock\Assertion;
 
 
-use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Tester;
 
 class MockTester implements Tester
 {

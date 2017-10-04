@@ -18,11 +18,11 @@ class TestSuite
      */
     private $description = "";
 
-    public function __construct(string $description, TestCase ...$test_case_list)
+    public function __construct(string $description, TestCase ...$test_cases)
     {
         $this->description = $description;
 
-        $this->test_case_list = $test_case_list;
+        $this->test_case_list = $test_cases;
     }
 
     public function getDescription(): string

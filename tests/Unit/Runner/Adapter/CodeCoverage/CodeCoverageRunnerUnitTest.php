@@ -5,7 +5,7 @@ namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage;
 
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageRunner;
 use ThomasNordahlDk\Tester\TestCase;
-use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Tester;
 use ThomasNordahlDk\Tester\Tests\Mock\Runner\MockRunner;
 use ThomasNordahlDk\Tester\Tests\Mock\Runner\Adapter\CodeCoverage\MockCodeCoverageFacade;
 class CodeCoverageRunnerUnitTest implements TestCase

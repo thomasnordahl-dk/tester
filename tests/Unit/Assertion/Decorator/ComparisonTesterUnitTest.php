@@ -2,8 +2,8 @@
 
 namespace ThomasNordahlDk\Tester\Tests\Unit\Assertion\Decorator;
 
-use ThomasNordahlDk\Tester\Assertion\Decorator\ComparisonTester;
-use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Decorator\ComparisonTester;
+use ThomasNordahlDk\Tester\Tester;
 use ThomasNordahlDk\Tester\TestCase;
 use ThomasNordahlDk\Tester\Tests\Mock\Assertion\MockTester;
 use stdClass;

@@ -37,7 +37,7 @@ class CodeCoverageFacade
         $this->coverage->stop();
     }
 
-    public function outputXml(string $file_name): void
+    public function outputClover(string $file_name): void
     {
         $this->xml_writer->process($this->coverage, $file_name);
     }

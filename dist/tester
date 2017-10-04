@@ -1,16 +1,15 @@
 #!/usr/bin/env php
 <?php
 
-use ThomasNordahlDk\Tester\Runner\RunnerFactory;
-use ThomasNordahlDk\Tester\Runner\Utility\CommandLineArguments;
-use ThomasNordahlDk\Tester\Runner\FailedTestsException;
-use ThomasNordahlDk\Tester\Runner\Configuration\ConfigurationFactory;
+use ThomasNordahlDk\Tester\Runner\CommandLine\CommandLineArguments;
+use ThomasNordahlDk\Tester\Runner\CommandLine\CommandLineRunnerFactory;
+use ThomasNordahlDk\Tester\Runner\FailedTestException;
 
 requireAutoloader();
 
 try {
     runSuites($argv);
-} catch (FailedTestsException $exception) {
+} catch (FailedTestException $exception) {
     exit($exception->getMessage() . "\n");
 }
 
@@ -49,28 +48,22 @@ function requireAutoloader(): void
 
 function runSuites(array $argv): void
 {
-    $options = new CommandLineArguments($argv);
+    $factory = new CommandLineRunnerFactory();
 
-    $config_factory = new ConfigurationFactory();
+    $runner = $factory->createFromArguments($argv);
 
-    $configuration = $config_factory->createFromCommandLineArguments($options);
-
-    $factory = new RunnerFactory($configuration);
-
-    $runner = $factory->create();
-
-    $test_suites = getTestSuites($options->getValue("file") ?: "test.php");
+    $test_suites = getTestSuites($argv);
 
     $runner->run($test_suites);
 }
-/**
- * @param string $file_name "string.php"
- *
- * @return \ThomasNordahlDk\Tester\TestSuite[]
- * @throws RuntimeException
- */
-function getTestSuites(string $file_name = "test.php")
+
+
+function getTestSuites(array $argv)
 {
+    $options = new CommandLineArguments($argv);
+
+    $file_name = $options->getValue("file") ?: "test.php";
+
     if (file_exists($file_name)) {
         return require $file_name;
     }

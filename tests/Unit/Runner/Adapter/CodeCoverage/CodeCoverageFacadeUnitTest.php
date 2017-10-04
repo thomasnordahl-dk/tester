@@ -3,10 +3,10 @@
 namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage;
 
 
-use ThomasNordahlDk\Tester\Assertion\Decorator\ComparisonTester;
+use ThomasNordahlDk\Tester\Decorator\ComparisonTester;
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
 use ThomasNordahlDk\Tester\TestCase;
-use ThomasNordahlDk\Tester\Assertion\Tester;
+use ThomasNordahlDk\Tester\Tester;
 use ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockCodeCoverage;
 use ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockClover;
 use ThomasNordahlDk\Tester\Tests\Mock\ThirdParty\CodeCoverage\MockFacade;
@@ -31,6 +31,10 @@ class CodeCoverageFacadeUnitTest implements TestCase
 
         $tester->assertEqual(CodeCoverageFacade::create("path"), $expected, "create method creates facade");
 
+        $coverage->filter()->addDirectoryToWhitelist("path");
+        $expected = new CodeCoverageFacade($coverage, new Clover(), new Facade());
+        $tester->assertEqual(CodeCoverageFacade::create("path1", "path2"), $expected, "create method creates facade");
+
         $xml_file = "/my/special/coverage.xml";
         $html_directory = "/my/special/coverage";
 
@@ -44,7 +48,7 @@ class CodeCoverageFacadeUnitTest implements TestCase
 
         $facade->stop();
 
-        $facade->outputXml($xml_file);
+        $facade->outputClover($xml_file);
 
         $facade->outputHtml($html_directory);
 

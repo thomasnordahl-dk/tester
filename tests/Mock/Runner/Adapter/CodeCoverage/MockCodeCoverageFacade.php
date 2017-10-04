@@ -55,7 +55,7 @@ class MockCodeCoverageFacade extends CodeCoverageFacade
         $this->html_dir = $directory;
     }
 
-    public function outputXml(string $file_name): void
+    public function outputClover(string $file_name): void
     {
         $this->xml_file = $file_name;
     }
