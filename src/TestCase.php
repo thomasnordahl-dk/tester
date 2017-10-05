@@ -2,7 +2,7 @@
 
 namespace ThomasNordahlDk\Tester;
 
-use ThomasNordahlDk\Tester\Tester;
+
 
 /**
  * A TestCase uses a Tester to make assertions on code.

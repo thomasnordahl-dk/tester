@@ -5,7 +5,7 @@ namespace ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion;
 
 use Exception;
 use ThomasNordahlDk\Tester\Tester;
-use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\FailedAssertionException;
+
 
 /**
  * Outputs results to the output buffer, and counts successful assertions.

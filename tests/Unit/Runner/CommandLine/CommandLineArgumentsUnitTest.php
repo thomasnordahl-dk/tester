@@ -1,6 +1,6 @@
 <?php
 
-namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Utility;
+namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\CommandLine;
 
 use ThomasNordahlDk\Tester\Decorator\ComparisonTester;
 use ThomasNordahlDk\Tester\Tester;

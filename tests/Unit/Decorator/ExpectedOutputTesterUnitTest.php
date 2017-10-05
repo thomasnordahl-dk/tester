@@ -1,12 +1,12 @@
 <?php
 
-namespace ThomasNordahlDk\Tester\Tests\Unit\Assertion\Decorator;
+namespace ThomasNordahlDk\Tester\Tests\Unit\Decorator;
 
 
 use ThomasNordahlDk\Tester\Decorator\ExpectedOutputTester;
 use ThomasNordahlDk\Tester\TestCase;
 use ThomasNordahlDk\Tester\Tester;
-use ThomasNordahlDk\Tester\Tests\Mock\Assertion\MockTester;
+use ThomasNordahlDk\Tester\Tests\Mock\MockTester;
 
 class ExpectedOutputTesterUnitTest implements TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults;
+namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\TestSuite;
 
 
 use ThomasNordahlDk\Tester\Decorator\ExpectedOutputTester;

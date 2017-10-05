@@ -2,7 +2,6 @@
 
 namespace ThomasNordahlDk\Tester\Runner\Adapter\OutputResults;
 
-
 use ThomasNordahlDk\Tester\Runner\Runner;
 use ThomasNordahlDk\Tester\TestSuite;
 
@@ -16,6 +15,8 @@ class OutputResultsRunner implements Runner
     /**
      * @internal Use create() method instead
      * @see OutputResultsRunner::create()
+     *
+     * @param OutputResultsFactory $factory
      */
     public function __construct(OutputResultsFactory $factory)
     {

@@ -1,49 +1,38 @@
 <?php
 
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\OutputResultsFactoryUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\OutputResultsRunnerUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\TestCaseRunnerUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\Assertion\OutputResultsTesterUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\TestSuiteRunnerUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Configuration\CoverageConfigurationUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Configuration\ConfigurationUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Factory\ConfigurationRunnerFactoryUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Configuration\CommandLineRunnerFactoryTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\RunnerFactoryUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Utility\CommandLineRunnerFactoryUnitTest;
 use ThomasNordahlDk\Tester\TestSuite;
 use ThomasNordahlDk\Tester\Tests\Unit\SuiteUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Assertion\Decorator\ComparisonTesterUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Assertion\Decorator\ExpectedOutputTesterUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Decorator\ComparisonTesterUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Decorator\ExpectedOutputTesterUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\CodeCoverageFacadeUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\CodeCoverage\CodeCoverageRunnerUnitTest;
-use ThomasNordahlDk\Tester\Tests\Unit\Runner\Utility\CommandLineArgumentsUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\Assertion\OutputResultsTesterUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\TestCase\TestCaseRunnerUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\TestSuite\TestSuiteRunnerUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\OutputResultsFactoryUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\OutputResultsRunnerUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\CommandLine\CommandLineRunnerFactoryUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\CommandLine\CommandLineArgumentsUnitTest;
 
-$unit_tests = new TestSuite(...[
-    "UNIT TESTS",
-    # Package class
+$unit_tests = new TestSuite("UNIT TESTS", ...[
     new SuiteUnitTest,
-
-    # Tester decorators
+    # Decorators/
     new ComparisonTesterUnitTest,
     new ExpectedOutputTesterUnitTest,
-
-    # Runner
-
     # Runner/Adapter/CodeCoverage
     new CodeCoverageFacadeUnitTest,
     new CodeCoverageRunnerUnitTest,
-
-    # Runner/Utility
-    new CommandLineArgumentsUnitTest,
-
+    # Runner/Adapter/OutputResults/Assertion
+    new OutputResultsTesterUnitTest,
+    # Runner/Adapter/OutputResults/TestCase
+    new TestCaseRunnerUnitTest,
+    # Runner/Adapter/OutputResults/TestSuite
+    new TestSuiteRunnerUnitTest,
     # Runner/Adapter/OutputResults
     new OutputResultsFactoryUnitTest,
-    new OutputResultsTesterUnitTest,
-    new TestCaseRunnerUnitTest,
-    new TestSuiteRunnerUnitTest,
     new OutputResultsRunnerUnitTest,
-
+    # Runner/CommandLine
+    new CommandLineArgumentsUnitTest,
     new CommandLineRunnerFactoryUnitTest,
 ]);
 

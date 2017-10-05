@@ -1,6 +1,6 @@
 <?php
 
-namespace ThomasNordahlDk\Tester\Tests\Mock\Assertion;
+namespace ThomasNordahlDk\Tester\Tests\Mock;
 
 
 use ThomasNordahlDk\Tester\Tester;
