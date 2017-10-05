@@ -67,7 +67,7 @@ class CommandLineRunnerFactory
     {
         $options = $this->options;
 
-        $whitelist = explode(";", $options->getValue("cover") ?: "src");
+        $whitelist = explode(",", $options->getValue("cover") ?: "src");
 
         return CodeCoverageFacade::create(... $whitelist);
     }

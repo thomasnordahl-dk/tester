@@ -126,7 +126,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
             "--coverage-html --cover=path results in coverage with custom path");
 
 
-        $argv = ["script", "--coverage-html", "--cover=path;dir;src"];
+        $argv = ["script", "--coverage-html", "--cover=path,dir,src"];
 
         $output_results_runner = new OutputResultsRunner(new OutputResultsFactory());
         $coverage_facade = CodeCoverageFacade::create("path", "dir", "src");
