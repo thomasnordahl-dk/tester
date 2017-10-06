@@ -12,8 +12,8 @@ use ThomasNordahlDk\Tester\TestSuite;
  */
 class TestSuiteRunner
 {
-    private const PAD_LENGTH    = 100;
-    private const PAD_CHARACTER = "-";
+    private const PAD_LENGTH    = 75;
+    private const PAD_CHARACTER = "*";
 
     /**
      * @var float
@@ -36,7 +36,10 @@ class TestSuiteRunner
         $test_cases = $test_suite->getTestCaseList();
 
         $count = count($test_cases);
-        $this->outputPaddedLine("{$description} ({$count}) ");
+        $this->outputPaddedLine();
+        echo "{$description} (test cases: {$count})\n";
+        $this->outputPaddedLine();
+        echo "\n";
 
         $this->start_time = microtime(true);
 
@@ -59,7 +62,7 @@ class TestSuiteRunner
         $tester = $this->factory->createTester();
         $runner = $this->factory->createTestCaseRunner($tester);
 
-        echo $test_case->getDescription() . "\n";
+        echo " - " . $test_case->getDescription() . "\n";
 
         try {
             $runner->run($test_case);
@@ -75,24 +78,27 @@ class TestSuiteRunner
 
         $assertions = $this->pluralize($result->getAssertionCount(), "assertion");
 
+        echo "\n";
+        $this->outputPaddedLine();
+
         if ($result->getFailureCount()) {
             $successful = $this->pluralize($result->getSuccessCount(), "successful test");
             $failed = $this->pluralize($result->getFailureCount(), "failed test");
 
-            echo "\nFAILED! {$failed}, {$successful}, {$assertions} ({$time}s)\n";
+            echo "FAILED! {$failed}, {$successful}, {$assertions} ({$time}s)\n";
 
         } else {
             $tests = $this->pluralize($result->getSuccessCount(), "test");
-            echo "\nSuccess! {$tests}, {$assertions} ({$time}s)\n";
+            echo "Success! {$tests}, {$assertions} ({$time}s)\n";
         }
 
-        $this->outputPaddedLine("");
+        $this->outputPaddedLine();
         echo "\n";
     }
 
-    private function outputPaddedLine(string $value): void
+    private function outputPaddedLine(): void
     {
-        echo str_pad($value, self::PAD_LENGTH, self::PAD_CHARACTER) . "\n";
+        echo str_pad("", self::PAD_LENGTH, self::PAD_CHARACTER) . "\n";
     }
 
     private function pluralize(int $count, string $subject): string
