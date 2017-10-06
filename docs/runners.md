@@ -48,5 +48,5 @@ $runner->run([$test_package]);
 
 Notice that the phpunit coverage classes are hidden behind a facade, so the runner does not
 directly depend on phpunits code coverage classes, should you whish to replace the coverage
-driver with another coverage library (if such a thing exists). Admittedly this might be a 
-bit premature at this point.
+driver with another coverage library (if such a thing exists). 
+Admittedly this might be a bit of an "overkill" at such an early stage of the library.
