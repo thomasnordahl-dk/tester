@@ -1,76 +1,30 @@
 #!/usr/bin/env php
 <?php
-
+/**
+ * tester - distributed test runner
+ *
+ * See /docs for information on custom test runners
+ */
 use ThomasNordahlDk\Tester\Runner\CommandLine\CommandLineArguments;
 use ThomasNordahlDk\Tester\Runner\CommandLine\CommandLineRunnerFactory;
 use ThomasNordahlDk\Tester\Runner\FailedTestException;
 
+require_once __DIR__ . "/functions/requireAutoloader.php";
+require_once __DIR__ . "/functions/getTestSuites.php";
+
 requireAutoloader();
 
+$options = new CommandLineArguments($argv);
+$factory = new CommandLineRunnerFactory();
+$runner = $factory->createFromArguments($argv);
+
+$test_file_name = $options->getValue("file") ?: "/test.php";
+$test_suites = getTestSuites($test_file_name);
+
 try {
-    runSuites($argv);
+    $runner->run($test_suites);
 } catch (FailedTestException $exception) {
-    exit($exception->getMessage() . "\n");
+    exit(1);
 }
 
 exit(0);
-
-/**
- * locates and loads autoloader
- *
- * @throws \RuntimeException if the autoload file can not be located
- */
-function requireAutoloader(): void
-{
-    if (file_exists(__DIR__ . "/../vendor/autoload.php")) {
-        require_once __DIR__ . "/../vendor/autoload.php";
-
-        return;
-    }
-
-    $dir = __DIR__;
-    $prev_dir = "";
-
-    while ($dir != $prev_dir) {
-
-        $prev_dir = $dir;
-        $dir = dirname($dir);
-
-        if (file_exists($dir . "/autoload.php")) {
-            require_once $dir . "/autoload.php";
-
-            return;
-        }
-    }
-
-    throw new \RuntimeException("autoload.php not found!");
-}
-
-function runSuites(array $argv): void
-{
-    $factory = new CommandLineRunnerFactory();
-
-    $runner = $factory->createFromArguments($argv);
-
-    $test_suites = getTestSuites($argv);
-
-    $runner->run($test_suites);
-}
-
-
-function getTestSuites(array $argv)
-{
-    $options = new CommandLineArguments($argv);
-
-    $file_name = $options->getValue("file") ?: "test.php";
-
-    if (file_exists($file_name)) {
-        return require $file_name;
-    }
-
-    if (file_exists(getcwd() . "/{$file_name}")) {
-        return require getcwd() . "/{$file_name}";
-    }
-
-    throw new \RuntimeException("File not found: {$file_name}");
-}
