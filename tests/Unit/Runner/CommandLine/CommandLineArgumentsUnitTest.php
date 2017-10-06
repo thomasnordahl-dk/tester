@@ -36,11 +36,11 @@ class CommandLineArgumentsUnitTest implements TestCase
 
         $tester->assert($command_line_options->isSet("script_name") === false, "script_name gets sorted");
         $tester->assert($command_line_options->isSet("a") === true, "-a is set");
-        $tester->assert($command_line_options->isSet("b") === true, "b is set");
-        $tester->assert($command_line_options->isSet("c") === true, "c is set");
+        $tester->assert($command_line_options->isSet("b") === false, "b is invalid");
+        $tester->assert($command_line_options->isSet("c") === false, "c=d is invalid");
         $tester->assert($command_line_options->isSet("e") === true, "-e is set");
         $tester->assert($command_line_options->isSet("g") === true, "-g is set");
-        $tester->assert($command_line_options->isSet("i") === true, "i is set");
+        $tester->assert($command_line_options->isSet("i") === false, "i=jjj is invalid");
         $tester->assert($command_line_options->isSet("x") === false, "x is not set");
         $tester->assert($command_line_options->isSet("notset") === false, "--notset not set");
         $tester->assert($command_line_options->isSet("long") === true, "--long is set");
@@ -50,10 +50,10 @@ class CommandLineArgumentsUnitTest implements TestCase
 
         $tester->assertSame($command_line_options->getValue("a"), "", "-a has no value");
         $tester->assertSame($command_line_options->getValue("b"), "", "b has no value");
-        $tester->assertSame($command_line_options->getValue("c"), "d", "c=d");
+        $tester->assertSame($command_line_options->getValue("c"), "", "c=d is invalid");
         $tester->assertSame($command_line_options->getValue("e"), "f", "-e=f ");
         $tester->assertSame($command_line_options->getValue("g"), "hhh", "-g=hhh");
-        $tester->assertSame($command_line_options->getValue("i"), "jjj", "i=jjj");
+        $tester->assertSame($command_line_options->getValue("i"), "", "i=jjj is invalid");
         $tester->assertSame($command_line_options->getValue("long"), "", "--long has no value");
         $tester->assertSame($command_line_options->getValue("long-with-value"), "thevalue",
             "--long-with-value=thevalue");

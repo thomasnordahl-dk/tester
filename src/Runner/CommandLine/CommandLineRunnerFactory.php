@@ -8,6 +8,12 @@ use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsFactory;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsRunner;
 use ThomasNordahlDk\Tester\Runner\Runner;
 
+/**
+ * Creates instances of Runner based on the provided $argv array
+ *
+ * http://us2.php.net/manual/en/reserved.variables.php
+ * @see CommandLineArguments
+ */
 class CommandLineRunnerFactory
 {
     /**
@@ -15,17 +21,30 @@ class CommandLineRunnerFactory
      */
     private $options;
 
+    /**
+     * Creates an instance of Runner based on the provided command line arguments.
+     *
+     * -v                       => Specify verbose output
+     * --coverage-clover        => Specify coverage clover report
+     * --coverage-clover=file   => Specify coverage clover report to file
+     * --coverage-html          => Specify coverage HTML report
+     * --coverage-html=dir      => Specify coverage HTML report to directory
+     * --cover=path1,path       => Specify which paths to run coverage on.
+     *
+     * @param array $argv the command line argument array
+     *
+     * @return Runner
+     */
     public function createFromArguments(array $argv): Runner
     {
         $this->options = new CommandLineArguments($argv);
 
         $runner = $this->createOutputResultsRunner();
-        $runner = $this->decorateWithCoverage($runner);
 
-        return $runner;
+        return $this->decorateWithCoverage($runner);
     }
 
-    private function createOutputResultsRunner(): Runner
+    private function createOutputResultsRunner(): OutputResultsRunner
     {
         $verbose = $this->options->isSet("v");
 
@@ -34,7 +53,7 @@ class CommandLineRunnerFactory
         return new OutputResultsRunner($factory);
     }
 
-    private function decorateWithCoverage($runner): Runner
+    private function decorateWithCoverage(Runner $runner): Runner
     {
         $options = $this->options;
 
@@ -53,11 +72,13 @@ class CommandLineRunnerFactory
         $runner = new CodeCoverageRunner($runner, $facade);
 
         if ($options->isSet("coverage-clover")) {
-            $runner->outputClover($options->getValue("coverage-clover") ?: "coverage.xml");
+            $output_file = $options->getValue("coverage-clover") ?: "coverage.xml";
+            $runner->outputsCloverReportTo($output_file);
         }
 
         if ($options->isSet("coverage-html")) {
-            $runner->outputHtml($options->getValue("coverage-html") ?: "coverage");
+            $directory = $options->getValue("coverage-html") ?: "coverage";
+            $runner->outputsHtmlReportTo($directory);
         }
 
         return $runner;

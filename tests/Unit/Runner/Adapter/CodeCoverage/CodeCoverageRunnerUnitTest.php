@@ -33,14 +33,14 @@ class CodeCoverageRunnerUnitTest implements TestCase
 
 
         $coverage_runner = new CodeCoverageRunner($mock_runner, $mock_facade);
-        $coverage_runner->outputClover("file");
+        $coverage_runner->outputsCloverReportTo("file");
 
         $coverage_runner->run([]);
 
         $tester->assert($mock_facade->getXmlFile() === "file", "xml was output");
 
         $coverage_runner = new CodeCoverageRunner($mock_runner, $mock_facade);
-        $coverage_runner->outputHtml("dir");
+        $coverage_runner->outputsHtmlReportTo("dir");
 
         $coverage_runner->run([]);
 

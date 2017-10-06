@@ -6,6 +6,11 @@ use SebastianBergmann\CodeCoverage\CodeCoverage;
 use SebastianBergmann\CodeCoverage\Report\Clover;
 use SebastianBergmann\CodeCoverage\Report\Html\Facade;
 
+/**
+ * Delegates to the CodeCoverage instances provided to the constructor
+ *
+ * A facade layer to reduce dependency on phpunit/php-unit-codecoverage
+ */
 class CodeCoverageFacade
 {
     private $coverage;
@@ -27,26 +32,51 @@ class CodeCoverageFacade
         $this->html_writer = $html_writer;
     }
 
+    /**
+     * Start registering coverage
+     * TODO remove notion of ID
+     * @param mixed $id ID to pass to
+     */
     public function start($id): void
     {
         $this->coverage->start($id);
     }
 
+    /**
+     * Stop registering coverage
+     */
     public function stop(): void
     {
         $this->coverage->stop();
     }
 
+    /**
+     * Writes a clover report of the coverage registered
+     *
+     * @param string $file_name Clover report output file name
+     */
     public function outputClover(string $file_name): void
     {
         $this->xml_writer->process($this->coverage, $file_name);
     }
 
+    /**
+     * Writes an HTML report of the coverage registered
+     *
+     * @param string $directory HTML report directory
+     */
     public function outputHtml(string $directory): void
     {
         $this->html_writer->process($this->coverage, $directory);
     }
 
+    /**
+     * Factory method for creation of new facades.
+     *
+     * @param string[] ...$paths
+     *
+     * @return CodeCoverageFacade
+     */
     public static function create(string ...$paths): CodeCoverageFacade
     {
         $coverage = new CodeCoverage();

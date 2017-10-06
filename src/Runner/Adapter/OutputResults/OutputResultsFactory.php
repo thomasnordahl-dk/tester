@@ -6,8 +6,9 @@ use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\OutputResultsT
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestCase\TestCaseRunner;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestSuite\TestSuiteRunner;
 
-
 /**
+ * Creates instances of the classes needed by the OutputResultsRunner
+ *
  * @internal This factory should only be used as an internal component of
  *           the OutputResultsRunner
  */
@@ -18,6 +19,9 @@ class OutputResultsFactory
      */
     private $is_verbose;
 
+    /**
+     * @param bool $verbose If true the factory creates verbose instances.
+     */
     public function __construct(bool $verbose = false)
     {
         $this->is_verbose = $verbose;

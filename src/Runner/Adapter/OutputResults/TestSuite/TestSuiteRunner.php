@@ -8,12 +8,12 @@ use ThomasNordahlDk\Tester\TestCase;
 use ThomasNordahlDk\Tester\TestSuite;
 
 /**
- * Outputs the description and results of the test suite
+ * Runs the test cases and outputs a summary of the test results.
  */
 class TestSuiteRunner
 {
-    private const PAD_LENGTH    = 75;
-    private const PAD_CHARACTER = "*";
+    private const BREAKER_LENGTH    = 75;
+    private const BREAKER_CHARACTER = "*";
 
     /**
      * @var float
@@ -25,20 +25,32 @@ class TestSuiteRunner
      */
     private $factory;
 
+    /**
+     * @internal use OutputResultsFactory::createTestSuiteRunner() instead
+     *
+     * @param OutputResultsFactory $factory
+     */
     public function __construct(OutputResultsFactory $factory)
     {
         $this->factory = $factory;
     }
 
+    /**
+     * Runs the test cases and outputs a summary of the test results.
+     *
+     * @param TestSuite $test_suite The test suite to run
+     *
+     * @throws FailedTestException If any of the test cases fail
+     */
     public function run(TestSuite $test_suite): void
     {
         $description = $test_suite->getDescription();
         $test_cases = $test_suite->getTestCaseList();
 
         $count = count($test_cases);
-        $this->outputPaddedLine();
+        $this->outputBreakerLine();
         echo "{$description} (test cases: {$count})\n";
-        $this->outputPaddedLine();
+        $this->outputBreakerLine();
         echo "\n";
 
         $this->start_time = microtime(true);
@@ -57,6 +69,13 @@ class TestSuiteRunner
         }
     }
 
+    /**
+     * Runs an individual test case and adds the results of the case to the
+     * provided test suite results.
+     *
+     * @param TestCase        $test_case The test case to run
+     * @param TestSuiteResult $result    Add the results of the test to this
+     */
     private function runTestCase(TestCase $test_case, TestSuiteResult $result): void
     {
         $tester = $this->factory->createTester();
@@ -72,6 +91,11 @@ class TestSuiteRunner
         }
     }
 
+    /**
+     * Renders a summary of the test suite from the results provided.
+     *
+     * @param TestSuiteResult $result The results of the test suite
+     */
     private function renderSummary(TestSuiteResult $result): void
     {
         $time = number_format(microtime(true) - $this->start_time, 2, ".", ",");
@@ -79,7 +103,7 @@ class TestSuiteRunner
         $assertions = $this->pluralize($result->getAssertionCount(), "assertion");
 
         echo "\n";
-        $this->outputPaddedLine();
+        $this->outputBreakerLine();
 
         if ($result->getFailureCount()) {
             $successful = $this->pluralize($result->getSuccessCount(), "successful test");
@@ -92,17 +116,26 @@ class TestSuiteRunner
             echo "Success! {$tests}, {$assertions} ({$time}s)\n";
         }
 
-        $this->outputPaddedLine();
+        $this->outputBreakerLine();
         echo "\n";
     }
 
-    private function outputPaddedLine(): void
-    {
-        echo str_pad("", self::PAD_LENGTH, self::PAD_CHARACTER) . "\n";
-    }
-
+    /**
+     * Formats a string describing an amount of items, with correct
+     * pluralization.
+     *
+     * @param int    $count   The count of items
+     * @param string $subject The subject string
+     *
+     * @return string "$count $subject(s)"
+     */
     private function pluralize(int $count, string $subject): string
     {
         return "{$count} $subject" . ($count != 1 ? "s" : "");
+    }
+
+    private function outputBreakerLine(): void
+    {
+        echo str_pad("", self::BREAKER_LENGTH, self::BREAKER_CHARACTER) . "\n";
     }
 }

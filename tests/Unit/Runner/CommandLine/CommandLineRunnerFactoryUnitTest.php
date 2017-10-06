@@ -74,14 +74,14 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $coverage_facade = CodeCoverageFacade::create("src");
 
         $expected = new CodeCoverageRunner($output_results_runner, $coverage_facade);
-        $expected->outputClover("coverage.xml");
+        $expected->outputsCloverReportTo("coverage.xml");
 
         $factory = new CommandLineRunnerFactory();
         $tester->assertEqual($factory->createFromArguments($argv), $expected,
             "--coverage-clover results in codecoverage runner with clover output to coverage.xml");
 
         $argv = ["script", "--coverage-clover=file.xml"];
-        $expected->outputClover("file.xml");
+        $expected->outputsCloverReportTo("file.xml");
         $tester->assertEqual($factory->createFromArguments($argv), $expected,
             "--coverage-clover=file.xml results in codecoverage runner with clover output to file.xml");
     }
@@ -96,14 +96,14 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $coverage_facade = CodeCoverageFacade::create("src");
 
         $expected = new CodeCoverageRunner($output_results_runner, $coverage_facade);
-        $expected->outputHtml("coverage");
+        $expected->outputsHtmlReportTo("coverage");
 
         $factory = new CommandLineRunnerFactory();
         $tester->assertEqual($factory->createFromArguments($argv), $expected,
             "--coverage-html results in codecoverage runner with html report output to coverage");
 
         $argv = ["script", "--coverage-html=custom/dir"];
-        $expected->outputHtml("custom/dir");
+        $expected->outputsHtmlReportTo("custom/dir");
         $tester->assertEqual($factory->createFromArguments($argv), $expected,
             "--coverage-html results in codecoverage runner with html report output to custom/dir");
 
@@ -119,7 +119,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $coverage_facade = CodeCoverageFacade::create("path");
 
         $expected = new CodeCoverageRunner($output_results_runner, $coverage_facade);
-        $expected->outputHtml("coverage");
+        $expected->outputsHtmlReportTo("coverage");
 
         $factory = new CommandLineRunnerFactory();
         $tester->assertEqual($factory->createFromArguments($argv), $expected,
@@ -132,7 +132,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $coverage_facade = CodeCoverageFacade::create("path", "dir", "src");
 
         $expected = new CodeCoverageRunner($output_results_runner, $coverage_facade);
-        $expected->outputHtml("coverage");
+        $expected->outputsHtmlReportTo("coverage");
 
         $factory = new CommandLineRunnerFactory();
         $tester->assertEqual($factory->createFromArguments($argv), $expected,
@@ -149,8 +149,8 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $coverage_facade = CodeCoverageFacade::create("path");
 
         $expected = new CodeCoverageRunner($output_results_runner, $coverage_facade);
-        $expected->outputHtml("dir");
-        $expected->outputClover("file.xml");
+        $expected->outputsHtmlReportTo("dir");
+        $expected->outputsCloverReportTo("file.xml");
 
         $factory = new CommandLineRunnerFactory();
         $tester->assertEqual($factory->createFromArguments($argv), $expected,

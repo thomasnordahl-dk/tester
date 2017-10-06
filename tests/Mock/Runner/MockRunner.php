@@ -12,7 +12,7 @@ class MockRunner implements Runner
      */
     private $suites;
 
-    public function run(array $suites): void
+    public function run($suites): void
     {
         $this->suites = $suites;
     }

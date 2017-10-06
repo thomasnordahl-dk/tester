@@ -6,7 +6,7 @@ namespace ThomasNordahlDk\Tester\Runner;
 use ThomasNordahlDk\Tester\TestSuite;
 
 /**
- * Runs test test suites
+ * Runs test suites
  */
 interface Runner
 {
@@ -15,5 +15,5 @@ interface Runner
      *
      * @throws FailedTestException
      */
-    public function run(array $suites): void;
+    public function run($suites): void;
 }

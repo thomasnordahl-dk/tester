@@ -5,6 +5,9 @@ namespace ThomasNordahlDk\Tester\Runner\Adapter\OutputResults;
 use ThomasNordahlDk\Tester\Runner\Runner;
 use ThomasNordahlDk\Tester\TestSuite;
 
+/**
+ * Runner class that outputs a test summary to the output buffer.
+ */
 class OutputResultsRunner implements Runner
 {
     /**
@@ -14,7 +17,7 @@ class OutputResultsRunner implements Runner
 
     /**
      * @internal Use create() method instead
-     * @see OutputResultsRunner::create()
+     * @see      OutputResultsRunner::create()
      *
      * @param OutputResultsFactory $factory
      */
@@ -23,18 +26,33 @@ class OutputResultsRunner implements Runner
         $this->factory = $factory;
     }
 
+    /**
+     * Factory method for neat creaton of new OutputResultsRunner instance.
+     *
+     * @param bool $verbose Set to true to output verbose summaries.
+     *
+     * @return OutputResultsRunner
+     */
     public static function create(bool $verbose = false): OutputResultsRunner
     {
         return new self(new OutputResultsFactory($verbose));
     }
 
-    public function run(array $suites): void
+    /**
+     * @internal
+     */
+    public function run($suites): void
     {
         foreach ($suites as $suite) {
             $this->runSuite($suite);
         }
     }
 
+    /**
+     * Runs individual test suite
+     *
+     * @param TestSuite $suite The test suite to run.
+     */
     private function runSuite(TestSuite $suite): void
     {
         $suite_runner = $this->factory->createTestSuiteRunner();

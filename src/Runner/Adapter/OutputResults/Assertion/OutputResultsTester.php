@@ -27,6 +27,13 @@ class OutputResultsTester implements Tester
         $this->is_verbose = $verbose;
     }
 
+    /**
+     * Outputs the result of the assertion and counts successful assertion
+     *
+     * @inheritdoc
+     *
+     * @throws FailedAssertionException
+     */
     public function assert(bool $result, string $why): void
     {
         if ($result) {
@@ -38,6 +45,13 @@ class OutputResultsTester implements Tester
         }
     }
 
+    /**
+     * Outputs the result of the assertion and counts successful assertion
+     *
+     * @inheritdoc
+     *
+     * @throws FailedAssertionException
+     */
     public function expect(string $exception_type, callable $when, string $why): void
     {
         try {
@@ -56,6 +70,9 @@ class OutputResultsTester implements Tester
         throw new FailedAssertionException($why);
     }
 
+    /**
+     * @return int The amount of successful assertions made so far
+     */
     public function getAssertionCount(): int
     {
         return $this->assertion_count;
