@@ -39,7 +39,7 @@ class OutputResultsRunner implements Runner
     }
 
     /**
-     * @internal
+     * @inheritdoc
      */
     public function run($suites): void
     {
