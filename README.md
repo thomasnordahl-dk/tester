@@ -2,103 +2,84 @@ thomasnordahldk/tester
 =================
 *An object oriented approach to testing PHP code.*
 
+*Tester* aims to be: easy to learn, light weight, object oriented, and extendable.
+
+[Documentation here](docs/index.md)
+
 ## Installation
+The library is released as a composer package. 
 ```
 composer require --dev thomasnordahldk/tester
 ```
 
 ## Tests
-A test is defined by a class that implements `TestCase`. 
+
+Tests are defined by creating `TestCase` classes.
 
 ```php
-namespace Vendor\Project\Test;
-
-use ThomasNordahlDk\Tester\TestCase;
-use ThomasNordahlDk\Tester\Assertion\Tester;
-use Vendor\Project\User;
-
-class UserUnitTest implements TestCase
+class MyTestCase implements TestCase
 {
     public function getDescription(): string
     {
-        return "Unit test of " . User::class;
+        return "My new unit test";
     }
     
-    public function run(Tester $tester): string
+    public function run(Tester $tester): void
     {
-        $email = "john.doe@email.com";
-        $user = new User($email);
-        
-        $tester->assert($user->getEmail() === $email, "getEmail() returns email");
-        
-        $tester->expect(\InvalidArgumentException::class, function() {
-            new User("not valid");
-        }, "Constructor throws on invalid email address");
+        $tester->assert(true, "This assertion passes!");
+        $tester->assert(false, "This assertion fails!");
     }
 }
+```
+The test case is defined as **a description of the test** and a **run test method**.
 
+**Docs:** [Creating a test case](docs/creating-a-test-case.md).
+
+## Test suites
+
+Tests suites are defined by the `TestSuite` class which is created with a
+description and an array of `TestCase` classes.
+
+```php
+$unit_tests = new TestSuite("Unit tests", [new UserUnitTest, AddressUnitTest]);
 ```
 
-### `TestCase` 
-
-`run(Tester $tester): void` - This method is where the tests are written. The `Tester` is used to
-make assertions about the tested software / unit.
-
-`getDescription(): string` - Should return a short description of the test case. 
+**Docs:** [Test Suites](docs/test-suite.md).
 
 ## Running tests
-Running tests is done by putting a file `test.php` in the root folder of the composer
-project, that returns an array of test suites.
+
+The library comes with a native test runner that is run from the command line interface, 
+and outputs a summary of the test.
+
+Which tests to run is defined in the file `test.php` in the root composer
+directory. The file is expected to return an array of test suites.
+
 ```php
-use ThomasNordahlDk\Tester\TestSuite;
-use Vendor\Project\Tests\Unit\UserUnitTest;
-use Vendor\Project\Tests\Integration\UserRepositoryIntegrationTest;
+# test.php
+$unit_tests = new TestSuite("Unit tests", [new UserUnitTest, new AddressUnitTest]);
 
-$unit_tests = new TestSuite("Unit tests", [new UserUnitTest]);
-$integration_tests = new TestSuite("Integration tests", [new UserRepositoryIntegrationTest]);
+return [$unit_tests];
 
-return [$unit_tests, $integration_tests];
 ```
 
-Tests are then invoked by calling the binary `bin/tester`;
 ```
-~ bin/tester
+$composer-root/~ bin/tester
+***************************************************************************
+Unit tests (test cases: 2)
+***************************************************************************
+
+ - Unit test of User
+ - Unit test of Address
+
+***************************************************************************
+Success! 2 tests, 8 assertions (0.03s)
+***************************************************************************
+
 ```
 
-For verbose output:
-```
-~ bin/tester -v
-``` 
+For a comprehensive description of the options available for the native test runner script:
 
-### Code coverage
-The library utilizes the PHPUnit Code Coverage package to create code coverage reports for 
-the tests. The following arguments are available. Other output formats may be added later on.
-
-#### Output clover report:
-
-Outputs to `coverage.xml`:
-```
-~ bin/tester --coverage-xml
-```
-Outputs to custom file:
-```
-~ bin/tester --coverage-xml=filename.xml
-```
-
-#### Output coverage HTML report:
-Outputs to directory `coverage`:
-```
-~ bin/tester --coverage-html
-```
-Outputs to custom directory:
-```
-~ bin/tester --coverage-html=custom/directory
-```
-
-### Coverage on custom path
-```
-~ bin/tester --coverage-html --coverage=cover/this/instead
-```
+**Docs:** [How to run tests](docs/how-to-run-tests.md).
 
 ## Inspiration
 This library is inspired by the testing library [mindplay-dk/testies](https://github.com/mindplay-dk/testies).
