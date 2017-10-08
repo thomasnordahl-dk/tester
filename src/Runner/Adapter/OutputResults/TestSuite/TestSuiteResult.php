@@ -24,6 +24,11 @@ class TestSuiteResult
     private $assertion_count = 0;
 
     /**
+     * @var float
+     */
+    private $time_spent = 0.0;
+
+    /**
      * Registers that a test case succeeded and adds the assertion count
      * to the total assertion count
      *
@@ -69,5 +74,15 @@ class TestSuiteResult
     public function getAssertionCount(): int
     {
         return $this->assertion_count;
+    }
+
+    public function getTimeSpent(): float
+    {
+        return $this->time_spent;
+    }
+
+    public function setTimeSpent(float $time_spent)
+    {
+        $this->time_spent = $time_spent;
     }
 }

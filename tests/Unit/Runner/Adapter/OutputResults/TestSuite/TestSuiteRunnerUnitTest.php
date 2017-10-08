@@ -42,11 +42,9 @@ class TestSuiteRunnerUnitTest implements TestCase
 description (test cases: 2)
 ***************************************************************************
 
- - case1
- - case2
 
 ***************************************************************************
-Success! 2 tests, 3 assertions (0.00s)
+Success! 2 test(s), 3 assertion(s) (1.23s)
 ***************************************************************************
 
 ";
@@ -83,11 +81,9 @@ Success! 2 tests, 3 assertions (0.00s)
 description (test cases: 2)
 ***************************************************************************
 
- - case1
- - case2
 
 ***************************************************************************
-FAILED! 1 failed test, 1 successful test, 2 assertions (0.00s)
+FAILED! 1 failed test(s), 1 successful test(s), 2 assertion(s) (1.23s)
 ***************************************************************************
 
 ";
