@@ -9,7 +9,7 @@ class MockCodeCoverage extends CodeCoverage
 
     private $stop_called = false;
 
-    private $started_with_id = false;
+    private $started = false;
 
     /**
      * @return bool
@@ -19,14 +19,14 @@ class MockCodeCoverage extends CodeCoverage
         return $this->stop_called;
     }
 
-    public function wasStartedWithId()
+    public function isStartCalled(): bool
     {
-        return $this->started_with_id;
+        return $this->started;
     }
 
     public function start($id, $clear = false)
     {
-        $this->started_with_id = $id;
+        $this->started = true;
     }
 
     public function stop($append = true, $linesToBeCovered = [], array $linesToBeUsed = [])

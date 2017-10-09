@@ -80,7 +80,7 @@ class CodeCoverageRunner implements Runner
     {
         $coverage_facade = $this->coverage_facade;
 
-        $coverage_facade->start("ThomasNordahlDk-tester");
+        $coverage_facade->start();
 
         $this->runner->run($test_suites);
 
