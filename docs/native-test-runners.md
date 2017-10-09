@@ -35,7 +35,7 @@ $factory = new OutputResultsFactory(true);
 
 $runner = $factory->createRunner();
 
-$runner->run(... $test_suites);
+$runner->run($test_suites);
 ```
 
 ## CodeCoverageRunner
@@ -48,7 +48,7 @@ $runner = new CodeCoverageRunner($runner, CoverageFacade::create("path/to/cover"
 
 $runner->outputsCloverToFile("coverage.xml");
 
-$runner->run(... $suites);
+$runner->run($suites);
 ```
 
 Notice that the phpunit coverage classes are hidden behind a facade, so the runner does not
