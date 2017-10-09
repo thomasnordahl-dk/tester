@@ -12,14 +12,6 @@ use ThomasNordahlDk\Tester\TestSuite;
  */
 class TestSuiteRunner
 {
-    private const BREAKER_LENGTH    = 75;
-    private const BREAKER_CHARACTER = "*";
-
-    /**
-     * @var float
-     */
-    private $start_time;
-
     /**
      * @var OutputResultsFactory
      */
@@ -44,29 +36,46 @@ class TestSuiteRunner
      */
     public function run(TestSuite $test_suite): void
     {
-        $description = $test_suite->getDescription();
-        $test_cases = $test_suite->getTestCaseList();
+        $this->renderHeader($test_suite);
 
-        $count = count($test_cases);
-        $this->outputBreakerLine();
-        echo "{$description} (test cases: {$count})\n";
-        $this->outputBreakerLine();
-        echo "\n";
-
-        $this->start_time = microtime(true);
-
-        $result = new TestSuiteResult();
-
-        foreach ($test_cases as $test_case) {
-            $this->runTestCase($test_case, $result);
-        }
+        $result = $this->runSuite($test_suite);
 
         $this->renderSummary($result);
 
         if ($result->getFailureCount()) {
-            $message = $this->pluralize($result->getFailureCount(), "failed test");
-            throw new FailedTestException($message);
+            throw new FailedTestException("{$result->getFailureCount()} failed test");
         }
+    }
+
+    private function runSuite(TestSuite $suite): TestSuiteResult
+    {
+        $timer = $this->factory->createTimer();
+        $results = new TestSuiteResult();
+        $test_cases = $suite->getTestCaseList();
+
+        $timer->start();
+
+        foreach ($test_cases as $test_case) {
+            $this->runTestCase($test_case, $results);
+        }
+
+        $timer->stop();
+
+        $results->setTimeSpent($timer->getTimePassed());
+
+        return $results;
+    }
+
+    private function renderHeader(TestSuite $test_suite)
+    {
+        $description = $test_suite->getDescription();
+        $test_cases = $test_suite->getTestCaseList();
+        $case_count = count($test_cases);
+
+        echo $this->createBreaker() . "\n";
+        echo "{$description} (test cases: {$case_count})\n";
+        echo $this->createBreaker() . "\n\n";
+
     }
 
     /**
@@ -78,16 +87,13 @@ class TestSuiteRunner
      */
     private function runTestCase(TestCase $test_case, TestSuiteResult $result): void
     {
-        $tester = $this->factory->createTester();
-        $runner = $this->factory->createTestCaseRunner($tester);
-
-        echo " - " . $test_case->getDescription() . "\n";
+        $runner = $this->factory->createTestCaseRunner($test_case);
 
         try {
-            $runner->run($test_case);
-            $result->registerSuccess($tester->getAssertionCount());
+            $runner->run();
+            $result->registerSuccess($runner->getAssertionCount());
         } catch (FailedTestException $exception) {
-            $result->registerFailure($tester->getAssertionCount());
+            $result->registerFailure($runner->getAssertionCount());
         }
     }
 
@@ -98,44 +104,24 @@ class TestSuiteRunner
      */
     private function renderSummary(TestSuiteResult $result): void
     {
-        $time = number_format(microtime(true) - $this->start_time, 2, ".", ",");
+        $time = number_format($result->getTimeSpent(), 2, ".", ",");
+        $assertions = $result->getAssertionCount();
+        $failed = $result->getFailureCount();
+        $successful = $result->getSuccessCount();
 
-        $assertions = $this->pluralize($result->getAssertionCount(), "assertion");
+        echo "\n" . $this->createBreaker() . "\n";
 
-        echo "\n";
-        $this->outputBreakerLine();
-
-        if ($result->getFailureCount()) {
-            $successful = $this->pluralize($result->getSuccessCount(), "successful test");
-            $failed = $this->pluralize($result->getFailureCount(), "failed test");
-
-            echo "FAILED! {$failed}, {$successful}, {$assertions} ({$time}s)\n";
-
+        if ($failed) {
+            echo "FAILED! {$failed} failed test(s), {$successful} successful test(s), {$assertions} assertion(s) ({$time}s)\n";
         } else {
-            $tests = $this->pluralize($result->getSuccessCount(), "test");
-            echo "Success! {$tests}, {$assertions} ({$time}s)\n";
+            echo "Success! {$successful} test(s), {$assertions} assertion(s) ({$time}s)\n";
         }
 
-        $this->outputBreakerLine();
-        echo "\n";
+        echo $this->createBreaker() . "\n\n";
     }
 
-    /**
-     * Formats a string describing an amount of items, with correct
-     * pluralization.
-     *
-     * @param int    $count   The count of items
-     * @param string $subject The subject string
-     *
-     * @return string "$count $subject(s)"
-     */
-    private function pluralize(int $count, string $subject): string
+    private function createBreaker(): string
     {
-        return "{$count} $subject" . ($count != 1 ? "s" : "");
-    }
-
-    private function outputBreakerLine(): void
-    {
-        echo str_pad("", self::BREAKER_LENGTH, self::BREAKER_CHARACTER) . "\n";
+        return str_pad("", 75, "*");
     }
 }

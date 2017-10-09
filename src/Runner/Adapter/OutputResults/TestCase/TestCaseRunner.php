@@ -4,6 +4,7 @@ namespace ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestCase;
 
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\FailedAssertionException;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\OutputResultsTester;
+use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsFactory;
 use ThomasNordahlDk\Tester\Runner\FailedTestException;
 use ThomasNordahlDk\Tester\TestCase;
 
@@ -14,48 +15,71 @@ use ThomasNordahlDk\Tester\TestCase;
 class TestCaseRunner
 {
     /**
-     * @var OutputResultsTester
+     * @var TestCase
      */
-    private $tester;
+
+    private $case;
+
+    /**
+     * @var OutputResultsFactory
+     */
+    private $factory;
 
     /**
      * @var bool
      */
     private $is_verbose;
 
-    public function __construct(OutputResultsTester $tester, bool $verbose = false)
+    /**
+     * @var int
+     */
+    private $assertion_count = 0;
+
+    public function __construct(TestCase $case, OutputResultsFactory $factory, bool $verbose = false)
     {
-        $this->tester = $tester;
+        $this->case = $case;
+        $this->factory = $factory;
         $this->is_verbose = $verbose;
     }
 
     /**
-     * @param TestCase $test_case
-     *
      * @throws FailedTestException
      */
-    public function run(TestCase $test_case): void
+    public function run(): void
     {
-        $tester = $this->tester;
+        $this->outputHeader();
+
+        $tester = $this->factory->createTester();
+
         try {
-            $test_case->run($tester);
+            $this->case->run($tester);
 
             $this->outputSuccessfulTestSummary($tester);
         } catch (FailedAssertionException $exception) {
             $this->outputFailedTestSummary($tester);
 
             throw new FailedTestException($exception->getMessage());
+        } finally {
+            $this->assertion_count = $tester->getAssertionCount();
         }
+    }
+
+    public function getAssertionCount(): int
+    {
+        return $this->assertion_count;
+    }
+
+    private function outputHeader(): void
+    {
+        echo " - " . $this->case->getDescription() . "\n";
     }
 
     private function outputSuccessfulTestSummary(OutputResultsTester $tester): void
     {
         $assertion_count = $tester->getAssertionCount();
 
-        $assertions = $this->pluralize($assertion_count, "successful assertion");
-
         if ($this->is_verbose) {
-            echo "Test completed after {$assertions}\n";
+            echo "Test completed after {$assertion_count} successful assertion(s)\n";
         }
     }
 
@@ -63,13 +87,6 @@ class TestCaseRunner
     {
         $assertion_count = $tester->getAssertionCount();
 
-        $assertions = $this->pluralize($assertion_count, "successful assertion");
-
-        echo "FAILED! Test failed after {$assertions}\n";
-    }
-
-    private function pluralize(int $count, string $subject): string
-    {
-        return "{$count} {$subject}" . ($count != 1 ? "s" : "");
+        echo "FAILED! Test failed after {$assertion_count} successful assertion(s)\n";
     }
 }

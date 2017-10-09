@@ -2,7 +2,6 @@
 
 namespace ThomasNordahlDk\Tester\Tests\Mock\Runner\Adapter\OutputResults\Assertion;
 
-
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\OutputResultsTester;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\FailedAssertionException;
 
@@ -31,8 +30,4 @@ class MockOutputResultsTester extends OutputResultsTester
         return $this->assertion_count;
     }
 
-    public function getAssertResults(): array
-    {
-        return $this->assert_results;
-    }
 }

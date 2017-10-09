@@ -1,5 +1,6 @@
 <?php
 
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\TimerUnitTest;
 use ThomasNordahlDk\Tester\TestSuite;
 use ThomasNordahlDk\Tester\Tests\Unit\SuiteUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Decorator\ComparisonTesterUnitTest;
@@ -34,6 +35,8 @@ $unit_tests = new TestSuite("UNIT TESTS", ...[
     # Runner/CommandLine
     new CommandLineArgumentsUnitTest,
     new CommandLineRunnerFactoryUnitTest,
+    # Runner
+    new TimerUnitTest,
 ]);
 
 return [$unit_tests];

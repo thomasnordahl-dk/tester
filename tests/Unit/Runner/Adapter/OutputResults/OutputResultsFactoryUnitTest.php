@@ -4,12 +4,14 @@ namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults;
 
 
 use ThomasNordahlDk\Tester\Decorator\ComparisonTester;
+use ThomasNordahlDk\Tester\Runner\Timer;
 use ThomasNordahlDk\Tester\Tester;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsFactory;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestCase\TestCaseRunner;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\OutputResultsTester;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestSuite\TestSuiteRunner;
 use ThomasNordahlDk\Tester\TestCase;
+use ThomasNordahlDk\Tester\Tests\Mock\MockTestCase;
 
 class OutputResultsFactoryUnitTest implements TestCase
 {
@@ -30,6 +32,7 @@ class OutputResultsFactoryUnitTest implements TestCase
         $this->testCreateTesterMethod();
         $this->testCreateTestCaseRunnerMethod();
         $this->testCreateTestSuiteRunnerMethod();
+        $this->testCreateTimerMethod();
     }
 
     private function testCreateTesterMethod(): void
@@ -54,18 +57,19 @@ class OutputResultsFactoryUnitTest implements TestCase
         $tester = $this->tester;
 
         $factory = new OutputResultsFactory();
-        $output_results_tester = $factory->createTester();
-        $expected = new TestCaseRunner($output_results_tester);
+        $mock_test_case = new MockTestCase("case", function () {
 
-        $tester->assertEqual($factory->createTestCaseRunner($output_results_tester), $expected,
-            "createTestCaseRunner creates new TestCaseRunner");
+        });
+        $expected = new TestCaseRunner($mock_test_case, $factory);
+
+        $tester->assertEqual($factory->createTestCaseRunner($mock_test_case), $expected,
+            "createTestCaseRunner creates new TestCaseRunner with self as factory arg");
 
 
         $factory = new OutputResultsFactory(true);
-        $output_results_tester = $factory->createTester();
-        $expected = new TestCaseRunner($output_results_tester, true);
+        $expected = new TestCaseRunner($mock_test_case, $factory, true);
 
-        $tester->assertEqual($factory->createTestCaseRunner($output_results_tester), $expected,
+        $tester->assertEqual($factory->createTestCaseRunner($mock_test_case), $expected,
             "createTestCaseRunner creates new verbose TestCaseRunner when verbose");
     }
 
@@ -77,5 +81,15 @@ class OutputResultsFactoryUnitTest implements TestCase
         $expected = new TestSuiteRunner($factory);
 
         $tester->assertEqual($factory->createTestSuiteRunner(), $expected, "Creates new test suite runner");
+    }
+
+    private function testCreateTimerMethod(): void
+    {
+        $tester = $this->tester;
+
+        $factory = new OutputResultsFactory();
+        $expected = new Timer();
+
+        $tester->assertEqual($factory->createTimer(), $expected, "Creates ned timer");
     }
 }

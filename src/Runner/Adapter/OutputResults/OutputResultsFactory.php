@@ -5,6 +5,8 @@ namespace ThomasNordahlDk\Tester\Runner\Adapter\OutputResults;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\OutputResultsTester;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestCase\TestCaseRunner;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestSuite\TestSuiteRunner;
+use ThomasNordahlDk\Tester\Runner\Timer;
+use ThomasNordahlDk\Tester\TestCase;
 
 /**
  * Creates instances of the classes needed by the OutputResultsRunner
@@ -32,13 +34,18 @@ class OutputResultsFactory
         return new OutputResultsTester($this->is_verbose);
     }
 
-    public function createTestCaseRunner(OutputResultsTester $tester): TestCaseRunner
+    public function createTestCaseRunner(TestCase $test_case): TestCaseRunner
     {
-        return new TestCaseRunner($tester, $this->is_verbose);
+        return new TestCaseRunner($test_case, $this, $this->is_verbose);
     }
 
     public function createTestSuiteRunner(): TestSuiteRunner
     {
         return new TestSuiteRunner($this);
+    }
+
+    public function createTimer(): Timer
+    {
+        return new Timer();
     }
 }
