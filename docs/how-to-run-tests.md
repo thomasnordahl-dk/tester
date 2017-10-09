@@ -46,7 +46,7 @@ Unit tests (test cases: 2)
  - Unit test of Address
 
 ***************************************************************************
-Success! 2 tests, 8 assertions (0.03s)
+Success! 2 successful test(s), 8 assertion(s) (0.03s)
 ***************************************************************************
 
 ***************************************************************************
@@ -59,7 +59,7 @@ Acceptance tests (test cases: 4)
  - A user changes address
 
 ***************************************************************************
-Success! 4 tests, 13 assertions (0.32s)
+Success! 4 successful test(s), 13 assertion(s) (0.32s)
 ***************************************************************************
 
 ~/composer-package-root$ vendor/bin/tester
@@ -114,17 +114,4 @@ The script can be called with a number of arguments.
 ```
 
 --
-## Customizing a test script
 
-If for some reason you feel the options or methods above don't quite satisfy the
-your needs, you could bootstrap the tests and run the tests in a more custom way.
-
-You could go as far as implementing your own `Tester` class and
-run the test cases in a completely custom way.
-
-You could check out the code located in the provided tester script
-or the `ThomasNordahlDk\Tester\Runner` namespace to see how the
-library runs the tests in the native way, and "mix n' match" which
-functionality to use and which to extend or replace.
-
-The native runner classes are described [here](runners.md).

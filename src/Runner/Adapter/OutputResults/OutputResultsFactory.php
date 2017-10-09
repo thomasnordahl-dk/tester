@@ -5,6 +5,7 @@ namespace ThomasNordahlDk\Tester\Runner\Adapter\OutputResults;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\OutputResultsTester;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestCase\TestCaseRunner;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestSuite\TestSuiteRunner;
+use ThomasNordahlDk\Tester\Runner\Runner;
 use ThomasNordahlDk\Tester\Runner\Timer;
 use ThomasNordahlDk\Tester\TestCase;
 
@@ -27,6 +28,11 @@ class OutputResultsFactory
     public function __construct(bool $verbose = false)
     {
         $this->is_verbose = $verbose;
+    }
+
+    public function createRunner(): Runner
+    {
+        return new OutputResultsRunner($this);
     }
 
     public function createTester(): OutputResultsTester

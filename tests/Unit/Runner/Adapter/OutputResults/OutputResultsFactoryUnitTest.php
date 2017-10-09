@@ -4,6 +4,7 @@ namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults;
 
 
 use ThomasNordahlDk\Tester\Decorator\ComparisonTester;
+use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsRunner;
 use ThomasNordahlDk\Tester\Runner\Timer;
 use ThomasNordahlDk\Tester\Tester;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsFactory;
@@ -29,6 +30,7 @@ class OutputResultsFactoryUnitTest implements TestCase
     {
         $this->tester = new ComparisonTester($tester);
 
+        $this->testCreateRunnerMethod();
         $this->testCreateTesterMethod();
         $this->testCreateTestCaseRunnerMethod();
         $this->testCreateTestSuiteRunnerMethod();
@@ -91,5 +93,15 @@ class OutputResultsFactoryUnitTest implements TestCase
         $expected = new Timer();
 
         $tester->assertEqual($factory->createTimer(), $expected, "Creates ned timer");
+    }
+
+    private function testCreateRunnerMethod(): void
+    {
+        $tester = $this->tester;
+
+        $factory = new OutputResultsFactory();
+        $expected = new OutputResultsRunner($factory);
+
+        $tester->assertEqual($factory->createRunner(), $expected, "Creates new runner");
     }
 }

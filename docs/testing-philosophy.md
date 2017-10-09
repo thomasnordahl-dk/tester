@@ -1,16 +1,20 @@
 Testing Philosophy
 ==================
 
-## Limited assertion methods
-The philosophy of the assertions provided is that assertions can only assert on the state of classes from the public variables
-and methods. No assertions should be made that evaluates the internal state of a class.
+## Assertions are simple
+In PHP asserting the validity of a class or function can be boiled down to two cases:
 
-This promotes a testing style that focuses on testing *what* a class does, rather than *how* the class does what it does.
-What a class does is the only behaviour that should matter if the tests are to help keep refactoring possible, without breaking
-the expected behaviour of the class. 
+1. Confirming that the return values are as expected
+2. Expecting the class/function to throw Exceptions invoked incorrectly.
 
-So focus on whether the `getCount` method returns the right count, not on whether the internal `$counter` attribute 
-has been updated.
+## What, not how
+The philosophy of the assertions defined is that a test should confirm what a class does,
+not how it does it. This means that tests should not test the internal state of a class.
 
-However the library also tries to be extendable, so tests can be shaped to the needs of the specific test cases. 
-See the section about extending assertion methods below for more on how to add custom assertions.
+This promotes a testing style that focuses on the confirming the external requirements 
+of the test subject, rather than the internal state. This allows us up to refactor the
+subjects more freely. We don't want to refactor the tests everytime we refactor the internal
+structure of a class.
+
+If you don't agree and still want to make assertions on the internal state of a class,
+check out how to create [Custom Assertion Methods](custom-assertion-methods.md)

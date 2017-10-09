@@ -114,7 +114,6 @@ The second argument is a description of the behaviour of the class that is teste
 assert(bool $result, string $why): void
 ```
 
-
 #### Expect method:
 The assert method takes 3 arguments.
 

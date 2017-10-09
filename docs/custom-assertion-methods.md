@@ -1,15 +1,20 @@
 Custom Assertion Methods
 ===========================
 
-By using the simple `Tester` interface as a base for making assertions, it is defined
-that tests should always be able to be expressed in a way that evaluates to a boolean, or
-expecting an exception when functionality is used wrongly.
+The `Tester` interface only defines two basic assertion methods:
 
-This however doesn't mean that we can't add a layer of abstraction between the test case
-and this boolean expression.
+* `assert(bool $result, string $why): void`
+* `expect(string $exception_type, callable $when, string $why): void`
 
-### Decorator Pattern
-One way to do this is to create a decorator class, that adds assertion methods.
+This definition is very limited by design.
+
+If more complex assertions are needed, the tester methods can be extended
+by e.g. applying the writing Decorator classes.
+
+## Decorator classes
+Assertion methods can be added by creating
+a [Decorator](https://en.wikipedia.org/wiki/Decorator_pattern) 
+class that "adds behaviour" in the form of one or more complex assertion types.
 
 Let's say we wanted to make assertions on messages returned by expected exceptions.
 
@@ -81,9 +86,9 @@ uses these methods to assert the result of the custom assertion.
 The library aims to keep the definitions of what a test case is as minimalistic as possible, so extensions like
 this are as simple to achieve as possible.
 
-### Provided assertion extensions
+### Decorators provided by the library
 
-#### Comparative assertions
+### ComparisonTester
 The library provides a decorator: `ComparisonTester`, that provides two extra assertion methods,
 `assertSame()` and `assertEqual()`.
 
@@ -135,7 +140,7 @@ of the two values.
 Being a decorator, `ComparisonTester` implements `Tester` and has the assert and expect method as well. 
 The implementation simply delegates calls to these methods to the methods on the decorated tester.
 
-### Assertions on output
+### ExpectedOutputTester
 The library also defines a decorator, `ExpectedOutputTester`, for testing the output to the output buffer.
 
 ```php

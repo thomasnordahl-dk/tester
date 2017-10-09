@@ -1,5 +1,5 @@
-Test Runners
-============
+Native Test Runners
+===================
 
 If you wish to just run the tests in the standard way as described in the 
 [How to Run Tests guide](how-to-run-tests.md), there is no need to read on. Knowing about how
@@ -55,3 +55,11 @@ Notice that the phpunit coverage classes are hidden behind a facade, so the runn
 directly depend on phpunits code coverage classes, should you whish to replace the coverage
 driver with another coverage library (if such a thing exists). 
 Admittedly this might be a bit of an "overkill" at such an early stage of the librarys life time.
+
+## Command Line Script
+The command line script located in `dist/tester` utilizes the `CommandLineFactory`
+and the `CommandLineArguments` to create a runner and fetch the suites from the
+designated test file.
+
+Check out the implementations for inspiration for ways to write custom test runner
+scripts.
