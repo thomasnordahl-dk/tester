@@ -12,17 +12,12 @@ class MockCodeCoverageFacade extends CodeCoverageFacade
 {
     private $xml_file;
     private $html_dir;
+    private $started = false;
     private $stopped = false;
-    private $id;
 
     public function __construct()
     {
         parent::__construct(new MockCodeCoverage(), new MockClover(), new MockFacade());
-    }
-
-    public function wasStarted(): bool
-    {
-        return $this->id != null;
     }
 
     public function getXmlFile()
@@ -35,14 +30,19 @@ class MockCodeCoverageFacade extends CodeCoverageFacade
         return $this->html_dir;
     }
 
+    public function wasStarted(): bool
+    {
+        return $this->started;
+    }
+
     public function wasStopped(): bool
     {
         return $this->stopped;
     }
 
-    public function start($id): void
+    public function start(): void
     {
-        $this->id = $id;
+        $this->started = true;
     }
 
     public function stop(): void

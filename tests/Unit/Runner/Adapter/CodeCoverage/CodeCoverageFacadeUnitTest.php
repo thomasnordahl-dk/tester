@@ -44,7 +44,7 @@ class CodeCoverageFacadeUnitTest implements TestCase
 
         $facade = new CodeCoverageFacade($coverage, $xml_writer, $html_writer);
 
-        $facade->start("facadetest");
+        $facade->start();
 
         $facade->stop();
 
@@ -52,7 +52,7 @@ class CodeCoverageFacadeUnitTest implements TestCase
 
         $facade->outputHtml($html_directory);
 
-        $tester->assert($coverage->wasStartedWithId() === "facadetest", "must start coverage with name as id");
+        $tester->assert($coverage->isStopCalled(), "must start coverage");
         $tester->assert($coverage->isStopCalled(), "must stop coverage");
         $tester->assert($xml_writer->getCoverage() === $coverage, "xml writer processed with mock coverage");
         $tester->assert($xml_writer->getTarget() === $xml_file, "xml writer processed with xml file");

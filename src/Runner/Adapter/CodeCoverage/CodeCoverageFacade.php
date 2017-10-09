@@ -34,12 +34,10 @@ class CodeCoverageFacade
 
     /**
      * Start registering coverage
-     * TODO remove notion of ID
-     * @param mixed $id ID to pass to
      */
-    public function start($id): void
+    public function start(): void
     {
-        $this->coverage->start($id);
+        $this->coverage->start(self::class);
     }
 
     /**
