@@ -1,10 +1,10 @@
 <?php
 
-namespace ThomasNordahlDk\Tester\Tests\Unit\Runner;
+namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Timer;
 
 
 use RuntimeException;
-use ThomasNordahlDk\Tester\Runner\Timer;
+use ThomasNordahlDk\Tester\Runner\Timer\Timer;
 use ThomasNordahlDk\Tester\TestCase;
 use ThomasNordahlDk\Tester\Tester;
 

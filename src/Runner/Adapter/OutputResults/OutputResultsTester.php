@@ -1,6 +1,6 @@
 <?php
 
-namespace ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion;
+namespace ThomasNordahlDk\Tester\Runner\Adapter\OutputResults;
 
 
 use Exception;

@@ -1,9 +1,8 @@
 <?php
 
-namespace ThomasNordahlDk\Tester\Runner;
+namespace ThomasNordahlDk\Tester\Runner\Timer;
 
 use RuntimeException;
-
 
 /**
  * Used to measure time passed in microseconds.

@@ -7,7 +7,6 @@ use ThomasNordahlDk\Tester\Decorator\ComparisonTester;
 use ThomasNordahlDk\Tester\Tester;
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageRunner;
-use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsFactory;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsRunner;
 use ThomasNordahlDk\Tester\Runner\CommandLine\CommandLineRunnerFactory;
 use ThomasNordahlDk\Tester\TestCase;
@@ -42,7 +41,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
 
         $argv = ["script"];
 
-        $expected = new OutputResultsRunner(new OutputResultsFactory());
+        $expected = OutputResultsRunner::create();
 
         $factory = new CommandLineRunnerFactory();
 
@@ -56,7 +55,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
 
         $argv = ["script", "-v"];
 
-        $expected = new OutputResultsRunner(new OutputResultsFactory(true));
+        $expected = OutputResultsRunner::create(true);
 
         $factory = new CommandLineRunnerFactory();
 
@@ -70,7 +69,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
 
         $argv = ["script", "--coverage-clover"];
 
-        $output_results_runner = new OutputResultsRunner(new OutputResultsFactory());
+        $output_results_runner = OutputResultsRunner::create();
         $coverage_facade = CodeCoverageFacade::create("src");
 
         $expected = new CodeCoverageRunner($output_results_runner, $coverage_facade);
@@ -92,7 +91,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
 
         $argv = ["script", "--coverage-html"];
 
-        $output_results_runner = new OutputResultsRunner(new OutputResultsFactory());
+        $output_results_runner = OutputResultsRunner::create();
         $coverage_facade = CodeCoverageFacade::create("src");
 
         $expected = new CodeCoverageRunner($output_results_runner, $coverage_facade);
@@ -115,7 +114,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
 
         $argv = ["script", "--coverage-html", "--cover=path"];
 
-        $output_results_runner = new OutputResultsRunner(new OutputResultsFactory());
+        $output_results_runner = OutputResultsRunner::create();
         $coverage_facade = CodeCoverageFacade::create("path");
 
         $expected = new CodeCoverageRunner($output_results_runner, $coverage_facade);
@@ -125,10 +124,9 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $tester->assertEqual($factory->createFromArguments($argv), $expected,
             "--coverage-html --cover=path results in coverage with custom path");
 
-
         $argv = ["script", "--coverage-html", "--cover=path,dir,src"];
 
-        $output_results_runner = new OutputResultsRunner(new OutputResultsFactory());
+        $output_results_runner = OutputResultsRunner::create();
         $coverage_facade = CodeCoverageFacade::create("path", "dir", "src");
 
         $expected = new CodeCoverageRunner($output_results_runner, $coverage_facade);
@@ -145,7 +143,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
 
         $argv = ["script", "-v", "--coverage-clover=file.xml", "--coverage-html=dir", "--cover=path"];
 
-        $output_results_runner = new OutputResultsRunner(new OutputResultsFactory(true));
+        $output_results_runner = OutputResultsRunner::create(true);
         $coverage_facade = CodeCoverageFacade::create("path");
 
         $expected = new CodeCoverageRunner($output_results_runner, $coverage_facade);

@@ -1,14 +1,14 @@
 <?php
 
-namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\Assertion;
+namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults;
 
 
 use Exception;
 use RuntimeException;
 use ThomasNordahlDk\Tester\Decorator\ExpectedOutputTester;
 use ThomasNordahlDk\Tester\Tester;
-use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\OutputResultsTester;
-use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\Assertion\FailedAssertionException;
+use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsTester;
+use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\FailedAssertionException;
 use ThomasNordahlDk\Tester\TestCase;
 
 class OutputResultsTesterUnitTest implements TestCase

@@ -3,13 +3,18 @@
 namespace ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults;
 
 
+use Exception;
 use ThomasNordahlDk\Tester\Decorator\ComparisonTester;
+use ThomasNordahlDk\Tester\Decorator\ExpectedOutputTester;
+use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestResultsRenderer;
+use ThomasNordahlDk\Tester\Runner\FailedTestException;
+use ThomasNordahlDk\Tester\Runner\Timer\TimerFactory;
 use ThomasNordahlDk\Tester\Tester;
-use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsFactory;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsRunner;
 use ThomasNordahlDk\Tester\TestCase;
 use ThomasNordahlDk\Tester\Tests\Mock\MockTestCase;
-use ThomasNordahlDk\Tester\Tests\Mock\Runner\Adapter\OutputResults\MockOutputResultsFactory;
+use ThomasNordahlDk\Tester\Tests\Mock\Runner\Adapter\OutputResults\MockTestResultsRenderer;
+use ThomasNordahlDk\Tester\Tests\Mock\Runner\Timer\MockTimerFactory;
 use ThomasNordahlDk\Tester\TestSuite;
 
 class OutputResultsRunnerUnitTest implements TestCase
@@ -21,36 +26,66 @@ class OutputResultsRunnerUnitTest implements TestCase
 
     public function run(Tester $tester): void
     {
+        $tester = new ExpectedOutputTester($tester);
+
+        $mock_renderer = new MockTestResultsRenderer();
+        $mock_timer_factory = new MockTimerFactory();
+
+        $runner = new OutputResultsRunner($mock_renderer, $mock_timer_factory);
+
+        $suite = new TestSuite("description", ... [
+            new MockTestCase("case 1", function (Tester $tester) {
+                $tester->assert(true, "reason 1");
+            }),
+            new MockTestCase("case 2", function (Tester $tester) {
+                $tester->expect(Exception::class, function () {
+                    throw new Exception("error!");
+                }, "reason 2");
+            }),
+        ]);
+
+        $tester->expectOutput(
+            "description\ncase 1\ncase 2\n2, 0, 2, 1.23\n",
+            function () use ($runner, $suite) {
+                $runner->run([$suite]);
+            },
+            "Uses renderer correctly"
+        );
+
+        $suite = new TestSuite("description", ... [
+            new MockTestCase("case 1", function (Tester $tester) {
+                $tester->assert(true, "reason 1");
+            }),
+            new MockTestCase("case 2", function (Tester $tester) {
+                $tester->assert(false, "reason 2");
+            }),
+        ]);
+
+
+        /** @var FailedTestException $exception_caught */
+        $exception_caught = null;
+
+        $tester->expectOutput(
+            "description\ncase 1\ncase 2\n✖ reason 2\n1, 1, 1, 1.23\n",
+            function () use ($runner, $suite, &$exception_caught) {
+                try {
+                    $runner->run([$suite]);
+                } catch (FailedTestException $e) {
+                    $exception_caught = $e;
+                }
+            },
+            "Uses renderer correctly on failure"
+        );
+
         $tester = new ComparisonTester($tester);
 
-        $mock_render_results_factory = new MockOutputResultsFactory();
-        $mock_suite_runner = $mock_render_results_factory->getMockTestSuiteRunner();
+        $tester->assert($exception_caught instanceof FailedTestException,
+            "Runner throws FailedTestException on failed test");
 
-        $test_case_list = [
-            new MockTestCase("case1", function () {
-            }),
-            new MockTestCase("case2", function () {
-            }),
-        ];
-        $suite_1 = new TestSuite("description1", ... $test_case_list);
-        $suite_2 = new TestSuite("description2", ... $test_case_list);
+        $expected = new OutputResultsRunner(new TestResultsRenderer(), new TimerFactory());
+        $tester->assertEqual(OutputResultsRunner::create(), $expected, "Factory method creates new Runner");
 
-        $expected = [$suite_1, $suite_2];
-
-        $runner = new OutputResultsRunner($mock_render_results_factory);
-
-        $runner->run($expected);
-
-        $tester->assertSame($mock_suite_runner->getTestSuites(), $expected,
-            "Uses test suite runner from factory to run suites");
-
-        $expected = new OutputResultsRunner(new OutputResultsFactory());
-        $tester->assertEqual(OutputResultsRunner::create(), $expected,
-            "static factory method creates the expected runner");
-
-
-        $expected = new OutputResultsRunner(new OutputResultsFactory(true));
-        $tester->assertEqual(OutputResultsRunner::create(true), $expected,
-            "static factory method creates the expected verbose runner");
+        $expected = new OutputResultsRunner(new TestResultsRenderer(true), new TimerFactory());
+        $tester->assertEqual(OutputResultsRunner::create(true), $expected, "Factory method creates new verbose Runner");
     }
 }

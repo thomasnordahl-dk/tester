@@ -4,9 +4,10 @@ namespace ThomasNordahlDk\Tester\Runner\CommandLine;
 
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageRunner;
-use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsFactory;
 use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsRunner;
+use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestResultsRenderer;
 use ThomasNordahlDk\Tester\Runner\Runner;
+use ThomasNordahlDk\Tester\Runner\Timer\TimerFactory;
 
 /**
  * Creates instances of Runner based on the provided $argv array
@@ -48,9 +49,10 @@ class CommandLineRunnerFactory
     {
         $verbose = $this->options->isSet("v");
 
-        $factory = new OutputResultsFactory($verbose);
+        $test_results_renderer = new TestResultsRenderer($verbose);
+        $timer_factory = new TimerFactory();
 
-        return new OutputResultsRunner($factory);
+        return new OutputResultsRunner($test_results_renderer, $timer_factory);
     }
 
     private function decorateWithCoverage(Runner $runner): Runner
