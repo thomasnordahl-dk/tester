@@ -7,6 +7,7 @@ use ThomasNordahlDk\Tester\Tester;
 use ThomasNordahlDk\Tester\TestCase;
 use ThomasNordahlDk\Tester\Tests\Mock\MockTester;
 use stdClass;
+use ThomasNordahlDk\Tester\TestSuite;
 
 class ComparisonTesterUnitTest implements TestCase
 {
@@ -132,6 +133,7 @@ class ComparisonTesterUnitTest implements TestCase
             [$array, $not_equal_array, false, "not equal arrays"],
             [$object, $equal_object, true, "equal objects"],
             [$object, $not_equal_object, false, "not equal objects"],
+            [$object, new TestSuite("different object type"), false, "different object types"],
         ];
 
         foreach ($tests as $arguments) {

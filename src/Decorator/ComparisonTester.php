@@ -97,7 +97,7 @@ class ComparisonTester implements Tester
 
     private function compareObjectEquality($value, $expected): bool
     {
-        if (! get_class($value) === get_class($expected)) {
+        if (get_class($value) != get_class($expected)) {
             return false;
         }
 
