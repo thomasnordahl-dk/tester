@@ -103,9 +103,11 @@ class ComparisonTesterUnitTest implements TestCase
     {
         $object = new stdClass();
         $object->hello = "hello";
+        $object->nested = new stdClass();
 
         $equal_object = new stdClass();
         $equal_object->hello = "hello";
+        $equal_object->nested = new stdClass();
 
         $not_equal_object = new stdClass();
         $not_equal_object->hello = "bonjour";
