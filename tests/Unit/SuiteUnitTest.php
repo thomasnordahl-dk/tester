@@ -23,7 +23,7 @@ class SuiteUnitTest implements TestCase
         $test_case_1 = new MockTestCase("test case 1", $empty_function);
         $test_case_2 = new MockTestCase("test case 2", $empty_function);
 
-        $package = new TestSuite("Description", $test_case_1, $test_case_2);
+        $package = new TestSuite("Description", [$test_case_1, $test_case_2]);
 
         $tester->assert($package->getDescription() === "Description", "Assigned description correctly returned");
         $tester->assert($package->getTestCaseList() === [$test_case_1, $test_case_2],

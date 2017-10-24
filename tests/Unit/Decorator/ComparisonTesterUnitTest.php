@@ -133,7 +133,7 @@ class ComparisonTesterUnitTest implements TestCase
             [$array, $not_equal_array, false, "not equal arrays"],
             [$object, $equal_object, true, "equal objects"],
             [$object, $not_equal_object, false, "not equal objects"],
-            [$object, new TestSuite("different object type"), false, "different object types"],
+            [$object, new TestSuite("different object type", []), false, "different object types"],
         ];
 
         foreach ($tests as $arguments) {

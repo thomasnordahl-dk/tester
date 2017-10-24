@@ -1,6 +1,7 @@
 <?php
 
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\TestResultsRendererUnitTest;
+use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\Simple\SimpleRunnerUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Timer\TimerFactoryUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\Timer\TimerUnitTest;
 use ThomasNordahlDk\Tester\TestSuite;
@@ -14,7 +15,7 @@ use ThomasNordahlDk\Tester\Tests\Unit\Runner\Adapter\OutputResults\OutputResults
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\CommandLine\CommandLineRunnerFactoryUnitTest;
 use ThomasNordahlDk\Tester\Tests\Unit\Runner\CommandLine\CommandLineArgumentsUnitTest;
 
-$unit_tests = new TestSuite("UNIT TESTS", ...[
+$unit_tests = new TestSuite("UNIT TESTS", [
     new SuiteUnitTest,
     # Decorators/
     new ComparisonTesterUnitTest,

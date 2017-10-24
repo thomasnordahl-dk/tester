@@ -33,7 +33,7 @@ class OutputResultsRunnerUnitTest implements TestCase
 
         $runner = new OutputResultsRunner($mock_renderer, $mock_timer_factory);
 
-        $suite = new TestSuite("description", ... [
+        $suite = new TestSuite("description", [
             new MockTestCase("case 1", function (Tester $tester) {
                 $tester->assert(true, "reason 1");
             }),
@@ -52,7 +52,7 @@ class OutputResultsRunnerUnitTest implements TestCase
             "Uses renderer correctly"
         );
 
-        $suite = new TestSuite("description", ... [
+        $suite = new TestSuite("description", [
             new MockTestCase("case 1", function (Tester $tester) {
                 $tester->assert(true, "reason 1");
             }),

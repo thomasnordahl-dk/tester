@@ -18,11 +18,17 @@ class TestSuite
      */
     private $description = "";
 
-    public function __construct(string $description, TestCase ...$test_cases)
+    /**
+     * @param string     $description
+     * @param TestCase[] $test_cases
+     */
+    public function __construct(string $description, array $test_cases)
     {
         $this->description = $description;
 
-        $this->test_case_list = $test_cases;
+        foreach ($test_cases as $test_case) {
+            $this->addTestCase($test_case);
+        }
     }
 
     public function getDescription(): string
@@ -36,5 +42,10 @@ class TestSuite
     public function getTestCaseList()
     {
         return $this->test_case_list;
+    }
+
+    private function addTestCase(TestCase $test_case): void
+    {
+        $this->test_case_list[] = $test_case;
     }
 }

@@ -87,7 +87,7 @@ class TestResultsRendererUnitTest implements TestCase
         $expected .= "description (test cases: 2)\n";
         $expected .= "***************************************************************************\n\n";
 
-        $suite = new TestSuite("description", ... [
+        $suite = new TestSuite("description", [
             new MockTestCase("case 1", function () {
                 //does nothing;
             }),
