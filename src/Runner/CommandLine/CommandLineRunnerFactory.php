@@ -4,10 +4,8 @@ namespace ThomasNordahlDk\Tester\Runner\CommandLine;
 
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageFacade;
 use ThomasNordahlDk\Tester\Runner\Adapter\CodeCoverage\CodeCoverageRunner;
-use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\OutputResultsRunner;
-use ThomasNordahlDk\Tester\Runner\Adapter\OutputResults\TestResultsRenderer;
+use ThomasNordahlDk\Tester\Runner\Adapter\Simple\SimpleRunner;
 use ThomasNordahlDk\Tester\Runner\Runner;
-use ThomasNordahlDk\Tester\Runner\Timer\TimerFactory;
 
 /**
  * Creates instances of Runner based on the provided $argv array
@@ -25,7 +23,6 @@ class CommandLineRunnerFactory
     /**
      * Creates an instance of Runner based on the provided command line arguments.
      *
-     * -v                       => Specify verbose output
      * --coverage-clover        => Specify coverage clover report
      * --coverage-clover=file   => Specify coverage clover report to file
      * --coverage-html          => Specify coverage HTML report
@@ -45,14 +42,9 @@ class CommandLineRunnerFactory
         return $this->decorateWithCoverage($runner);
     }
 
-    private function createOutputResultsRunner(): OutputResultsRunner
+    private function createOutputResultsRunner(): SimpleRunner
     {
-        $verbose = $this->options->isSet("v");
-
-        $test_results_renderer = new TestResultsRenderer($verbose);
-        $timer_factory = new TimerFactory();
-
-        return new OutputResultsRunner($test_results_renderer, $timer_factory);
+        return SimpleRunner::create();
     }
 
     private function decorateWithCoverage(Runner $runner): Runner

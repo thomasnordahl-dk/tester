@@ -38,29 +38,24 @@ in the composer-root-dir.
 
 ```
 ~/composer-package-root$ vendor/bin/tester
-***************************************************************************
-Unit tests (test cases: 2)
-***************************************************************************
 
- - Unit test of User
- - Unit test of Address
+---------------------------------------------------------------------------
+ - Unit tests - cases: 2
+ --- Unit test of User ✔
+ --- Unit test of Address ✔
+---------------------------------------------------------------------------
+success: 2, failure: 0, assertions: 8, time: 0.04s
+---------------------------------------------------------------------------
 
-***************************************************************************
-Success! 2 successful test(s), 8 assertion(s) (0.03s)
-***************************************************************************
-
-***************************************************************************
-Acceptance tests (test cases: 4)
-***************************************************************************
-
- - Creating a new user
- - Deleting a user
- - A user logs in
- - A user changes address
-
-***************************************************************************
-Success! 4 successful test(s), 13 assertion(s) (0.32s)
-***************************************************************************
+---------------------------------------------------------------------------
+ - Acceptance tests - cases 4
+ --- Creating a new user ✔
+ --- Deleting a user ✔
+ --- A user logs in ✔
+ --- A user changes address ✔
+---------------------------------------------------------------------------
+success: 4, failure: 0, assertions: 8, time: 0.32s
+---------------------------------------------------------------------------
 
 ~/composer-package-root$ vendor/bin/tester
 ```
@@ -72,11 +67,6 @@ The script can be called with a number of arguments.
 **Use a different test suite file:**
 ```
 ~ vendor/bin/tester --file=tests/test.php
-```
-
-**Output verbose results:**
-```
-~ vendor/bin/tester -v
 ```
 
 **Output coverage HTML report to `coverage/`:**
