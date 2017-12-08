@@ -29,8 +29,13 @@ class MockCodeCoverage extends CodeCoverage
         $this->started = true;
     }
 
-    public function stop($append = true, $linesToBeCovered = [], array $linesToBeUsed = [])
-    {
+    public function stop(
+        $append = true,
+        $linesToBeCovered = [],
+        array $linesToBeUsed = [],
+        $ignoreForceCoversAnnotation = false
+    ) {
+
         $this->stop_called = true;
     }
 }
