@@ -84,6 +84,6 @@ class CommandLineRunnerFactory
 
         $whitelist = explode(",", $options->getValue("cover") ?: "src");
 
-        return CodeCoverageFacade::create(... $whitelist);
+        return CodeCoverageFacade::create($whitelist);
     }
 }

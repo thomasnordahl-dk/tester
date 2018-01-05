@@ -29,11 +29,11 @@ class CodeCoverageFacadeUnitTest implements TestCase
         $coverage->filter()->addDirectoryToWhitelist("path");
         $expected = new CodeCoverageFacade($coverage, new Clover(), new Facade());
 
-        $tester->assertEqual(CodeCoverageFacade::create("path"), $expected, "create method creates facade");
+        $tester->assertEqual(CodeCoverageFacade::create(["path"]), $expected, "create method creates facade");
 
         $coverage->filter()->addDirectoryToWhitelist("path");
         $expected = new CodeCoverageFacade($coverage, new Clover(), new Facade());
-        $tester->assertEqual(CodeCoverageFacade::create("path1", "path2"), $expected, "create method creates facade");
+        $tester->assertEqual(CodeCoverageFacade::create(["path1", "path2"]), $expected, "create method creates facade");
 
         $xml_file = "/my/special/coverage.xml";
         $html_directory = "/my/special/coverage";

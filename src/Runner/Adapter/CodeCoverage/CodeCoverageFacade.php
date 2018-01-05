@@ -71,11 +71,11 @@ class CodeCoverageFacade
     /**
      * Factory method for creation of new facades.
      *
-     * @param string[] ...$paths
+     * @param string[] $paths
      *
      * @return CodeCoverageFacade
      */
-    public static function create(string ...$paths): CodeCoverageFacade
+    public static function create(array $paths): CodeCoverageFacade
     {
         $coverage = new CodeCoverage();
 

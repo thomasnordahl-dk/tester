@@ -55,7 +55,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $argv = ["script", "--coverage-clover"];
 
         $simple_runner = SimpleRunner::create();
-        $coverage_facade = CodeCoverageFacade::create("src");
+        $coverage_facade = CodeCoverageFacade::create(["src"]);
 
         $expected = new CodeCoverageRunner($simple_runner, $coverage_facade);
         $expected->outputsCloverReportTo("coverage.xml");
@@ -77,7 +77,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $argv = ["script", "--coverage-html"];
 
         $simple_runner = SimpleRunner::create();
-        $coverage_facade = CodeCoverageFacade::create("src");
+        $coverage_facade = CodeCoverageFacade::create(["src"]);
 
         $expected = new CodeCoverageRunner($simple_runner, $coverage_facade);
         $expected->outputsHtmlReportTo("coverage");
@@ -100,7 +100,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $argv = ["script", "--coverage-html", "--cover=path"];
 
         $simple_runner = SimpleRunner::create();
-        $coverage_facade = CodeCoverageFacade::create("path");
+        $coverage_facade = CodeCoverageFacade::create(["path"]);
 
         $expected = new CodeCoverageRunner($simple_runner, $coverage_facade);
         $expected->outputsHtmlReportTo("coverage");
@@ -112,7 +112,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $argv = ["script", "--coverage-html", "--cover=path,dir,src"];
 
         $simple_runner = SimpleRunner::create();
-        $coverage_facade = CodeCoverageFacade::create("path", "dir", "src");
+        $coverage_facade = CodeCoverageFacade::create(["path", "dir", "src"]);
 
         $expected = new CodeCoverageRunner($simple_runner, $coverage_facade);
         $expected->outputsHtmlReportTo("coverage");
@@ -129,7 +129,7 @@ class CommandLineRunnerFactoryUnitTest implements TestCase
         $argv = ["script", "--coverage-clover=file.xml", "--coverage-html=dir", "--cover=path"];
 
         $simple_runner = SimpleRunner::create();
-        $coverage_facade = CodeCoverageFacade::create("path");
+        $coverage_facade = CodeCoverageFacade::create(["path"]);
 
         $expected = new CodeCoverageRunner($simple_runner, $coverage_facade);
         $expected->outputsHtmlReportTo("dir");

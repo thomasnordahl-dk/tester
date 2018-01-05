@@ -28,8 +28,12 @@ class ComparisonTester implements Tester
     }
 
     /**
-     * This assertion is equivalent to the assertion:
-     * assert($value === $expected, $why);
+     * Assert that two values can be considered equal
+     *
+     * For scalar values, this is equivalent to a loose comparison ($value == $expected)
+     *
+     * For objects and arrays, the values are expected to have equal state and be of the same type, but does not
+     * have to be the same instance.
      *
      * @param mixed  $value    The value to test
      * @param mixed  $expected The expected value
@@ -41,6 +45,8 @@ class ComparisonTester implements Tester
     }
 
     /**
+     * Assert that two values are the same object / scalar value
+     *
      * This assertion is equivalent to the assertion:
      * assert($value == $expected, $why);
      *
@@ -50,10 +56,10 @@ class ComparisonTester implements Tester
      */
     public function assertEqual($value, $expected, string $why): void
     {
+        $is_equal = $this->isEqual($value, $expected);
 
-        $result = $this->compareEquality($value, $expected);
+        $this->assert($is_equal, $why);
 
-        $this->assert($result, $why);
     }
 
     /**
@@ -72,17 +78,25 @@ class ComparisonTester implements Tester
         $this->tester->expect($exception_type, $when, $why);
     }
 
-    private function compareEquality($value, $expected): bool
+    /**
+     *
+     *
+     * @param mixed $value
+     * @param mixed $compare_to
+     *
+     * @return bool
+     */
+    private function isEqual($value, $compare_to): bool
     {
-        if (is_array($value) && is_array($expected)) {
-            return $this->compareArrayEquality($value, $expected);
+        if (is_array($value) && is_array($compare_to)) {
+            return $this->compareArrayEquality($value, $compare_to);
         }
 
         if (is_object($value)) {
-            return $this->compareObjectEquality($value, (object) $expected);
+            return $this->compareObjectEquality($value, (object) $compare_to);
         }
 
-        return $value == $expected;
+        return $value == $compare_to;
     }
 
     private function compareArrayEquality(array $value, $expected): bool
@@ -92,7 +106,7 @@ class ComparisonTester implements Tester
         }
 
         foreach ($value as $key => $element) {
-            if (! $this->compareEquality($element, @$expected[$key])) {
+            if (! $this->isEqual($element, @$expected[$key])) {
                 return false;
             }
         }
@@ -109,7 +123,7 @@ class ComparisonTester implements Tester
         $value_public_properties = get_object_vars($value);
         $expected_public_properties = get_object_vars($expected);
 
-        if (! $this->compareEquality($value_public_properties, $expected_public_properties)) {
+        if (! $this->isEqual($value_public_properties, $expected_public_properties)) {
             return false;
         }
 
@@ -125,7 +139,7 @@ class ComparisonTester implements Tester
             $property_value = $property->getValue($value);
             $expected_property_value = $property->getValue($expected);
 
-            if (! $this->compareEquality($property_value, $expected_property_value)) {
+            if (! $this->isEqual($property_value, $expected_property_value)) {
                 return false;
             }
         }

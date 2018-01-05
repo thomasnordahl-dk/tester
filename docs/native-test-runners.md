@@ -13,7 +13,10 @@ the the test classes as part of test suites.
 ```php
 interface Runner
 {
-    public function run(TestSuite ...$suites): void;
+    /**
+     * @var TestSuite[] $suites
+     */ 
+    public function run($suites): void;
 }
 ```
 
@@ -21,19 +24,12 @@ The library defines an implementation that outputs results and summaries
 to the command line, and a decorator class that decorates other runners
 with code coverage.
 
-### OutputResultsRunner
+### SimpleRunner
 
-`OutputResultsRunner` outputs the results of the tests to the 
-command line (output buffer, more precisely).
-
-The runner is created with an instance of the related `OutputResultsFactory`.
+`SimpleRunner` outputs the results of the tests to the command line (the output buffer, to be precise).
 
 ```php
-$factory = new OutputResultsFactory();
-// Or, for verbose output
-$factory = new OutputResultsFactory(true);
-
-$runner = $factory->createRunner();
+$runner = SimpleRunner::create();
 
 $runner->run($test_suites);
 ```
@@ -57,7 +53,7 @@ driver with another coverage library (if such a thing exists).
 Admittedly this might be a bit of an "overkill" at such an early stage of the librarys life time.
 
 ## Command Line Script
-The command line script located in `dist/tester` utilizes the `CommandLineFactory`
+The command line script located in `dist/tester` utilizes the `CommandLineRunnerFactory`
 and the `CommandLineArguments` to create a runner and fetch the suites from the
 designated test file.
 

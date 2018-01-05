@@ -9,10 +9,19 @@ use RuntimeException;
  */
 class Timer
 {
+    /**
+     * @var float
+     */
     private $start_time = 0.0;
 
+    /**
+     * @var float
+     */
     private $stop_time = 0.0;
 
+    /**
+     * @var bool
+     */
     private $started = false;
 
     /**
