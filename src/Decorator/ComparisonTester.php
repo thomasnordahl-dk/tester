@@ -50,6 +50,7 @@ class ComparisonTester implements Tester
      */
     public function assertEqual($value, $expected, string $why): void
     {
+
         $result = $this->compareEquality($value, $expected);
 
         $this->assert($result, $why);
@@ -77,15 +78,19 @@ class ComparisonTester implements Tester
             return $this->compareArrayEquality($value, $expected);
         }
 
-        if (is_object($value) && is_object($expected)) {
-            return $this->compareObjectEquality($value, $expected);
+        if (is_object($value)) {
+            return $this->compareObjectEquality($value, (object) $expected);
         }
 
         return $value == $expected;
     }
 
-    private function compareArrayEquality(array $value, array $expected): bool
+    private function compareArrayEquality(array $value, $expected): bool
     {
+        if (! is_array($expected)) {
+            return false;
+        }
+
         foreach ($value as $key => $element) {
             if (! $this->compareEquality($element, @$expected[$key])) {
                 return false;
@@ -104,7 +109,7 @@ class ComparisonTester implements Tester
         $value_public_properties = get_object_vars($value);
         $expected_public_properties = get_object_vars($expected);
 
-        if (!$this->compareEquality($value_public_properties, $expected_public_properties)) {
+        if (! $this->compareEquality($value_public_properties, $expected_public_properties)) {
             return false;
         }
 

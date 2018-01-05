@@ -30,6 +30,7 @@ class SimpleTester implements Tester
      * @inheritdoc
      *
      * @throws FailedAssertionException
+     * @throws Exception
      */
     public function expect(string $exception_type, callable $when, string $why): void
     {

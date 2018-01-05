@@ -104,17 +104,17 @@ class ComparisonTesterUnitTest implements TestCase
     {
         $object = new stdClass();
         $object->hello = "hello";
-        $object->nested = new stdClass();
+        $object->nested = new TestSuite("description", []);
 
         $equal_object = new stdClass();
         $equal_object->hello = "hello";
-        $equal_object->nested = new stdClass();
+        $equal_object->nested = new TestSuite("description", []);
 
         $not_equal_object = new stdClass();
         $not_equal_object->hello = "bonjour";
 
-        $array = [1, "2" => "3", $equal_object, [1 => 2]];
-        $equal_array = [1, "2" => "3", $object, [1 => 2]];
+        $array = [1, "2" => "3", 0 => $equal_object, [1 => 2]];
+        $equal_array = [1, "2" => "3", 0 => $object, [1 => 2]];
         $not_equal_array = [1, "2" => "3", $not_equal_object, [1 => 2]];
 
         //arrays containing [value, expected_value, expected_result, why]
