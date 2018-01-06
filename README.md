@@ -8,7 +8,7 @@ thomasnordahldk/tester
 
 *An object oriented approach to testing PHP code.*
 
-*Tester* aims to be: easy to learn, light weight, object oriented, and extendable.
+*Tester* aims to be: easy to learn, light weight, object oriented, and extensible.
 
 [Documentation here](docs/index.md)
 
