@@ -4,6 +4,7 @@ thomasnordahldk/tester
 [![PHP Version](https://img.shields.io/badge/php-7.1%2B-blue.svg)](https://packagist.org/packages/thomasnordahldk/tester)
 [![Latest Stable Version](https://poser.pugx.org/thomasnordahldk/tester/v/stable)](https://packagist.org/packages/thomasnordahldk/tester)
 [![License](https://poser.pugx.org/thomasnordahldk/tester/license)](https://packagist.org/packages/thomasnordahldk/tester)
+[![Build Status](https://travis-ci.org/mindplay-dk/sql.svg?branch=master)](https://travis-ci.org/thomasnordahldk/tester)
 
 *An object oriented approach to testing PHP code.*
 
