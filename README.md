@@ -1,14 +1,15 @@
 thomasnordahldk/tester
 =================
+
+[![PHP Version](https://img.shields.io/badge/php-7.1%2B-blue.svg)](https://packagist.org/packages/thomasnordahldk/tester)
+[![Latest Stable Version](https://poser.pugx.org/thomasnordahldk/tester/v/stable)](https://packagist.org/packages/thomasnordahldk/tester)
+[![License](https://poser.pugx.org/thomasnordahldk/tester/license)](https://packagist.org/packages/thomasnordahldk/tester)
+
 *An object oriented approach to testing PHP code.*
 
 *Tester* aims to be: easy to learn, light weight, object oriented, and extendable.
 
 [Documentation here](docs/index.md)
-
-[![PHP Version](https://img.shields.io/badge/php-7.1%2B-blue.svg)](https://packagist.org/packages/thomasnordahldk/tester)
-[![Latest Stable Version](https://poser.pugx.org/thomasnordahldk/tester/v/stable)](https://packagist.org/packages/thomasnordahldk/tester)
-[![License](https://poser.pugx.org/thomasnordahldk/tester/license)](https://packagist.org/packages/thomasnordahldk/tester)
 
 ## Installation
 The library is released as a composer package. 
