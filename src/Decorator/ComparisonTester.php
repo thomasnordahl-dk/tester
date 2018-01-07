@@ -26,14 +26,12 @@ class ComparisonTester implements Tester
     {
         $this->tester = $tester;
     }
-
+    
     /**
-     * Assert that two values can be considered equal
+     * Assert that two values are the same object / scalar value
      *
-     * For scalar values, this is equivalent to a loose comparison ($value == $expected)
-     *
-     * For objects and arrays, the values are expected to have equal state and be of the same type, but does not
-     * have to be the same instance.
+     * This assertion is equivalent to the assertion:
+     * assert($value === $expected, $why);
      *
      * @param mixed  $value    The value to test
      * @param mixed  $expected The expected value
@@ -45,10 +43,12 @@ class ComparisonTester implements Tester
     }
 
     /**
-     * Assert that two values are the same object / scalar value
+     * Assert that two values can be considered equal
      *
-     * This assertion is equivalent to the assertion:
-     * assert($value == $expected, $why);
+     * For scalar values, this is equivalent to a loose comparison ($value == $expected)
+     *
+     * For objects and arrays, the values are expected to have equal state and be of the same type, but does not
+     * have to be the same instance.
      *
      * @param mixed  $value    The value to test
      * @param mixed  $expected The expected value
