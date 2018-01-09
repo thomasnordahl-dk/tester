@@ -9,7 +9,7 @@ The `Tester` interface only defines two basic assertion methods:
 This definition is very limited by design.
 
 If more complex assertions are needed, the tester methods can be extended
-by e.g. applying the writing Decorator classes.
+by, for example, writing a Decorator to the Tester interface.
 
 ## Decorator classes
 Assertion methods can be added by creating
